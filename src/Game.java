@@ -12,18 +12,18 @@ import java.io.IOException;
 
 public class Game extends Canvas implements Runnable
 {
-    public static final int WIDTH = 768 + 20, HEIGHT = WIDTH/2 + 20;
+    public static final int WIDTH = 768, HEIGHT = WIDTH/2;
     private Thread thread;
     private boolean running = false;
 
-    //private GameManager gameManager;
+    private GameManager gameManager;
 
     public Game() throws IOException
     {
 
-        //gameManager = new GameManager(WIDTH - 20, HEIGHT - 20);
+        gameManager = new GameManager(WIDTH , HEIGHT );
         //this.addMouseListener(new MouseInput(gameManager));
-        new Window(WIDTH, HEIGHT, "Game", this);
+        new Window(WIDTH, HEIGHT, "Janggi", this);
         //this.addKeyListener(new KeyInput(handler));
 
     }
@@ -81,7 +81,7 @@ public class Game extends Canvas implements Runnable
 
     private void tick()
     {
-        //gameManager.tick();
+        gameManager.tick();
     }
 
     private void render()
@@ -97,7 +97,7 @@ public class Game extends Canvas implements Runnable
         // Draw the background each frame
         g2d.setColor(Color.gray);
         g2d.fillRect(0, 0, WIDTH, HEIGHT);
-        //gameManager.render(g2d);
+        gameManager.render(g2d);
 
         g2d.dispose();
         bs.show();
