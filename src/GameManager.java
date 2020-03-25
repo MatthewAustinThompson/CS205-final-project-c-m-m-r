@@ -15,6 +15,10 @@ public class GameManager
         height = inputHeight;
 
         pieces = new ArrayList<Piece>();
+        pieces.add(new ExamplePieceMarcus(this,
+                new Point(width/2, height/2), new BoardPoint(0,0)));
+
+        // Add your piece to the array, but at a different position
     }
 
     public void tick()
