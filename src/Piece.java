@@ -2,16 +2,16 @@ import java.awt.*;
 
 public abstract class Piece
 {
-    private GameManager manager;
+    protected GameManager manager;
 
     // The current center of the Piece
-    private Point center;
+    protected Point center;
 
     // The location of the Piece in terms of the board
-    private BoardPoint location;
+    protected BoardPoint location;
 
-    private Color fillColor;
-    private Color symbolColor;
+    protected Color fillColor;
+    protected Color symbolColor;
 
     public Piece(GameManager inputManager, Point inputCenter, BoardPoint inputLocation)
     {
