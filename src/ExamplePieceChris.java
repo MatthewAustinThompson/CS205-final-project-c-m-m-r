@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
-public class ExamplePieceRuth extends Piece
+public class ExamplePieceChris extends Piece
 {
     // The octagon shape of the piece
     private Path2D.Double outline;
@@ -10,11 +10,11 @@ public class ExamplePieceRuth extends Piece
     // The shape you draw in the middle
     private Path2D.Double symbol;
 
-    public ExamplePieceRuth(GameManager inputManager, Point inputCenter, BoardPoint inputLocation)
+    public ExamplePieceChris(GameManager inputManager, Point inputCenter, BoardPoint inputLocation)
     {
         super(inputManager, inputCenter, inputLocation);
         symbolColor = Color.BLACK;
-        fillColor = Color.BLUE;
+        fillColor = Color.ORANGE;
         this.initializeOctagon();
         this.initializeSymbol();
     }
@@ -69,17 +69,11 @@ public class ExamplePieceRuth extends Piece
         symbol = new Path2D.Double();
 
         symbol.moveTo(center.x, center.y);
-
-        symbol.lineTo(center.x , center.y +15);
-        symbol.lineTo(center.x - 7.5, center.y - 15);
-        symbol.lineTo(center.x - 15, center.y + 15);
-        symbol.lineTo(center.x - 15, center.y);
-        symbol.lineTo(center.x - 15, center.y - 15);
-
-        symbol.moveTo(center.x -15, center.y);
-
-        symbol.lineTo(center.x, center.y - 15);
-
+        symbol.lineTo(center.x-20, center.y - 15);
+        symbol.lineTo(center.x-20, center.y + 15);
+        symbol.moveTo(center.x, center.y);
+        symbol.lineTo(center.x+20, center.y - 15);
+        symbol.lineTo(center.x+20, center.y + 15);
     }
 
     // Overriding setters
