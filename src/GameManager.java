@@ -23,7 +23,9 @@ public class GameManager
 
         pieces.add(new ExamplePieceChris(this,
                 new Point(width/2, height/4) , new BoardPoint(2,1)));
-        // Add your piece to the array, but at a different position
+
+        pieces.add(new ExamplePieceMatthew(this,
+                new Point(width/4, height/6) , new BoardPoint(2,2)));
     }
 
     public void tick()
