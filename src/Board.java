@@ -15,7 +15,7 @@ public class Board
     // Variables for drawing
     private int distanceBetweenPoints;
     private int lineWidth;
-    private double pointRadius;
+    private int pointRadius;
     private Color defaultColor;
     private Color highlightedColor;
 
@@ -29,8 +29,8 @@ public class Board
         this.initializePieces();
         this.initializeHighlighted();
 
-        lineWidth = 10;
-        pointRadius = 20;
+        lineWidth = 8;
+        pointRadius = 10;
         defaultColor = Color.BLUE;
         highlightedColor = Color.MAGENTA;
     }
@@ -79,6 +79,15 @@ public class Board
                     drawVerticalSegment(g2d, x, y, y + distanceBetweenPoints);
                 }
 
+                // fill in the circle on the intersection
+                if(highlighted[i][j])
+                {
+                    g2d.setColor(highlightedColor);
+                }
+                drawPoint(g2d, x, y);
+                g2d.setColor(defaultColor);
+
+                // Move down the column
                 y += distanceBetweenPoints;
             }
             y = distanceBetweenPoints/2;
@@ -142,5 +151,34 @@ public class Board
             rect.closePath();
         }
         g2d.fill(rect);
+    }
+    void drawPoint(Graphics2D g2d, int x, int y)
+    {
+        g2d.fillOval(x - pointRadius, y - pointRadius, 2*pointRadius, 2*pointRadius);
+    }
+
+
+    // ==============================
+    //
+    //      Handling Highlighting
+    //
+    // ==============================
+    void highlightPoint(BoardPoint bp)
+    {
+        highlighted[bp.getX()][bp.getY()] = true;
+    }
+    void highlightPoint(int i, int j)
+    {
+        highlighted[i][j] = true;
+    }
+    void unhighlightAll()
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            for(int j = 0; j < 10; j++)
+            {
+                highlighted[i][j] = false;
+            }
+        }
     }
 }
