@@ -9,6 +9,8 @@ public class GameManager
 
     private ArrayList<Piece> pieces;
 
+    private Board board;
+
     public GameManager(int inputWidth, int inputHeight)
     {
         width = inputWidth;
@@ -26,6 +28,8 @@ public class GameManager
 
         pieces.add(new ExamplePieceMatthew(this,
                 new Point(width/4, height/6) , new BoardPoint(2,2)));
+
+        board = new Board(this);
     }
 
     public void tick()
@@ -39,6 +43,7 @@ public class GameManager
 
     public void render(Graphics2D g2d)
     {
+        board.render(g2d);
         // Have each Piece draw itself
         for(Piece p : pieces)
         {
