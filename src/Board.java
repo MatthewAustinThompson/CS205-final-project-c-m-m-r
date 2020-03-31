@@ -12,7 +12,8 @@ public class Board
 
 
     // Variables for drawing
-    private double lineWidth;
+    private int distanceBetweenPoints;
+    private int lineWidth;
     private double pointRadius;
     private Color defaultColor;
     private Color highlightedColor;
@@ -22,6 +23,7 @@ public class Board
         manager = inputManager;
         windowWidth = (int)manager.getWidth();
         windowHeight = (int)manager.getHeight();
+        distanceBetweenPoints = (int)Math.min(windowWidth/10, windowHeight/11);
 
         this.initializePieces();
         this.initializeHighlighted();
@@ -49,5 +51,31 @@ public class Board
                 highlighted[i][j] = false;
             }
         }
+    }
+
+    // ===============================
+    //
+    //       Drawing the Board
+    //
+    // ===============================
+    public void render(Graphics2D g2d)
+    {
+        int x = distanceBetweenPoints/2;
+        int y = distanceBetweenPoints/2;
+        for(int i = 0; i < 8; i++)
+        {
+            for(int j = 0; j < 9; j++)
+            {
+                drawHorizontalSegment(g2d, x, x+distanceBetweenPoints, y);
+                y += distanceBetweenPoints;
+            }
+            y = distanceBetweenPoints/2;
+            x += distanceBetweenPoints;
+        }
+    }
+    // Draws a rectangle connecting x1 and x2 at height y. x1 must be less than x2.
+    public void drawHorizontalSegment(Graphics2D g2d, int x1, int x2, int y)
+    {
+        g2d.fillRect(x1, y - lineWidth/2, x2 - x1, lineWidth);
     }
 }
