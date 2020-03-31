@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Game extends Canvas implements Runnable
 {
-    public static final int WIDTH = 768, HEIGHT = WIDTH/2;
+    public static final int WIDTH = 1024, HEIGHT = 624;
     private Thread thread;
     private boolean running = false;
 
@@ -21,7 +21,7 @@ public class Game extends Canvas implements Runnable
     public Game() throws IOException
     {
 
-        gameManager = new GameManager(WIDTH , HEIGHT );
+        gameManager = new GameManager(WIDTH, HEIGHT);
         //this.addMouseListener(new MouseInput(gameManager));
         new Window(WIDTH, HEIGHT, "Janggi", this);
         //this.addKeyListener(new KeyInput(handler));
