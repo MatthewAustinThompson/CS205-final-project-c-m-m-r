@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
 public abstract class Piece
@@ -41,6 +42,9 @@ public abstract class Piece
     protected Color fillColor;
     protected Color symbolColor;
 
+    // The octagon shape of the piece
+    protected Path2D.Double outline;
+
     // Constructor
     public Piece(GameManager inputManager, Point inputCenter, BoardPoint inputLocation)
     {
@@ -55,6 +59,33 @@ public abstract class Piece
     public abstract void tick();
 
     public abstract void render(Graphics2D g2d);
+    public void initializeOctagon()
+    {
+        // Octagon geometry stuff
+        int sideLength = 20;
+        double r1 = sideLength/2.0;
+        double r2 = sideLength*(1 + Math.sqrt(2))/2;
+
+        // Trace out an octagon
+        // A Path2D is just a sequence of points that
+        // specifies line segments
+        outline = new Path2D.Double();
+
+        // Start at the top left
+        outline.moveTo(center.x - r1, center.y - r2);
+
+        // Go around clockwise
+        outline.lineTo(center.x + r1, center.y - r2);
+        outline.lineTo(center.x + r2, center.y - r1);
+        outline.lineTo(center.x + r2, center.y + r1);
+        outline.lineTo(center.x + r1, center.y + r2);
+        outline.lineTo(center.x - r1, center.y + r2);
+        outline.lineTo(center.x - r2, center.y + r1);
+        outline.lineTo(center.x - r2, center.y - r1);
+        // End where you started
+        outline.lineTo(center.x - r1, center.y - r2);
+    }
+
 
     // Getters
     public Point getCenter()
@@ -119,5 +150,12 @@ public abstract class Piece
                 legalMoveSquares.add(bp);
             }
         }
+    }
+
+
+    // for clicking
+    public boolean containsClick(int mx, int my)
+    {
+        return outline.contains(mx, my);
     }
 }
