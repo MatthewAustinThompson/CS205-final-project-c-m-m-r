@@ -162,8 +162,8 @@ public class Board
     {
         int i = bp.getX();
         int j = bp.getY();
-        return new Point(distanceBetweenPoints + i * distanceBetweenPoints,
-                distanceBetweenPoints + j * distanceBetweenPoints);
+        return new Point(distanceBetweenPoints/2 + i * distanceBetweenPoints,
+                distanceBetweenPoints/2 + j * distanceBetweenPoints);
     }
 
     // ==============================
