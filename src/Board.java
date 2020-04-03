@@ -103,23 +103,36 @@ public class Board
                     drawVerticalSegment(g2d, x, y, y + distanceBetweenPoints);
                 }
 
-                // fill in the circle on the intersection
-                if(highlighted[i][j])
-                {
-                    g2d.setColor(highlightedColor);
-                }
-                drawPoint(g2d, x, y);
-                g2d.setColor(defaultColor);
-
                 // Move down the column
                 y += distanceBetweenPoints;
             }
             y = distanceBetweenPoints/2;
             x += distanceBetweenPoints;
         }
-
-
     }
+
+    void drawHighlights(Graphics2D g2d)
+    {
+        int x = distanceBetweenPoints/2;
+        int y = distanceBetweenPoints/2;
+        for(int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                // fill in the circle on the intersection
+                if (highlighted[i][j])
+                {
+                    g2d.setColor(highlightedColor);
+                    drawPoint(g2d, x, y);
+                }
+                // Move down the column
+                y += distanceBetweenPoints;
+            }
+            y = distanceBetweenPoints/2;
+            x += distanceBetweenPoints;
+        }
+    }
+
     // Draws a rectangle connecting x1 and x2 at height y. x1 must be less than x2.
     public void drawHorizontalSegment(Graphics2D g2d, int x1, int x2, int y)
     {

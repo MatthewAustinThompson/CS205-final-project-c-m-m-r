@@ -37,6 +37,9 @@ public class GameManager
         board = new Board(this);
 
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(4,5));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(4,6));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(2,1));
         this.updatePieces();
     }
 
@@ -57,6 +60,7 @@ public class GameManager
         {
             p.render(g2d);
         }
+        board.drawHighlights(g2d);
     }
 
 
