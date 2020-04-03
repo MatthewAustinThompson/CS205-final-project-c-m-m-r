@@ -152,11 +152,19 @@ public class Board
         }
         g2d.fill(rect);
     }
-    void drawPoint(Graphics2D g2d, int x, int y)
+    public void drawPoint(Graphics2D g2d, int x, int y)
     {
         g2d.fillOval(x - pointRadius, y - pointRadius, 2*pointRadius, 2*pointRadius);
     }
 
+
+    public Point boardPointToPoint(BoardPoint bp)
+    {
+        int i = bp.getX();
+        int j = bp.getY();
+        return new Point(distanceBetweenPoints + i * distanceBetweenPoints,
+                distanceBetweenPoints + j * distanceBetweenPoints);
+    }
 
     // ==============================
     //
