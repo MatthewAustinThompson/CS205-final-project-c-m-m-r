@@ -64,6 +64,29 @@ public class Board
     {
         g2d.setColor(defaultColor);
 
+        // Draw the diagonals
+        int xCenter = distanceBetweenPoints*9/2;
+        int yUpper = distanceBetweenPoints*3/2;
+        int yLower = distanceBetweenPoints*17/2;
+        // Upper fortress
+        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yUpper - distanceBetweenPoints,
+                xCenter, yUpper);
+        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yUpper + distanceBetweenPoints,
+                xCenter, yUpper);
+        drawDiagonalSegment(g2d, xCenter, yUpper,
+                xCenter + distanceBetweenPoints, yUpper - distanceBetweenPoints);
+        drawDiagonalSegment(g2d, xCenter, yUpper,
+                xCenter + distanceBetweenPoints, yUpper + distanceBetweenPoints);
+        // Lower fortress
+        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yLower - distanceBetweenPoints,
+                xCenter, yLower);
+        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yLower + distanceBetweenPoints,
+                xCenter, yLower);
+        drawDiagonalSegment(g2d, xCenter, yLower,
+                xCenter + distanceBetweenPoints, yLower - distanceBetweenPoints);
+        drawDiagonalSegment(g2d, xCenter, yLower,
+                xCenter + distanceBetweenPoints, yLower + distanceBetweenPoints);
+
         // Draw the grid
         int x = distanceBetweenPoints/2;
         int y = distanceBetweenPoints/2;
@@ -95,28 +118,7 @@ public class Board
             x += distanceBetweenPoints;
         }
 
-        // Draw the diagonals
-        int xCenter = distanceBetweenPoints*9/2;
-        int yUpper = distanceBetweenPoints*3/2;
-        int yLower = distanceBetweenPoints*17/2;
-        // Upper fortress
-        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yUpper - distanceBetweenPoints,
-                xCenter, yUpper);
-        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yUpper + distanceBetweenPoints,
-                xCenter, yUpper);
-        drawDiagonalSegment(g2d, xCenter, yUpper,
-                xCenter + distanceBetweenPoints, yUpper - distanceBetweenPoints);
-        drawDiagonalSegment(g2d, xCenter, yUpper,
-                xCenter + distanceBetweenPoints, yUpper + distanceBetweenPoints);
-        // Lower fortress
-        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yLower - distanceBetweenPoints,
-                xCenter, yLower);
-        drawDiagonalSegment(g2d, xCenter - distanceBetweenPoints, yLower + distanceBetweenPoints,
-                xCenter, yLower);
-        drawDiagonalSegment(g2d, xCenter, yLower,
-                xCenter + distanceBetweenPoints, yLower - distanceBetweenPoints);
-        drawDiagonalSegment(g2d, xCenter, yLower,
-                xCenter + distanceBetweenPoints, yLower + distanceBetweenPoints);
+
     }
     // Draws a rectangle connecting x1 and x2 at height y. x1 must be less than x2.
     public void drawHorizontalSegment(Graphics2D g2d, int x1, int x2, int y)
