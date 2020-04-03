@@ -181,4 +181,80 @@ public class Board
             }
         }
     }
+
+    // Getters
+    public Piece[][] getSpaces()
+    {
+        return spaces;
+    }
+    public int getWindowWidth()
+    {
+        return windowWidth;
+    }
+    public int getWindowHeight()
+    {
+        return windowHeight;
+    }
+    public int getDistanceBetweenPoints()
+    {
+        return distanceBetweenPoints;
+    }
+
+    // ==================================================
+    //
+    //       Getting information about the board
+    //
+    // ==================================================
+
+    // Check if a space is empty
+    public boolean containsPiece(int i, int j)
+    {
+        if(i < 0 || i > 8 || j < 0 || j > 9)
+        {
+            System.out.println("Error: requested space not on board.");
+            return false;
+        }
+        return spaces[i][j] != null;
+    }
+    public boolean containsPiece(BoardPoint bp)
+    {
+        return containsPiece(bp.getX(), bp.getY());
+    }
+
+    // Return the Piece at a given space
+    public Piece getPieceAt(int i, int j)
+    {
+        if(i < 0 || i > 8 || j < 0 || j > 9)
+        {
+            System.out.println("Error: requested space not on board.");
+            return null;
+        }
+        return spaces[i][j];
+    }
+    public Piece getPieceAt(BoardPoint bp)
+    {
+        return getPieceAt(bp.getX(), bp.getY());
+    }
+
+    // Check if a square has a teammate relative to the given Piece
+    public boolean containsTeammate(Piece p, BoardPoint bp)
+    {
+        Piece otherPiece = this.getPieceAt(bp);
+        if(otherPiece == null)
+        {
+            return false;
+        }
+        return otherPiece.getTeam() == p.getTeam();
+    }
+
+    // Check if a square has an enemy relative to the given Piece
+    public boolean containsEnemy(Piece p, BoardPoint bp)
+    {
+        Piece otherPiece = this.getPieceAt(bp);
+        if(otherPiece == null)
+        {
+            return false;
+        }
+        return otherPiece.getTeam() != p.getTeam();
+    }
 }
