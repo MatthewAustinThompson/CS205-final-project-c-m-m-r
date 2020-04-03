@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 
 public class Board
 {
@@ -187,6 +188,15 @@ public class Board
             {
                 highlighted[i][j] = false;
             }
+        }
+    }
+
+    public void highlightLegalMoves(Piece p)
+    {
+        ArrayList<BoardPoint> bps = p.getLegalMoveSquares();
+        for(BoardPoint bp : bps)
+        {
+            this.highlightPoint(bp);
         }
     }
 
