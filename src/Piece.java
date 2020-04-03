@@ -132,7 +132,18 @@ public abstract class Piece
         pieceType = pt;
     }
 
-    // Moving
+    // ================================
+    //
+    //             Moving
+    //
+    // ================================
+    // Every time something on the board changes, this has to be called to update both lists
+    // of squares
+    public void update()
+    {
+        this.findTargetingSquares();
+        this.findLegalMoveSquares();
+    }
     // This sets targetingSquares to contain all squares that this Piece is
     // able to move to, or capture at, or protect teammates at
     public abstract void findTargetingSquares();
