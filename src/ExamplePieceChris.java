@@ -90,6 +90,6 @@ public class ExamplePieceChris extends Piece
 
     @Override
     public void findTargetingSquares() {
-        
+
     }
 }
