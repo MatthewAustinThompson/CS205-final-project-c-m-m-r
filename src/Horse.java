@@ -86,7 +86,7 @@ public class Horse extends Piece
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        if(i < 7)
+        if(i < 7 && !board.containsPiece(i + 1, j))
         {
             if(j > 0) // not too high
             {
@@ -98,7 +98,7 @@ public class Horse extends Piece
             }
         }
         // Check for moves to the left
-        if(i > 1)
+        if(i > 1 && !board.containsPiece(i - 1, j))
         {
             if(j > 0) // not too high
             {
@@ -110,7 +110,7 @@ public class Horse extends Piece
             }
         }
         // Check for moves down
-        if(j < 8)
+        if(j < 8 && !board.containsPiece(i, j + 1))
         {
             if(i > 0) // not too far left
             {
@@ -122,7 +122,7 @@ public class Horse extends Piece
             }
         }
         // Check for moves up
-        if(j > 1)
+        if(j > 1 && !board.containsPiece(i, j - 1))
         {
             if(i > 0) // not too far left
             {
