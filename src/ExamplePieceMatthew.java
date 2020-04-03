@@ -95,4 +95,9 @@ public class ExamplePieceMatthew extends Piece
 
         center = inputCenter;
     }
+
+    @Override
+    public void findTargetingSquares() {
+
+    }
 }
