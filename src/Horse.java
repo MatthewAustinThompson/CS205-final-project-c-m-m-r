@@ -14,11 +14,11 @@ public class Horse extends Piece
         team = inputTeam;
         if(team == Team.Player)
         {
-            symbolColor = Color.CYAN;
+            symbolColor = new Color(0.1f, 0.4f, 0.8f);
         }
         else
         {
-            symbolColor = Color.RED;
+            symbolColor = new Color(0.8f, 0.1f, 0.4f);
         }
         fillColor = Color.WHITE;
         pieceType = PieceType.Horse;
@@ -46,10 +46,10 @@ public class Horse extends Piece
         g2d.fill(outline);
 
         // Write the word "Horse"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 24));
+        g2d.setFont(new Font("Courier", Font.PLAIN, 18));
         g2d.setColor(symbolColor);
         int pixelLength = g2d.getFontMetrics().stringWidth("Horse"); // the number of pixels the string is long
-        g2d.drawString("Horse", (int)this.center.x - pixelLength/2, (int)center.y);
+        g2d.drawString("Horse", (int)this.center.x - pixelLength/2, (int)center.y + 5);
     }
 
     public void initializeOctagon()
