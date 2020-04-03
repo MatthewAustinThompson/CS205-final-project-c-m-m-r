@@ -61,6 +61,10 @@ public class GameManager
     {
         return height;
     }
+    public Board getBoard()
+    {
+        return board;
+    }
 
     // Setters
     public void setWidth(int inputWidth)
