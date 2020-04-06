@@ -37,11 +37,19 @@ public class GameManager
         board = new Board(this);
 
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(4,5));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(4,6));
+        //this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(4,6));
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(2,1));
+        //this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(2,1));
+        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(0,6));
         this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(2,6));
+        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(4,6));
+        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(6,6));
+        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(8,6));
+        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(0,3));
         this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(2,3));
+        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(4,3));
+        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(6,3));
+        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(8,3));
         this.updatePieces();
     }
 

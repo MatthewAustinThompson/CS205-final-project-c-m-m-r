@@ -83,7 +83,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves down
-        if(j < 9 && !board.containsPiece(i, j + 1))
+        if(j < 9 && !board.containsPiece(i, j + 1) && team == Team.Computer)
         {
             if(i > 0) // not too far left
             {
@@ -95,7 +95,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves up
-        if(j > 1 && !board.containsPiece(i, j - 1))
+        if(j > 1 && !board.containsPiece(i, j - 1) && team == Team.Player)
         {
             if(i > 0) // not too far left
             {
