@@ -57,4 +57,23 @@ public class BoardPoint
             y = inputY;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this){
+            return true;
+        }
+        if (!(o instanceof BoardPoint)) {
+            return false;
+        }
+
+        BoardPoint otherBoardPoint = (BoardPoint) o;
+
+        if(x == otherBoardPoint.getX() && y == otherBoardPoint.getY()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
