@@ -40,6 +40,8 @@ public class GameManager
         this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(4,6));
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
         this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(2,1));
+        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(2,6));
+        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(2,3));
         this.updatePieces();
     }
 
@@ -106,6 +108,9 @@ public class GameManager
         {
             case Horse:
                 p = new Horse(this, center, location, team);
+                break;
+            case Solider:
+                p = new Soldier(this, center, location, team);
                 break;
             default:
                 return;
