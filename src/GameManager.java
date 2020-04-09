@@ -14,6 +14,9 @@ public class GameManager
     // When the player clicks on a Piece
     private Piece selectedPiece;
 
+    // If a Piece has been captured
+    private Piece toBeRemoved;
+
     public GameManager(int inputWidth, int inputHeight)
     {
         width = inputWidth;
@@ -22,6 +25,7 @@ public class GameManager
         pieces = new ArrayList<Piece>();
 
         selectedPiece = null;
+        toBeRemoved = null;
         /*pieces.add(new ExamplePieceMarcus(this,
                 new Point(width/2, height/2), new BoardPoint(0,0)));
 
@@ -61,6 +65,11 @@ public class GameManager
         for(Piece p : pieces)
         {
             p.tick();
+        }
+        if(toBeRemoved != null)
+        {
+            pieces.remove(toBeRemoved);
+            toBeRemoved = null;
         }
     }
 
@@ -147,8 +156,21 @@ public class GameManager
     // ================================
     public void reactToClick(int mx, int my)
     {
+        // If a Piece is selected, either move it or unselect it
         if(selectedPiece != null)
         {
+            BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
+            if(bp != null)
+            {
+                // If we are capturing, remove the piece getting captured
+                if(board.containsPiece(bp))
+                {
+                    toBeRemoved = board.getPieceAt(bp);
+                }
+                // Now do the move
+                board.move(selectedPiece, bp);
+                this.updatePieces(); // the pieces need to update where they can move
+            }
             selectedPiece = null;
             board.unhighlightAll();
             return;
