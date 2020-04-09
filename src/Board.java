@@ -337,6 +337,8 @@ public class Board
 
         // Move the Piece
         spaces[bp.getX()][bp.getY()] = p;
+        p.setLocation(bp);
+        p.setCenter(boardPointToPoint(bp));
 
         // Set the old space to empty
         spaces[oldBP.getX()][oldBP.getY()] = null;
