@@ -320,4 +320,26 @@ public class Board
         return null;
     }
 
+
+    // ==================================================
+    //
+    //                 Moving Pieces
+    //
+    // ==================================================
+    public boolean move(Piece p, BoardPoint bp)
+    {
+        if(!p.getLegalMoveSquares().contains(bp))
+        {
+            return false;
+        }
+        // Get the Piece's previous location
+        BoardPoint oldBP = p.getLocation();
+
+        // Move the Piece
+        spaces[bp.getX()][bp.getY()] = p;
+
+        // Set the old space to empty
+        spaces[oldBP.getX()][oldBP.getY()] = null;
+        return true;
+    }
 }
