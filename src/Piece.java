@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
@@ -117,6 +118,11 @@ public abstract class Piece
     // Setters
     public void setCenter(Point inputCenter)
     {
+        // When the Piece moves, the paths have to get translated
+        AffineTransform tx = new AffineTransform();
+        tx.translate(inputCenter.x - center.x, inputCenter.y - center.y);
+        outline = (Path2D.Double) tx.createTransformedShape(outline);
+
         center = inputCenter;
     }
     public void setLocation(BoardPoint inputLocation)
@@ -162,7 +168,6 @@ public abstract class Piece
             }
         }
     }
-
 
     // for clicking
     public boolean containsClick(int mx, int my)
