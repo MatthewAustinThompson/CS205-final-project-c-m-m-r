@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -64,11 +68,22 @@ public class Elephant extends Piece
         g2d.setColor(fillColor);
         g2d.fill(outline);
 
-        // Write the word "Elephant"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 9));
-        g2d.setColor(symbolColor);
-        int pixelLength = g2d.getFontMetrics().stringWidth("Elephant"); // the number of pixels the string is long
-        g2d.drawString("Elephant", (int)this.center.x - pixelLength/2, (int)center.y + 5);
+
+        BufferedImage img = null;
+        try {
+            //Create BufferedImage object by reading from file
+            if(this.getTeam()==Team.Computer){
+            img = ImageIO.read(new File("./src/ElephantRed.png"));
+            }
+            else {
+                img = ImageIO.read(new File("./src/ElephantGreen.png"));
+            }
+
+        } catch (IOException e) {
+            System.out.println("no img found");
+        }
+        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
+        g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 20, null);
     }
 
 
@@ -150,7 +165,7 @@ public class Elephant extends Piece
 
             if (isValidElephantPathSquare(m2Square2)){
                 yOut = -1;
-                m3Square2 = new BoardPoint(m2Square1.getX()+xOut,m2Square1.getY() + yOut );
+                m3Square2 = new BoardPoint(m2Square2.getX()+xOut,m2Square2.getY() + yOut );
 
                 if (!m3Square2.getWasClipped() && m3Square2.existsOnBoard()) {
                     targetingSquares.add(new BoardPoint(m3Square2.getX(),m3Square2.getY()));
