@@ -290,4 +290,58 @@ public class Board
         }
         return otherPiece.getTeam() != p.getTeam();
     }
+
+    // Returns Euclidean distance between a boardPoint and two coordinates
+    // Used for seeing if a click is close to a point
+    public double distance(BoardPoint bp, int mx, int my)
+    {
+        Point p = this.boardPointToPoint(bp);
+        return Math.sqrt((p.x - mx)*(p.x - mx) + (p.y - my)*(p.y - my));
+    }
+
+
+    // Given that (mx, my) is the location of a user click, (and assume that
+    // p is the highlighted Piece), if the click is on a space that p can move
+    // to, this returns the Board coordinates of the space. Otherwise, returns null.
+    public BoardPoint clickIsOnLegalMove(int mx, int my, Piece p)
+    {
+        for(BoardPoint bp : p.getLegalMoveSquares())
+        {
+            // If there is a Piece there to capture, is the click on the octagon?
+            if(this.containsPiece(bp) && this.getPieceAt(bp).containsClick(mx, my))
+            {
+                return bp;
+            }
+            else if(distance(bp, mx, my) < pointRadius)
+            {
+                return bp;
+            }
+        }
+        return null;
+    }
+
+
+    // ==================================================
+    //
+    //                 Moving Pieces
+    //
+    // ==================================================
+    public boolean move(Piece p, BoardPoint bp)
+    {
+        if(!p.getLegalMoveSquares().contains(bp))
+        {
+            return false;
+        }
+        // Get the Piece's previous location
+        BoardPoint oldBP = p.getLocation();
+
+        // Move the Piece
+        spaces[bp.getX()][bp.getY()] = p;
+        p.setLocation(bp);
+        p.setCenter(boardPointToPoint(bp));
+
+        // Set the old space to empty
+        spaces[oldBP.getX()][oldBP.getY()] = null;
+        return true;
+    }
 }
