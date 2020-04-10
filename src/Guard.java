@@ -61,7 +61,7 @@ public class Guard extends Piece
         // Player team logic
         if(team == Team.Player){
             // Check for moves to the right
-            if(i < 5 && !board.containsPiece(i + 1, j))
+            if(i < 5 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
             {
                 if(j > 6) // not too high
                 {
@@ -79,7 +79,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves to the left
-            if(i > 3 && !board.containsPiece(i - 1, j))
+            if(i > 3 && (!board.containsPiece(i - 1, j) || board.getPieceAt(i - 1, j).getTeam() != team))
             {
                 if(j > 6) // not too high
                 {
@@ -97,7 +97,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves down
-            if(j < 9 && !board.containsPiece(i, j + 1))
+            if(j < 9 && (!board.containsPiece(i, j + 1) || board.getPieceAt(i , j + 1).getTeam() != team))
             {
                 if(i > 6) // not too far left
                 {
@@ -109,7 +109,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves up
-            if(j > 7 && !board.containsPiece(i, j - 1))
+            if(j > 7 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team))
             {
                 if(i > 2) // not too far left
                 {
@@ -121,14 +121,14 @@ public class Guard extends Piece
                 }
             }
             // check for center spot in the "castle"
-            if(!board.containsPiece(4, 8)){
+            if(!board.containsPiece(4, 8) || board.getPieceAt(4, 8).getTeam() != team){
                 targetingSquares.add(new BoardPoint(4, 8));
             }
 
         } else if(team == Team.Computer){
 
             // Check for moves to the right
-            if(i < 5 && !board.containsPiece(i + 1, j))
+            if(i < 5 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
             {
                 if(j > 0) // not too high
                 {
@@ -146,7 +146,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves to the left
-            if(i > 3 && !board.containsPiece(i - 1, j))
+            if(i > 3 && (!board.containsPiece(i - 1, j) || board.getPieceAt(i - 1, j).getTeam() != team))
             {
                 if(j > 0) // not too high
                 {
@@ -164,7 +164,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves down
-            if(j < 2 && !board.containsPiece(i, j + 1))
+            if(j < 2 && (!board.containsPiece(i, j + 1) || board.getPieceAt(i, j + 1).getTeam() != team))
             {
                 if(i > 3) // not too far left
                 {
@@ -176,7 +176,7 @@ public class Guard extends Piece
                 }
             }
             // Check for moves up
-            if(j > 0 && !board.containsPiece(i, j - 1))
+            if(j > 0 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team))
             {
                 if(i > 3) // not too far left
                 {
@@ -188,7 +188,7 @@ public class Guard extends Piece
                 }
             }
             // check for center spot in the "castle"
-            if(!board.containsPiece(4, 1)){
+            if(!board.containsPiece(4, 1) || board.getPieceAt(4, 1).getTeam() != team){
                 targetingSquares.add(new BoardPoint(4, 1));
             }
         }
