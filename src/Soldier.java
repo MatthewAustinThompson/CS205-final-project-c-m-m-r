@@ -59,7 +59,7 @@ public class Soldier extends Piece
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        if(i < 8 && !board.containsPiece(i + 1, j))
+        if(i < 8 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
         {
             if(j > 0) // not too high
             {
@@ -71,7 +71,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves to the left
-        if(i > 1 && !board.containsPiece(i - 1, j))
+        if(i > 1 && (!board.containsPiece(i - 1, j)  || board.getPieceAt(i - 1, j).getTeam() != team))
         {
             if(j > 0) // not too high
             {
@@ -83,7 +83,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves down
-        if(j < 9 && !board.containsPiece(i, j + 1) && team == Team.Computer)
+        if((j < 9 && !board.containsPiece(i, j + 1)  || board.getPieceAt(i, j + 1).getTeam() != team) && team == Team.Computer)
         {
             if(i > 0) // not too far left
             {
@@ -95,7 +95,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves up
-        if(j > 1 && !board.containsPiece(i, j - 1) && team == Team.Player)
+        if((j > 1 && !board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team) && team == Team.Player)
         {
             if(i > 0) // not too far left
             {
