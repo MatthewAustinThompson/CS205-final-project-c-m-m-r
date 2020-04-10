@@ -67,7 +67,7 @@ public class Elephant extends Piece
         g2d.fill(outline);
 
         // Write the word "Elephant"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 11));
+        g2d.setFont(new Font("Courier", Font.PLAIN, 9));
         g2d.setColor(symbolColor);
         int pixelLength = g2d.getFontMetrics().stringWidth("Elephant"); // the number of pixels the string is long
         g2d.drawString("Elephant", (int)this.center.x - pixelLength/2, (int)center.y + 5);
