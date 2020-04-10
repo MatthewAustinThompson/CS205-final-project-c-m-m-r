@@ -5,6 +5,7 @@
 public class BoardPoint
 {
     private int x, y;
+    private boolean wasClipped = false;
 
     public BoardPoint(int inputX, int inputY)
     {
@@ -28,11 +29,13 @@ public class BoardPoint
         if(inputX < 0)
         {
             System.out.println("Warning: x clipped to 0.");
+            wasClipped = true;
             x = 0;
         }
         else if(inputX > 8)
         {
             System.out.println("Warning: x clipped to 8");
+            wasClipped = true;
             x = 8;
         }
         else
@@ -45,17 +48,38 @@ public class BoardPoint
         if(inputY < 0)
         {
             System.out.println("Warning: y clipped to 0.");
+            wasClipped = true;
             y = 0;
         }
         else if(inputY > 9)
         {
             System.out.println("Warning: y clipped to 9");
+            wasClipped = true;
             y = 8;
         }
         else
         {
             y = inputY;
         }
+    }
+
+    //Added function to check if the piece is on the board.
+    //Must have positive x,y values, x: 0-8, y:0-9
+    public boolean existsOnBoard() {
+        if (this.getX() < 0 || this.getY() < 0 ) {
+            return false;
+        }
+
+        if (this.getX() > 8 || this.getY() > 9) {
+            return false;
+        }
+
+        return true;
+    }
+
+    //Were the points given the piece illegal
+    public boolean getWasClipped() {
+        return this.wasClipped;
     }
 
     @Override

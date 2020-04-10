@@ -42,6 +42,7 @@ public class GameManager
 
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(4,5));
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
+
         this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(0,6));
         this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(2,6));
         this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(4,6));
@@ -52,10 +53,20 @@ public class GameManager
         this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(4,3));
         this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(6,3));
         this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(8,3));
+
         this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
         this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
         this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
         this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
+
+        this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,9));
+        this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,0));
+
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
+
         this.updatePieces();
     }
 
@@ -134,6 +145,15 @@ public class GameManager
             case Solider:
                 p = new Soldier(this, center, location, team);
                 break;
+
+            case General:
+                p = new General(this, center, location, team);
+                break;
+
+            case Elephant:
+                p = new Elephant(this, center, location, team);
+                break;
+
             default:
                 return;
         }
