@@ -31,6 +31,7 @@ public class Elephant extends Piece
     BoardPoint m3Square1;
     BoardPoint m3Square2;
 
+
     public Elephant(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
     {
         super(inputManager, inputCenter, inputLocation);
@@ -48,6 +49,7 @@ public class Elephant extends Piece
         this.initializeOctagon();
     }
 
+
     @Override
     public void tick()
     {
@@ -60,6 +62,7 @@ public class Elephant extends Piece
     //              Drawing the Elephant
     //
     // =============================================
+
 
     @Override
     public void render(Graphics2D g2d)

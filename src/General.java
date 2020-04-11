@@ -19,9 +19,10 @@ public class General extends Piece
             symbolColor = new Color(0.8f, 0.1f, 0.4f);
         }
         fillColor = Color.WHITE;
-        pieceType = PieceType.Solider;
+        pieceType = PieceType.Soldier;
         this.initializeOctagon();
     }
+
 
     @Override
     public void tick()
@@ -36,6 +37,7 @@ public class General extends Piece
     //
     // =============================================
 
+
     @Override
     public void render(Graphics2D g2d)
     {
@@ -49,7 +51,6 @@ public class General extends Piece
         int pixelLength = g2d.getFontMetrics().stringWidth("General"); // the number of pixels the string is long
         g2d.drawString("General", (int)this.center.x - pixelLength/2, (int)center.y + 5);
     }
-
 
 
     @Override

@@ -6,5 +6,5 @@ public enum PieceType
     Elephant(),
     Chariot(),
     Cannon(),
-    Solider()
+    Soldier()
 }

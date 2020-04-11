@@ -2,11 +2,11 @@ import java.awt.*;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
-public class Soldier extends Piece
+public class Chariot extends Piece
 {
 
 
-    public Soldier(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
+    public Chariot(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
     {
         super(inputManager, inputCenter, inputLocation);
         team = inputTeam;
@@ -19,7 +19,7 @@ public class Soldier extends Piece
             symbolColor = new Color(0.8f, 0.1f, 0.4f);
         }
         fillColor = Color.WHITE;
-        pieceType = PieceType.Soldier;
+        pieceType = PieceType.Chariot;
         this.initializeOctagon();
     }
 
@@ -33,7 +33,7 @@ public class Soldier extends Piece
 
     // =============================================
     //
-    //              Drawing the Soldier
+    //              Drawing the Chariot
     //
     // =============================================
 
@@ -45,11 +45,11 @@ public class Soldier extends Piece
         g2d.setColor(fillColor);
         g2d.fill(outline);
 
-        // Write the word "Soldier"
+        // Write the word "Chariot"
         g2d.setFont(new Font("Courier", Font.PLAIN, 10));
         g2d.setColor(symbolColor);
-        int pixelLength = g2d.getFontMetrics().stringWidth("Soldier"); // the number of pixels the string is long
-        g2d.drawString("Soldier", (int)this.center.x - pixelLength/2, (int)center.y + 5);
+        int pixelLength = g2d.getFontMetrics().stringWidth("Chariot"); // the number of pixels the string is long
+        g2d.drawString("Chariot", (int)this.center.x - pixelLength/2, (int)center.y + 5);
     }
 
 
@@ -59,6 +59,7 @@ public class Soldier extends Piece
         targetingSquares = new ArrayList<BoardPoint>();
         int i = location.getX();
         int j = location.getY();
+
         // Check for moves to the right
         if(i < 8 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
         {

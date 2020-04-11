@@ -43,16 +43,16 @@ public class GameManager
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(4,5));
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
 
-        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(0,6));
-        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(2,6));
-        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(4,6));
-        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(6,6));
-        this.addPiece(PieceType.Solider, Team.Player, new BoardPoint(8,6));
-        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(0,3));
-        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(2,3));
-        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(4,3));
-        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(6,3));
-        this.addPiece(PieceType.Solider, Team.Computer, new BoardPoint(8,3));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(0,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(2,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(4,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(6,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(8,3));
 
         this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
         this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
@@ -66,6 +66,11 @@ public class GameManager
         this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
         this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
         this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
+
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
 
         this.updatePieces();
     }
@@ -142,7 +147,7 @@ public class GameManager
             case Horse:
                 p = new Horse(this, center, location, team);
                 break;
-            case Solider:
+            case Soldier:
                 p = new Soldier(this, center, location, team);
                 break;
 
@@ -152,6 +157,10 @@ public class GameManager
 
             case Elephant:
                 p = new Elephant(this, center, location, team);
+                break;
+
+            case Chariot:
+                p = new Chariot(this, center, location, team);
                 break;
 
             default:

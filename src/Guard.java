@@ -19,9 +19,10 @@ public class Guard extends Piece
             symbolColor = new Color(0.8f, 0.1f, 0.4f);
         }
         fillColor = Color.WHITE;
-        pieceType = PieceType.Solider;
+        pieceType = PieceType.Soldier;
         this.initializeOctagon();
     }
+
 
     @Override
     public void tick()
@@ -36,6 +37,7 @@ public class Guard extends Piece
     //
     // =============================================
 
+
     @Override
     public void render(Graphics2D g2d)
     {
@@ -43,13 +45,12 @@ public class Guard extends Piece
         g2d.setColor(fillColor);
         g2d.fill(outline);
 
-        // Write the word "Soldier"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 14));
+        // Write the word "Guard"
+        g2d.setFont(new Font("Courier", Font.PLAIN, 13));
         g2d.setColor(symbolColor);
         int pixelLength = g2d.getFontMetrics().stringWidth("Guard"); // the number of pixels the string is long
         g2d.drawString("Guard", (int)this.center.x - pixelLength/2, (int)center.y + 5);
     }
-
 
 
     @Override

@@ -23,6 +23,7 @@ public class Horse extends Piece
         this.initializeOctagon();
     }
 
+
     @Override
     public void tick()
     {
@@ -36,6 +37,7 @@ public class Horse extends Piece
     //
     // =============================================
 
+
     @Override
     public void render(Graphics2D g2d)
     {
@@ -44,12 +46,11 @@ public class Horse extends Piece
         g2d.fill(outline);
 
         // Write the word "Horse"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 18));
+        g2d.setFont(new Font("Courier", Font.PLAIN, 14));
         g2d.setColor(symbolColor);
         int pixelLength = g2d.getFontMetrics().stringWidth("Horse"); // the number of pixels the string is long
         g2d.drawString("Horse", (int)this.center.x - pixelLength/2, (int)center.y + 5);
     }
-
 
 
     @Override
