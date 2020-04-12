@@ -12,13 +12,13 @@ public class Board
     private Piece[][] spaces;  // store a Piece, or null at each
     private boolean[][] highlighted; // if a space is highlighted
 
-
     // Variables for drawing
     private int distanceBetweenPoints;
     private int lineWidth;
     private int pointRadius;
     private Color defaultColor;
     private Color highlightedColor;
+
 
     public Board(GameManager inputManager)
     {
@@ -42,7 +42,6 @@ public class Board
     {
         spaces = new Piece[9][10]; // 9 columns, each column has 10 spaces
     }
-
     public void initializeHighlighted()
     {
         highlighted = new boolean[9][10]; // 9 columns, each column has 10 spaces
@@ -54,6 +53,7 @@ public class Board
             }
         }
     }
+
 
     // ===============================
     //
@@ -111,6 +111,7 @@ public class Board
         }
     }
 
+
     void drawHighlights(Graphics2D g2d)
     {
         int x = distanceBetweenPoints/2;
@@ -133,16 +134,21 @@ public class Board
         }
     }
 
+
     // Draws a rectangle connecting x1 and x2 at height y. x1 must be less than x2.
     public void drawHorizontalSegment(Graphics2D g2d, int x1, int x2, int y)
     {
         g2d.fillRect(x1, y - lineWidth/2, x2 - x1, lineWidth);
     }
+
+
     // Must have y1 < y2
     public void drawVerticalSegment(Graphics2D g2d, int x, int y1, int y2)
     {
         g2d.fillRect(x - lineWidth/2, y1 , lineWidth, y2 - y1);
     }
+
+
     // Draws a segment at a 45 degree angle. Must have x1 < x2.
     public void drawDiagonalSegment(Graphics2D g2d, int x1, int y1, int x2, int y2)
     {
@@ -168,6 +174,8 @@ public class Board
         }
         g2d.fill(rect);
     }
+
+
     public void drawPoint(Graphics2D g2d, int x, int y)
     {
         g2d.fillOval(x - pointRadius, y - pointRadius, 2*pointRadius, 2*pointRadius);
@@ -206,6 +214,7 @@ public class Board
         }
     }
 
+
     public void highlightLegalMoves(Piece p)
     {
         ArrayList<BoardPoint> bps = p.getLegalMoveSquares();
@@ -214,6 +223,7 @@ public class Board
             this.highlightPoint(bp);
         }
     }
+
 
     // Getters
     public Piece[][] getSpaces()
@@ -233,12 +243,12 @@ public class Board
         return distanceBetweenPoints;
     }
 
+
     // ==================================================
     //
     //       Getting information about the board
     //
     // ==================================================
-
     // Check if a space is empty
     public boolean containsPiece(int i, int j)
     {
@@ -253,6 +263,7 @@ public class Board
     {
         return containsPiece(bp.getX(), bp.getY());
     }
+
 
     // Return the Piece at a given space
     public Piece getPieceAt(int i, int j)
@@ -269,6 +280,7 @@ public class Board
         return getPieceAt(bp.getX(), bp.getY());
     }
 
+
     // Check if a square has a teammate relative to the given Piece
     public boolean containsTeammate(Piece p, BoardPoint bp)
     {
@@ -280,6 +292,7 @@ public class Board
         return otherPiece.getTeam() == p.getTeam();
     }
 
+
     // Check if a square has an enemy relative to the given Piece
     public boolean containsEnemy(Piece p, BoardPoint bp)
     {
@@ -290,6 +303,7 @@ public class Board
         }
         return otherPiece.getTeam() != p.getTeam();
     }
+
 
     // Returns Euclidean distance between a boardPoint and two coordinates
     // Used for seeing if a click is close to a point

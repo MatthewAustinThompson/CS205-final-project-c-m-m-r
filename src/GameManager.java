@@ -150,19 +150,15 @@ public class GameManager
             case Soldier:
                 p = new Soldier(this, center, location, team);
                 break;
-
             case General:
                 p = new General(this, center, location, team);
                 break;
-
             case Elephant:
                 p = new Elephant(this, center, location, team);
                 break;
-
             case Chariot:
                 p = new Chariot(this, center, location, team);
                 break;
-
             default:
                 return;
         }

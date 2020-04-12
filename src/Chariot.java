@@ -61,75 +61,261 @@ public class Chariot extends Piece
         int j = location.getY();
 
         // Check for moves to the right
-        if(i < 8 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
+        if(i < 8)
         {
-            if(j > 0) // not too high
+            for(int index = i+1; index <= 8; index++)
             {
-                targetingSquares.add(new BoardPoint(i + 1, j));
-            }
-            if(j < 9) // not too low
-            {
-                targetingSquares.add(new BoardPoint(i + 1, j));
+                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                {
+                    targetingSquares.add(new BoardPoint(index, j));
+                    index = 8;
+                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                {
+                    index = 8;
+                } else
+                {
+                    targetingSquares.add(new BoardPoint(index, j));
+                }
             }
         }
+
         // Check for moves to the left
-        if(i > 1 && (!board.containsPiece(i - 1, j)  || board.getPieceAt(i - 1, j).getTeam() != team))
+        if(i > 0)
         {
-            if(j > 0) // not too high
+            for(int index = i-1; index >= 0; index--)
             {
-                targetingSquares.add(new BoardPoint(i - 1, j));
-            }
-            if(j < 9) // not too low
-            {
-                targetingSquares.add(new BoardPoint(i - 1, j));
+                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                {
+                    targetingSquares.add(new BoardPoint(index, j));
+                    index = 0;
+                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                {
+                    index = 0;
+                } else
+                {
+                    targetingSquares.add(new BoardPoint(index, j));
+                }
             }
         }
+
         // Check for moves down
-        if(j < 9 && (!board.containsPiece(i, j + 1)  || board.getPieceAt(i, j + 1).getTeam() != team) && team == Team.Computer)
+        if(j < 9)
         {
-            if(i > 0) // not too far left
+            for(int index = j+1; index <= 9; index++)
             {
-                targetingSquares.add(new BoardPoint(i, j + 1));
-            }
-            if(i < 8) // not too far right
-            {
-                targetingSquares.add(new BoardPoint(i, j + 1));
+                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                {
+                    targetingSquares.add(new BoardPoint(i, index));
+                    index = 9;
+                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                {
+                    index = 9;
+                } else
+                {
+                    targetingSquares.add(new BoardPoint(i, index));
+                }
             }
         }
+
         // Check for moves up
-        if(j >= 1 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team) && team == Team.Player)
+        if(j > 0)
         {
-            if(i > 0) // not too far left
+            for(int index = j-1; index >= 0; index--)
             {
-                targetingSquares.add(new BoardPoint(i, j - 1));
+                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                {
+                    targetingSquares.add(new BoardPoint(i, index));
+                    index = 0;
+                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                {
+                    index = 0;
+                } else
+                {
+                    targetingSquares.add(new BoardPoint(i, index));
+                }
             }
-            if(i < 8) // not too far right
+        }
+
+        // Palace cases for blue side
+        // Chariot in bottom left
+        if(i == 3 && j == 9)
+        {
+            if(board.containsPiece(4, 8))
             {
-                targetingSquares.add(new BoardPoint(i, j - 1));
+                if(board.containsEnemy(board.getPieceAt(3,9), new BoardPoint(4,8)))
+                {
+                    targetingSquares.add(new BoardPoint(4, 8));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(3,9), new BoardPoint(5,7)))
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+                targetingSquares.add(new BoardPoint(5, 7));
             }
         }
-        // special cases
-        if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && (!board.containsPiece(4, 1) || board.getPieceAt(4, 1).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(4, 1));
+        // Chariot in bottom right
+        if(i == 5 && j == 9)
+        {
+            if(board.containsPiece(4, 8))
+            {
+                if (board.containsEnemy(board.getPieceAt(5, 9), new BoardPoint(4, 8))) {
+                    targetingSquares.add(new BoardPoint(4, 8));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(5,9), new BoardPoint(3,7)))
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+                targetingSquares.add(new BoardPoint(3, 7));
+            }
         }
-        if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && (!board.containsPiece(4, 8) || board.getPieceAt(4, 8).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(4, 8));
+        // Chariot in top left
+        if(i == 3 && j == 7)
+        {
+            if(board.containsPiece(4, 8))
+            {
+                if (board.containsEnemy(board.getPieceAt(3, 7), new BoardPoint(4, 8))) {
+                    targetingSquares.add(new BoardPoint(4, 8));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(3,7), new BoardPoint(5,9)))
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+                targetingSquares.add(new BoardPoint(5, 9));
+            }
         }
-        if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && (!board.containsPiece(3, 9) || board.getPieceAt(3, 9).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(3, 9));
+        // Chariot in top right
+        if(i == 5 && j == 7)
+        {
+            if(board.containsPiece(4, 8))
+            {
+                if (board.containsEnemy(board.getPieceAt(5, 7), new BoardPoint(4, 8))) {
+                    targetingSquares.add(new BoardPoint(4, 8));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(5,7), new BoardPoint(3,9)))
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 8));
+                targetingSquares.add(new BoardPoint(3, 9));
+            }
         }
-        if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && (!board.containsPiece(5, 9) || board.getPieceAt(5, 9).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(5, 9));
+        // Chariot in center
+        if(i == 4 && j == 8)
+        {
+            if(!board.containsPiece(3, 9) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(3, 9)))
+            {
+                targetingSquares.add(new BoardPoint(3, 9));
+            }
+            if(!board.containsPiece(5, 9) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(5, 9)))
+            {
+                targetingSquares.add(new BoardPoint(5, 9));
+            }
+            if(!board.containsPiece(3, 7) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(3, 7)))
+            {
+                targetingSquares.add(new BoardPoint(3, 7));
+            }
+            if(!board.containsPiece(5, 7) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(5, 7)))
+            {
+                targetingSquares.add(new BoardPoint(5, 7));
+            }
         }
-        if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && (!board.containsPiece(3, 0) || board.getPieceAt(3, 0).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(3, 0));
+
+        // Palace cases for red side
+        // Chariot in top left
+        if(i == 3 && j == 0)
+        {
+            if(board.containsPiece(4, 1))
+            {
+                if(board.containsEnemy(board.getPieceAt(3,0), new BoardPoint(4,1)))
+                {
+                    targetingSquares.add(new BoardPoint(4, 1));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(3,0), new BoardPoint(5,2)))
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+                targetingSquares.add(new BoardPoint(5, 2));
+            }
         }
-        if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && (!board.containsPiece(5, 0) || board.getPieceAt(5, 0).getTeam() != team)){
-            targetingSquares.add(new BoardPoint(5, 0));
+        // Chariot in top right
+        if(i == 5 && j == 0)
+        {
+            if(board.containsPiece(4, 1))
+            {
+                if (board.containsEnemy(board.getPieceAt(5, 0), new BoardPoint(4, 1))) {
+                    targetingSquares.add(new BoardPoint(4, 1));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(5,0), new BoardPoint(3,2)))
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+                targetingSquares.add(new BoardPoint(3, 2));
+            }
+        }
+        // Chariot in bottom left
+        if(i == 3 && j == 2)
+        {
+            if(board.containsPiece(4, 1))
+            {
+                if (board.containsEnemy(board.getPieceAt(3, 2), new BoardPoint(4, 1))) {
+                    targetingSquares.add(new BoardPoint(4, 1));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(3,2), new BoardPoint(5,0)))
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+                targetingSquares.add(new BoardPoint(5, 0));
+            }
+        }
+        // Chariot in bottom right
+        if(i == 5 && j == 2)
+        {
+            if(board.containsPiece(4, 1))
+            {
+                if (board.containsEnemy(board.getPieceAt(5, 2), new BoardPoint(4, 1))) {
+                    targetingSquares.add(new BoardPoint(4, 1));
+                }
+            } else if(board.containsTeammate(board.getPieceAt(5,2), new BoardPoint(3,0)))
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+            } else
+            {
+                targetingSquares.add(new BoardPoint(4, 1));
+                targetingSquares.add(new BoardPoint(3, 0));
+            }
+        }
+        // Chariot in center
+        if(i == 4 && j == 1)
+        {
+            if(!board.containsPiece(3, 0) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(3, 0)))
+            {
+                targetingSquares.add(new BoardPoint(3, 0));
+            }
+            if(!board.containsPiece(5, 0) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(5, 0)))
+            {
+                targetingSquares.add(new BoardPoint(5, 0));
+            }
+            if(!board.containsPiece(3, 2) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(3, 2)))
+            {
+                targetingSquares.add(new BoardPoint(3, 2));
+            }
+            if(!board.containsPiece(5, 2) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(5, 2)))
+            {
+                targetingSquares.add(new BoardPoint(5, 2));
+            }
         }
     }
 }
