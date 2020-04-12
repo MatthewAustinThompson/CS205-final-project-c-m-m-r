@@ -17,6 +17,9 @@ public class GameManager
     // If a Piece has been captured
     private Piece toBeRemoved;
 
+    // If all Pieces need to update their moves
+    private boolean needsToUpdate;
+
     public GameManager(int inputWidth, int inputHeight)
     {
         width = inputWidth;
@@ -26,6 +29,7 @@ public class GameManager
 
         selectedPiece = null;
         toBeRemoved = null;
+        needsToUpdate = false;
         /*pieces.add(new ExamplePieceMarcus(this,
                 new Point(width/2, height/2), new BoardPoint(0,0)));
 
@@ -91,6 +95,11 @@ public class GameManager
         {
             pieces.remove(toBeRemoved);
             toBeRemoved = null;
+        }
+        if(needsToUpdate)
+        {
+            updatePieces();
+            needsToUpdate = false;
         }
     }
 
@@ -202,7 +211,7 @@ public class GameManager
                 }
                 // Now do the move
                 board.move(selectedPiece, bp);
-                this.updatePieces(); // the pieces need to update where they can move
+                needsToUpdate = true; // the pieces need to update where they can move
             }
             selectedPiece = null;
             board.unhighlightAll();
