@@ -63,6 +63,8 @@ public class Chariot extends Piece
         // Check for moves to the right
         if(i < 8)
         {
+            // Checks all spaces to the right of piece adding empty spaces to targetingSquares until reaches
+            // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = i+1; index <= 8; index++)
             {
                 if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
@@ -82,6 +84,8 @@ public class Chariot extends Piece
         // Check for moves to the left
         if(i > 0)
         {
+            // Checks all spaces to the left of piece adding empty spaces to targetingSquares until reaches
+            // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = i-1; index >= 0; index--)
             {
                 if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
@@ -101,6 +105,8 @@ public class Chariot extends Piece
         // Check for moves down
         if(j < 9)
         {
+            // Checks all spaces to below the piece adding empty spaces to targetingSquares until reaches
+            // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = j+1; index <= 9; index++)
             {
                 if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
@@ -120,6 +126,8 @@ public class Chariot extends Piece
         // Check for moves up
         if(j > 0)
         {
+            // Checks all spaces above the piece adding empty spaces to targetingSquares until reaches
+            // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = j-1; index >= 0; index--)
             {
                 if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
@@ -209,19 +217,23 @@ public class Chariot extends Piece
         // Chariot in center
         if(i == 4 && j == 8)
         {
-            if(!board.containsPiece(3, 9) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(3, 9)))
+            if(!board.containsPiece(3, 9) || board.containsEnemy(board.getPieceAt(4, 8),
+                                                                       new BoardPoint(3, 9)))
             {
                 targetingSquares.add(new BoardPoint(3, 9));
             }
-            if(!board.containsPiece(5, 9) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(5, 9)))
+            if(!board.containsPiece(5, 9) || board.containsEnemy(board.getPieceAt(4, 8),
+                                                                       new BoardPoint(5, 9)))
             {
                 targetingSquares.add(new BoardPoint(5, 9));
             }
-            if(!board.containsPiece(3, 7) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(3, 7)))
+            if(!board.containsPiece(3, 7) || board.containsEnemy(board.getPieceAt(4, 8),
+                                                                       new BoardPoint(3, 7)))
             {
                 targetingSquares.add(new BoardPoint(3, 7));
             }
-            if(!board.containsPiece(5, 7) || board.containsEnemy(board.getPieceAt(4, 8), new BoardPoint(5, 7)))
+            if(!board.containsPiece(5, 7) || board.containsEnemy(board.getPieceAt(4, 8),
+                                                                       new BoardPoint(5, 7)))
             {
                 targetingSquares.add(new BoardPoint(5, 7));
             }
@@ -300,19 +312,23 @@ public class Chariot extends Piece
         // Chariot in center
         if(i == 4 && j == 1)
         {
-            if(!board.containsPiece(3, 0) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(3, 0)))
+            if(!board.containsPiece(3, 0) || board.containsEnemy(board.getPieceAt(4, 1),
+                                                                       new BoardPoint(3, 0)))
             {
                 targetingSquares.add(new BoardPoint(3, 0));
             }
-            if(!board.containsPiece(5, 0) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(5, 0)))
+            if(!board.containsPiece(5, 0) || board.containsEnemy(board.getPieceAt(4, 1),
+                                                                       new BoardPoint(5, 0)))
             {
                 targetingSquares.add(new BoardPoint(5, 0));
             }
-            if(!board.containsPiece(3, 2) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(3, 2)))
+            if(!board.containsPiece(3, 2) || board.containsEnemy(board.getPieceAt(4, 1),
+                                                                       new BoardPoint(3, 2)))
             {
                 targetingSquares.add(new BoardPoint(3, 2));
             }
-            if(!board.containsPiece(5, 2) || board.containsEnemy(board.getPieceAt(4, 1), new BoardPoint(5, 2)))
+            if(!board.containsPiece(5, 2) || board.containsEnemy(board.getPieceAt(4, 1),
+                                                                       new BoardPoint(5, 2)))
             {
                 targetingSquares.add(new BoardPoint(5, 2));
             }
