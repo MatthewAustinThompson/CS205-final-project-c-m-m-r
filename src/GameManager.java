@@ -112,6 +112,10 @@ public class GameManager
             p.render(g2d);
         }
         board.drawHighlights(g2d);
+        if(selectedPiece != null)
+        {
+            selectedPiece.drawHighlight(g2d);
+        }
     }
 
 
@@ -213,6 +217,7 @@ public class GameManager
                 board.move(selectedPiece, bp);
                 needsToUpdate = true; // the pieces need to update where they can move
             }
+            selectedPiece.setIsHighlighted(false);
             selectedPiece = null;
             board.unhighlightAll();
             return;
@@ -224,11 +229,13 @@ public class GameManager
                 if(p.containsClick(mx, my))
                 {
                     selectedPiece = p;
+                    selectedPiece.setIsHighlighted(true);
                     board.highlightLegalMoves(p);
                     return;
                 }
             }
         }
+        selectedPiece.setIsHighlighted(false);
         selectedPiece = null;
         board.unhighlightAll();
     }

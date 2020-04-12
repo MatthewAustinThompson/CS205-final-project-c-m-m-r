@@ -46,6 +46,9 @@ public abstract class Piece
     // The octagon shape of the piece
     protected Path2D.Double outline;
 
+    // If this Piece has been selected by clicking on it
+    protected boolean isHighlighted;
+
     // Constructor
     public Piece(GameManager inputManager, Point inputCenter, BoardPoint inputLocation)
     {
@@ -55,11 +58,14 @@ public abstract class Piece
         location = inputLocation;
         targetingSquares = new ArrayList<BoardPoint>();
         legalMoveSquares = new ArrayList<BoardPoint>();
+        isHighlighted = false;
     }
 
     public abstract void tick();
 
     public abstract void render(Graphics2D g2d);
+
+    // Creates the octagonal outline of the Piece as a Path2D object
     public void initializeOctagon()
     {
         // Octagon geometry stuff
@@ -85,6 +91,17 @@ public abstract class Piece
         outline.lineTo(center.x - r2, center.y - r1);
         // End where you started
         outline.lineTo(center.x - r1, center.y - r2);
+    }
+
+    // Highlight the outline of the piece
+    public void drawHighlight(Graphics2D g2d)
+    {
+        if(this.isHighlighted)
+        {
+            g2d.setStroke(new BasicStroke(5));
+            g2d.setColor(Color.MAGENTA);
+            g2d.draw(this.outline);
+        }
     }
 
 
@@ -113,6 +130,10 @@ public abstract class Piece
     {
         return legalMoveSquares;
     }
+    public boolean getIsHighlighted()
+    {
+        return isHighlighted;
+    }
 
 
     // Setters
@@ -136,6 +157,10 @@ public abstract class Piece
     public void setPieceType(PieceType pt)
     {
         pieceType = pt;
+    }
+    public void setIsHighlighted(boolean input)
+    {
+        isHighlighted = input;
     }
 
     // ================================
