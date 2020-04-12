@@ -67,11 +67,11 @@ public class Chariot extends Piece
             // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = i+1; index <= 8; index++)
             {
-                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(index, j)))
                 {
                     targetingSquares.add(new BoardPoint(index, j));
                     index = 8;
-                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                } else if(board.containsTeammate(board.getPieceAt(i, j), new BoardPoint(index, j)))
                 {
                     index = 8;
                 } else
@@ -88,11 +88,11 @@ public class Chariot extends Piece
             // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = i-1; index >= 0; index--)
             {
-                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(index, j)))
                 {
                     targetingSquares.add(new BoardPoint(index, j));
                     index = 0;
-                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(index,j)))
+                } else if(board.containsTeammate(board.getPieceAt(i, j), new BoardPoint(index, j)))
                 {
                     index = 0;
                 } else
@@ -109,11 +109,11 @@ public class Chariot extends Piece
             // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = j+1; index <= 9; index++)
             {
-                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(i, index)))
                 {
                     targetingSquares.add(new BoardPoint(i, index));
                     index = 9;
-                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                } else if(board.containsTeammate(board.getPieceAt(i, j), new BoardPoint(i, index)))
                 {
                     index = 9;
                 } else
@@ -130,11 +130,11 @@ public class Chariot extends Piece
             // another piece. If enemy then adds to targetingSquares and stops loop, if teammate then stops loop
             for(int index = j-1; index >= 0; index--)
             {
-                if(board.containsEnemy(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(i, index)))
                 {
                     targetingSquares.add(new BoardPoint(i, index));
                     index = 0;
-                } else if(board.containsTeammate(board.getPieceAt(i,j), new BoardPoint(i,index)))
+                } else if(board.containsTeammate(board.getPieceAt(i, j), new BoardPoint(i, index)))
                 {
                     index = 0;
                 } else
@@ -150,11 +150,11 @@ public class Chariot extends Piece
         {
             if(board.containsPiece(4, 8))
             {
-                if(board.containsEnemy(board.getPieceAt(3,9), new BoardPoint(4,8)))
+                if(board.containsEnemy(board.getPieceAt(3, 9), new BoardPoint(4, 8)))
                 {
                     targetingSquares.add(new BoardPoint(4, 8));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(3,9), new BoardPoint(5,7)))
+            } else if(board.containsTeammate(board.getPieceAt(3, 9), new BoardPoint(5, 7)))
             {
                 targetingSquares.add(new BoardPoint(4, 8));
             } else
@@ -171,7 +171,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(5, 9), new BoardPoint(4, 8))) {
                     targetingSquares.add(new BoardPoint(4, 8));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(5,9), new BoardPoint(3,7)))
+            } else if(board.containsTeammate(board.getPieceAt(5, 9), new BoardPoint(3, 7)))
             {
                 targetingSquares.add(new BoardPoint(4, 8));
             } else
@@ -188,7 +188,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(3, 7), new BoardPoint(4, 8))) {
                     targetingSquares.add(new BoardPoint(4, 8));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(3,7), new BoardPoint(5,9)))
+            } else if(board.containsTeammate(board.getPieceAt(3, 7), new BoardPoint(5, 9)))
             {
                 targetingSquares.add(new BoardPoint(4, 8));
             } else
@@ -205,7 +205,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(5, 7), new BoardPoint(4, 8))) {
                     targetingSquares.add(new BoardPoint(4, 8));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(5,7), new BoardPoint(3,9)))
+            } else if(board.containsTeammate(board.getPieceAt(5, 7), new BoardPoint(3, 9)))
             {
                 targetingSquares.add(new BoardPoint(4, 8));
             } else
@@ -245,11 +245,11 @@ public class Chariot extends Piece
         {
             if(board.containsPiece(4, 1))
             {
-                if(board.containsEnemy(board.getPieceAt(3,0), new BoardPoint(4,1)))
+                if(board.containsEnemy(board.getPieceAt(3, 0), new BoardPoint(4, 1)))
                 {
                     targetingSquares.add(new BoardPoint(4, 1));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(3,0), new BoardPoint(5,2)))
+            } else if(board.containsTeammate(board.getPieceAt(3, 0), new BoardPoint(5, 2)))
             {
                 targetingSquares.add(new BoardPoint(4, 1));
             } else
@@ -266,7 +266,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(5, 0), new BoardPoint(4, 1))) {
                     targetingSquares.add(new BoardPoint(4, 1));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(5,0), new BoardPoint(3,2)))
+            } else if(board.containsTeammate(board.getPieceAt(5, 0), new BoardPoint(3, 2)))
             {
                 targetingSquares.add(new BoardPoint(4, 1));
             } else
@@ -283,7 +283,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(3, 2), new BoardPoint(4, 1))) {
                     targetingSquares.add(new BoardPoint(4, 1));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(3,2), new BoardPoint(5,0)))
+            } else if(board.containsTeammate(board.getPieceAt(3, 2), new BoardPoint(5, 0)))
             {
                 targetingSquares.add(new BoardPoint(4, 1));
             } else
@@ -300,7 +300,7 @@ public class Chariot extends Piece
                 if (board.containsEnemy(board.getPieceAt(5, 2), new BoardPoint(4, 1))) {
                     targetingSquares.add(new BoardPoint(4, 1));
                 }
-            } else if(board.containsTeammate(board.getPieceAt(5,2), new BoardPoint(3,0)))
+            } else if(board.containsTeammate(board.getPieceAt(5, 2), new BoardPoint(3, 0)))
             {
                 targetingSquares.add(new BoardPoint(4, 1));
             } else
