@@ -72,7 +72,7 @@ public class Soldier extends Piece
             }
         }
         // Check for moves to the left
-        if(i > 1 && (!board.containsPiece(i - 1, j)  || board.getPieceAt(i - 1, j).getTeam() != team))
+        if(i > 0 && (!board.containsPiece(i - 1, j)  || board.getPieceAt(i - 1, j).getTeam() != team))
         {
             if(j > 0) // not too high
             {
