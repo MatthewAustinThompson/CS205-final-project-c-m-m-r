@@ -59,8 +59,8 @@ public class GameManager
         this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
         this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
 
-        this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,9));
-        this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,0));
+        this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,8));
+        this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,1));
 
         this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
         this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
