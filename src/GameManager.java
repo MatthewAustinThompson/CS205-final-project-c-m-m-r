@@ -44,8 +44,10 @@ public class GameManager
 
         board = new Board(this);
 
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(4,5));
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(3,3));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
 
         this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
         this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
@@ -76,7 +78,7 @@ public class GameManager
         this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
         this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
 
-        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,6));
+        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
         this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
         this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
         this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
