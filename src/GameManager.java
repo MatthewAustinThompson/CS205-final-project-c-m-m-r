@@ -237,7 +237,10 @@ public class GameManager
                 }
             }
         }
-        selectedPiece.setIsHighlighted(false);
+        if(selectedPiece != null)
+        {
+            selectedPiece.setIsHighlighted(false);
+        }
         selectedPiece = null;
         board.unhighlightAll();
     }
