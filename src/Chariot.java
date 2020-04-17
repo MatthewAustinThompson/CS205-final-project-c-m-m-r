@@ -68,7 +68,7 @@ public class Chariot extends Piece
             for(int index = i+1; index <= 8; index++)
             {
                 output.add(new BoardPoint(index, j));
-                if(hypotheticalBoard[index][j] == null)
+                if(hypotheticalBoard[index][j] != null)
                 {
                     index = 8;
                 }
@@ -83,7 +83,7 @@ public class Chariot extends Piece
             for(int index = i-1; index >= 0; index--)
             {
                 output.add(new BoardPoint(index, j));
-                if(hypotheticalBoard[index][j] == null)
+                if(hypotheticalBoard[index][j] != null)
                 {
                     index = -1;
                 }
@@ -98,7 +98,7 @@ public class Chariot extends Piece
             for(int index = j+1; index <= 9; index++)
             {
                 output.add(new BoardPoint(i, index));
-                if(hypotheticalBoard[i][index] == null)
+                if(hypotheticalBoard[i][index] != null)
                 {
                     index = 9;
                 }
@@ -113,7 +113,7 @@ public class Chariot extends Piece
             for(int index = j-1; index >= 0; index--)
             {
                 output.add(new BoardPoint(i, index));
-                if(hypotheticalBoard[i][index] == null)
+                if(hypotheticalBoard[i][index] != null)
                 {
                     index = -1;
                 }

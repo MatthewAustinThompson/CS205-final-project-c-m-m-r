@@ -74,7 +74,7 @@ public class Cannon extends Piece
                 if(hypotheticalBoard[search][j] != null && hypotheticalBoard[search][j].getPieceType() == PieceType.Cannon)
                 {
                     search = 8;
-                } else if (hypotheticalBoard[search][j] == null)
+                } else if (hypotheticalBoard[search][j] != null)
                 {
                     screen = true;
                     screenI = search;
@@ -91,7 +91,7 @@ public class Cannon extends Piece
                 for(int index = screenI+1; index <= 8; index++)
                 {
                     output.add(new BoardPoint(index, j));
-                    if(hypotheticalBoard[index][j] == null)
+                    if(hypotheticalBoard[index][j] != null)
                     {
                         index = 8;
                     }
@@ -113,7 +113,7 @@ public class Cannon extends Piece
                 if(hypotheticalBoard[search][j] != null && hypotheticalBoard[search][j].getPieceType() == PieceType.Cannon)
                 {
                     search = 0;
-                } else if (hypotheticalBoard[search][j] == null)
+                } else if (hypotheticalBoard[search][j] != null)
                 {
                     screen = true;
                     screenI = search;
@@ -130,7 +130,7 @@ public class Cannon extends Piece
                 for(int index = screenI-1; index >= 0; index--)
                 {
                     output.add(new BoardPoint(index, j));
-                    if(hypotheticalBoard[index][j] == null)
+                    if(hypotheticalBoard[index][j] != null)
                     {
                         index = 0;
                     }
@@ -152,7 +152,7 @@ public class Cannon extends Piece
                 if(hypotheticalBoard[i][search] != null && hypotheticalBoard[i][search].getPieceType() == PieceType.Cannon)
                 {
                     search = 9;
-                } else if (hypotheticalBoard[i][search] == null)
+                } else if (hypotheticalBoard[i][search] != null)
                 {
                     screen = true;
                     screenI = i;
@@ -169,7 +169,7 @@ public class Cannon extends Piece
                 for(int index = screenJ+1; index <= 9; index++)
                 {
                     output.add(new BoardPoint(i, index));
-                    if(hypotheticalBoard[i][index] == null)
+                    if(hypotheticalBoard[i][index] != null)
                     {
                         index = 9;
                     }
@@ -191,7 +191,7 @@ public class Cannon extends Piece
                 if(hypotheticalBoard[i][search] != null && hypotheticalBoard[i][search].getPieceType() == PieceType.Cannon)
                 {
                     search = 0;
-                } else if (hypotheticalBoard[i][search] == null)
+                } else if (hypotheticalBoard[i][search] != null)
                 {
                     screen = true;
                     screenI = i;
@@ -208,7 +208,7 @@ public class Cannon extends Piece
                 for(int index = screenJ-1; index >= 0; index--)
                 {
                     output.add(new BoardPoint(i, index));
-                    if(hypotheticalBoard[i][index] == null)
+                    if(hypotheticalBoard[i][index] != null)
                     {
                         index = 0;
                     }
