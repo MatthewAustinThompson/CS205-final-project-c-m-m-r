@@ -68,7 +68,7 @@ public class Chariot extends Piece
             for(int index = i+1; index <= 8; index++)
             {
                 output.add(new BoardPoint(index, j));
-                if(board.containsPiece(index, j))
+                if(hypotheticalBoard[index][j] == null)
                 {
                     index = 8;
                 }
@@ -83,7 +83,7 @@ public class Chariot extends Piece
             for(int index = i-1; index >= 0; index--)
             {
                 output.add(new BoardPoint(index, j));
-                if(board.containsPiece(index, j))
+                if(hypotheticalBoard[index][j] == null)
                 {
                     index = -1;
                 }
@@ -98,7 +98,7 @@ public class Chariot extends Piece
             for(int index = j+1; index <= 9; index++)
             {
                 output.add(new BoardPoint(i, index));
-                if(board.containsPiece(i, index))
+                if(hypotheticalBoard[i][index] == null)
                 {
                     index = 9;
                 }
@@ -113,7 +113,7 @@ public class Chariot extends Piece
             for(int index = j-1; index >= 0; index--)
             {
                 output.add(new BoardPoint(i, index));
-                if(board.containsPiece(i, index))
+                if(hypotheticalBoard[i][index] == null)
                 {
                     index = -1;
                 }
@@ -125,7 +125,7 @@ public class Chariot extends Piece
         if(i == 3 && j == 9)
         {
             output.add(new BoardPoint(4, 8));
-            if(!board.containsPiece(4, 8))
+            if(hypotheticalBoard[4][8] == null)
             {
                 output.add(new BoardPoint(5, 7));
             }
@@ -134,7 +134,7 @@ public class Chariot extends Piece
         if(i == 5 && j == 9)
         {
             output.add(new BoardPoint(4, 8));
-            if(!board.containsPiece(4, 8))
+            if(hypotheticalBoard[4][8] == null)
             {
                 output.add(new BoardPoint(3, 7));
             }
@@ -143,7 +143,7 @@ public class Chariot extends Piece
         if(i == 3 && j == 7)
         {
             output.add(new BoardPoint(4, 8));
-            if(!board.containsPiece(4, 8))
+            if(hypotheticalBoard[4][8] == null)
             {
                 output.add(new BoardPoint(5, 9));
             }
@@ -152,7 +152,7 @@ public class Chariot extends Piece
         if(i == 5 && j == 7)
         {
             output.add(new BoardPoint(4, 8));
-            if(!board.containsPiece(4, 8))
+            if(hypotheticalBoard[4][8] == null)
             {
                 output.add(new BoardPoint(3, 9));
             }
@@ -171,7 +171,7 @@ public class Chariot extends Piece
         if(i == 3 && j == 0)
         {
             output.add(new BoardPoint(4, 1));
-            if(!board.containsPiece(4, 1))
+            if(hypotheticalBoard[4][1] == null)
             {
                 output.add(new BoardPoint(5, 2));
             }
@@ -180,7 +180,7 @@ public class Chariot extends Piece
         if(i == 5 && j == 0)
         {
             output.add(new BoardPoint(4, 1));
-            if(!board.containsPiece(4, 1))
+            if(hypotheticalBoard[4][1] == null)
             {
                 output.add(new BoardPoint(3, 2));
             }
@@ -189,7 +189,7 @@ public class Chariot extends Piece
         if(i == 3 && j == 2)
         {
             output.add(new BoardPoint(4, 1));
-            if(!board.containsPiece(4, 1))
+            if(hypotheticalBoard[4][1] == null)
             {
                 output.add(new BoardPoint(5, 0));
             }
@@ -198,7 +198,7 @@ public class Chariot extends Piece
         if(i == 5 && j == 2)
         {
             output.add(new BoardPoint(4, 1));
-            if(!board.containsPiece(4, 1))
+            if(hypotheticalBoard[4][1] == null)
             {
                 output.add(new BoardPoint(3, 0));
             }

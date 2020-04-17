@@ -71,10 +71,10 @@ public class Cannon extends Piece
             int search = i+1;
             while(!screen && search < 8)
             {
-                if(board.containsPiece(search, j) && board.getPieceAt(search, j).getPieceType() == PieceType.Cannon)
+                if(hypotheticalBoard[search][j] != null && hypotheticalBoard[search][j].getPieceType() == PieceType.Cannon)
                 {
                     search = 8;
-                } else if (board.containsPiece(search, j))
+                } else if (hypotheticalBoard[search][j] == null)
                 {
                     screen = true;
                     screenI = search;
@@ -91,7 +91,7 @@ public class Cannon extends Piece
                 for(int index = screenI+1; index <= 8; index++)
                 {
                     output.add(new BoardPoint(index, j));
-                    if(board.containsPiece(index, j))
+                    if(hypotheticalBoard[index][j] == null)
                     {
                         index = 8;
                     }
@@ -110,10 +110,10 @@ public class Cannon extends Piece
             int search = i-1;
             while(!screen && search > 0)
             {
-                if(board.containsPiece(search, j) && board.getPieceAt(search, j).getPieceType() == PieceType.Cannon)
+                if(hypotheticalBoard[search][j] != null && hypotheticalBoard[search][j].getPieceType() == PieceType.Cannon)
                 {
                     search = 0;
-                } else if (board.containsPiece(search, j))
+                } else if (hypotheticalBoard[search][j] == null)
                 {
                     screen = true;
                     screenI = search;
@@ -130,7 +130,7 @@ public class Cannon extends Piece
                 for(int index = screenI-1; index >= 0; index--)
                 {
                     output.add(new BoardPoint(index, j));
-                    if(board.containsPiece(index, j))
+                    if(hypotheticalBoard[index][j] == null)
                     {
                         index = 0;
                     }
@@ -149,10 +149,10 @@ public class Cannon extends Piece
             int search = j+1;
             while(!screen && search < 9)
             {
-                if(board.containsPiece(i, search) && board.getPieceAt(i, search).getPieceType() == PieceType.Cannon)
+                if(hypotheticalBoard[i][search] != null && hypotheticalBoard[i][search].getPieceType() == PieceType.Cannon)
                 {
                     search = 9;
-                } else if (board.containsPiece(i, search))
+                } else if (hypotheticalBoard[i][search] == null)
                 {
                     screen = true;
                     screenI = i;
@@ -169,7 +169,7 @@ public class Cannon extends Piece
                 for(int index = screenJ+1; index <= 9; index++)
                 {
                     output.add(new BoardPoint(i, index));
-                    if(board.containsPiece(i, index))
+                    if(hypotheticalBoard[i][index] == null)
                     {
                         index = 9;
                     }
@@ -188,10 +188,10 @@ public class Cannon extends Piece
             int search = j-1;
             while(!screen && search > 0)
             {
-                if(board.containsPiece(i, search) && board.getPieceAt(i, search).getPieceType() == PieceType.Cannon)
+                if(hypotheticalBoard[i][search] != null && hypotheticalBoard[i][search].getPieceType() == PieceType.Cannon)
                 {
                     search = 0;
-                } else if (board.containsPiece(i, search))
+                } else if (hypotheticalBoard[i][search] == null)
                 {
                     screen = true;
                     screenI = i;
@@ -208,7 +208,7 @@ public class Cannon extends Piece
                 for(int index = screenJ-1; index >= 0; index--)
                 {
                     output.add(new BoardPoint(i, index));
-                    if(board.containsPiece(i, index))
+                    if(hypotheticalBoard[i][index] == null)
                     {
                         index = 0;
                     }
