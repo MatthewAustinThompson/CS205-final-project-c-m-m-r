@@ -54,9 +54,9 @@ public class Cannon extends Piece
 
 
     @Override
-    public void findTargetingSquares()
+    public ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard)
     {
-        targetingSquares = new ArrayList<BoardPoint>();
+        ArrayList<BoardPoint> output = new ArrayList<BoardPoint>();
         int i = location.getX();
         int j = location.getY();
 
@@ -90,20 +90,10 @@ public class Cannon extends Piece
             {
                 for(int index = screenI+1; index <= 8; index++)
                 {
+                    output.add(new BoardPoint(index, j));
                     if(board.containsPiece(index, j))
                     {
-                        if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(index, j)) &&
-                                board.getPieceAt(index, j).getPieceType() != PieceType.Cannon)
-                        {
-                            targetingSquares.add(new BoardPoint(index, j));
-                            index = 8;
-                        } else
-                        {
-                            index = 8;
-                        }
-                    } else
-                    {
-                        targetingSquares.add(new BoardPoint(index, j));
+                        index = 8;
                     }
                 }
             }
@@ -139,20 +129,10 @@ public class Cannon extends Piece
             {
                 for(int index = screenI-1; index >= 0; index--)
                 {
+                    output.add(new BoardPoint(index, j));
                     if(board.containsPiece(index, j))
                     {
-                        if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(index, j)) &&
-                                board.getPieceAt(index, j).getPieceType() != PieceType.Cannon)
-                        {
-                            targetingSquares.add(new BoardPoint(index, j));
-                            index = 0;
-                        } else
-                        {
-                            index = 0;
-                        }
-                    } else
-                    {
-                        targetingSquares.add(new BoardPoint(index, j));
+                        index = 0;
                     }
                 }
             }
@@ -188,20 +168,10 @@ public class Cannon extends Piece
             {
                 for(int index = screenJ+1; index <= 9; index++)
                 {
+                    output.add(new BoardPoint(i, index));
                     if(board.containsPiece(i, index))
                     {
-                        if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(i, index)) &&
-                                board.getPieceAt(i, index).getPieceType() != PieceType.Cannon)
-                        {
-                            targetingSquares.add(new BoardPoint(i, index));
-                            index = 9;
-                        } else
-                        {
-                            index = 9;
-                        }
-                    } else
-                    {
-                        targetingSquares.add(new BoardPoint(i, index));
+                        index = 9;
                     }
                 }
             }
@@ -237,20 +207,10 @@ public class Cannon extends Piece
             {
                 for(int index = screenJ-1; index >= 0; index--)
                 {
+                    output.add(new BoardPoint(i, index));
                     if(board.containsPiece(i, index))
                     {
-                        if(board.containsEnemy(board.getPieceAt(i, j), new BoardPoint(i, index)) &&
-                                board.getPieceAt(i, index).getPieceType() != PieceType.Cannon)
-                        {
-                            targetingSquares.add(new BoardPoint(i, index));
-                            index = 0;
-                        } else
-                        {
-                            index = 0;
-                        }
-                    } else
-                    {
-                        targetingSquares.add(new BoardPoint(i, index));
+                        index = 0;
                     }
                 }
             }
@@ -265,38 +225,22 @@ public class Cannon extends Piece
         // Cannon in bottom left
         if(i == 3 && j == 9 && bluePalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(3, 9), new BoardPoint(5, 7)) &&
-                    board.getPieceAt(5, 7).getPieceType() != PieceType.Cannon) || !board.containsPiece(5, 7))
-            {
-                targetingSquares.add(new BoardPoint(5, 7));
-            }
+            output.add(new BoardPoint(5, 7));
         }
         // Cannon in bottom right
         if(i == 5 && j == 9 && bluePalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(5, 9), new BoardPoint(3, 7)) &&
-                    board.getPieceAt(3, 7).getPieceType() != PieceType.Cannon) || !board.containsPiece(3, 7))
-            {
-                targetingSquares.add(new BoardPoint(3, 7));
-            }
+            output.add(new BoardPoint(3, 7));
         }
         // Cannon in top left
         if(i == 3 && j == 7 && bluePalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(3, 7), new BoardPoint(5, 9)) &&
-                    board.getPieceAt(5, 9).getPieceType() != PieceType.Cannon) || !board.containsPiece(5, 9))
-            {
-                targetingSquares.add(new BoardPoint(5, 9));
-            }
+            output.add(new BoardPoint(5, 9));
         }
         // Cannon in top right
         if(i == 5 && j == 7 && bluePalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(5, 7), new BoardPoint(5, 7)) &&
-                    board.getPieceAt(3, 9).getPieceType() != PieceType.Cannon) || !board.containsPiece(3, 9))
-            {
-                targetingSquares.add(new BoardPoint(3, 9));
-            }
+            output.add(new BoardPoint(3, 9));
         }
 
         // Palace cases for red side
@@ -308,37 +252,43 @@ public class Cannon extends Piece
         // Cannon in top left
         if(i == 3 && j == 0 && redPalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(3, 0), new BoardPoint(5, 2)) &&
-                    board.getPieceAt(5, 2).getPieceType() != PieceType.Cannon) || !board.containsPiece(5, 2))
-            {
-                targetingSquares.add(new BoardPoint(5, 2));
-            }
+            output.add(new BoardPoint(5, 2));
         }
         // Cannon in top right
         if(i == 5 && j == 0 && redPalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(5, 0), new BoardPoint(3, 2)) &&
-                    board.getPieceAt(3, 2).getPieceType() != PieceType.Cannon) || !board.containsPiece(3, 2))
-            {
-                targetingSquares.add(new BoardPoint(3, 2));
-            }
+            output.add(new BoardPoint(3, 2));
         }
         // Cannon in bottom left
         if(i == 3 && j == 2 && redPalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(3, 2), new BoardPoint(5, 0)) &&
-                    board.getPieceAt(5, 0).getPieceType() != PieceType.Cannon) || !board.containsPiece(5, 0))
-            {
-                targetingSquares.add(new BoardPoint(5, 0));
-            }
+            output.add(new BoardPoint(5, 0));
         }
         // Cannon in bottom right
         if(i == 5 && j == 2 && redPalaceScreen)
         {
-            if((board.containsEnemy(board.getPieceAt(5, 2), new BoardPoint(3, 0)) &&
-                    board.getPieceAt(3, 0).getPieceType() != PieceType.Cannon) || !board.containsPiece(3, 0))
+            output.add(new BoardPoint(3, 0));
+        }
+
+        return output;
+    }
+
+
+    // This sets legalMoveSquares to contain every square in targetingSquares
+    // that doesn't contain a teammate
+    // This is overridden since Cannons cannot capture other Cannons
+    public void findLegalMoveSquares()
+    {
+        legalMoveSquares = new ArrayList<BoardPoint>();
+        for(BoardPoint bp : targetingSquares)
+        {
+            // If there's not a teammate there,
+            // and it doesn't put us in check,
+            // and it's not a cannon, we can move there
+            if(!board.containsTeammate(this, bp) && board.canMoveWithoutCausingCheck(this, bp)
+                    && !board.containsEnemyCannon(this, bp.getX(), bp.getY()) )
             {
-                targetingSquares.add(new BoardPoint(3, 0));
+                legalMoveSquares.add(bp);
             }
         }
     }

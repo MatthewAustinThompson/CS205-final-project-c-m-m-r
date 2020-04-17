@@ -54,58 +54,63 @@ public class Horse extends Piece
 
 
     @Override
-    public void findTargetingSquares()
+    public ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard)
     {
-        targetingSquares = new ArrayList<BoardPoint>();
+        ArrayList<BoardPoint> output = new ArrayList<BoardPoint>();
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        if(i < 7 && !board.containsPiece(i + 1, j))
+        //if(i < 7 && !board.containsPiece(i + 1, j))
+        if(i < 7 && hypotheticalBoard[i+1][j] == null)
         {
             if(j > 0) // not too high
             {
-                targetingSquares.add(new BoardPoint(i + 2, j - 1));
+                output.add(new BoardPoint(i + 2, j - 1));
             }
             if(j < 9) // not too low
             {
-                targetingSquares.add(new BoardPoint(i + 2, j + 1));
+                output.add(new BoardPoint(i + 2, j + 1));
             }
         }
         // Check for moves to the left
-        if(i > 1 && !board.containsPiece(i - 1, j))
+        //if(i > 1 && !board.containsPiece(i - 1, j))
+        if(i > 1 && hypotheticalBoard[i-1][j] == null)
         {
             if(j > 0) // not too high
             {
-                targetingSquares.add(new BoardPoint(i - 2, j - 1));
+                output.add(new BoardPoint(i - 2, j - 1));
             }
             if(j < 9) // not too low
             {
-                targetingSquares.add(new BoardPoint(i - 2, j + 1));
+                output.add(new BoardPoint(i - 2, j + 1));
             }
         }
         // Check for moves down
-        if(j < 8 && !board.containsPiece(i, j + 1))
+        //if(j < 8 && !board.containsPiece(i, j + 1))
+        if(j < 8 && hypotheticalBoard[i][j + 1] == null)
         {
             if(i > 0) // not too far left
             {
-                targetingSquares.add(new BoardPoint(i - 1, j + 2));
+                output.add(new BoardPoint(i - 1, j + 2));
             }
             if(i < 8) // not too far right
             {
-                targetingSquares.add(new BoardPoint(i + 1, j + 2));
+                output.add(new BoardPoint(i + 1, j + 2));
             }
         }
         // Check for moves up
-        if(j > 1 && !board.containsPiece(i, j - 1))
+        //if(j > 1 && !board.containsPiece(i, j - 1))
+        if(j > 1 && hypotheticalBoard[i][j - 1] == null)
         {
             if(i > 0) // not too far left
             {
-                targetingSquares.add(new BoardPoint(i - 1, j - 2));
+                output.add(new BoardPoint(i - 1, j - 2));
             }
             if(i < 8) // not too far right
             {
-                targetingSquares.add(new BoardPoint(i + 1, j - 2));
+                output.add(new BoardPoint(i + 1, j - 2));
             }
         }
+        return output;
     }
 }

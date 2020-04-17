@@ -19,7 +19,7 @@ public class General extends Piece
             symbolColor = new Color(0.8f, 0.1f, 0.4f);
         }
         fillColor = Color.WHITE;
-        pieceType = PieceType.Soldier;
+        pieceType = PieceType.General;
         this.initializeOctagon();
     }
 
@@ -54,145 +54,89 @@ public class General extends Piece
 
 
     @Override
-    public void findTargetingSquares()
+    public ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard)
     {
-        targetingSquares = new ArrayList<BoardPoint>();
+        ArrayList<BoardPoint> output = new ArrayList<BoardPoint>();
         int i = location.getX();
         int j = location.getY();
         // Player team logic
-        if(team == Team.Player){
+        if(team == Team.Player)
+        {
             // Check for moves to the right
-            if(i < 5 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
+            if(i < 5)
             {
-                if(j > 6) // not too high
+                output.add(new BoardPoint(i + 1, j));
+                if(location.is(4,8)) // Moving diagonally from the center of the fortress
                 {
-                    targetingSquares.add(new BoardPoint(i + 1, j));
-                    if(!board.containsPiece(i+1, j-1) && location.equals(new BoardPoint(4,8))){
-                        targetingSquares.add(new BoardPoint(i + 1, j-1));
-                    }
-                }
-                if(j < 9) // not too low
-                {
-                    targetingSquares.add(new BoardPoint(i + 1, j));
-                    if(!board.containsPiece(i+1, j+1) && location.equals(new BoardPoint(4,8))){
-                        targetingSquares.add(new BoardPoint(i + 1, j+1));
-                    }
+                    output.add(new BoardPoint(5, 7));
+                    output.add(new BoardPoint(5, 9));
                 }
             }
             // Check for moves to the left
-            if(i > 3 && (!board.containsPiece(i - 1, j) || board.getPieceAt(i - 1, j).getTeam() != team))
+            if(i > 3)
             {
-                if(j > 6) // not too high
+                output.add(new BoardPoint(i - 1, j));
+                if(location.is(4,8)) // Moving diagonally from the center of the fortress
                 {
-                    targetingSquares.add(new BoardPoint(i - 1, j));
-                    if(!board.containsPiece(i-1, j-1) && location.equals(new BoardPoint(4,8))){
-                        targetingSquares.add(new BoardPoint(i - 1, j-1));
-                    }
-                }
-                if(j < 9) // not too low
-                {
-                    targetingSquares.add(new BoardPoint(i - 1, j));
-                    if(!board.containsPiece(i-1, j+1) && location.equals(new BoardPoint(4,8))){
-                        targetingSquares.add(new BoardPoint(i - 1, j+1));
-                    }
+                    output.add(new BoardPoint(3, 7));
+                    output.add(new BoardPoint(3, 9));
                 }
             }
             // Check for moves down
-            if(j < 9 && (!board.containsPiece(i, j + 1) || board.getPieceAt(i , j + 1).getTeam() != team))
+            if(j < 9)
             {
-                if(i > 6) // not too far left
-                {
-                    targetingSquares.add(new BoardPoint(i, j + 1));
-                }
-                if(i < 9) // not too far right
-                {
-                    targetingSquares.add(new BoardPoint(i, j + 1));
-                }
+                output.add(new BoardPoint(i, j + 1));
             }
             // Check for moves up
-            if(j > 7 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team))
+            if(j > 7)
             {
-                if(i > 2) // not too far left
-                {
-                    targetingSquares.add(new BoardPoint(i, j - 1));
-                }
-                if(i < 6) // not too far right
-                {
-                    targetingSquares.add(new BoardPoint(i, j - 1));
-                }
+                output.add(new BoardPoint(i, j - 1));
             }
             // check for center spot in the "castle"
-            if(!board.containsPiece(4, 8) || board.getPieceAt(4, 8).getTeam() != team){
-                targetingSquares.add(new BoardPoint(4, 8));
-            }
-
-        } else if(team == Team.Computer){
-
-            // Check for moves to the right
-            if(i < 5 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
+            if(!location.is(4,8))
             {
-                if(j > 0) // not too high
-                {
-                    targetingSquares.add(new BoardPoint(i + 1, j));
-                    if(!board.containsPiece(i+1, j-1) && location.equals(new BoardPoint(4,1))){
-                        targetingSquares.add(new BoardPoint(i + 1, j-1));
-                    }
-                }
-                if(j < 2) // not too low
-                {
-                    targetingSquares.add(new BoardPoint(i + 1, j));
-                    if(!board.containsPiece(i+1, j+1) && location.equals(new BoardPoint(4,1))){
-                        targetingSquares.add(new BoardPoint(i + 1, j+1));
-                    }
-                }
-            }
-            // Check for moves to the left
-            if(i > 3 && (!board.containsPiece(i - 1, j) || board.getPieceAt(i - 1, j).getTeam() != team))
-            {
-                if(j > 0) // not too high
-                {
-                    targetingSquares.add(new BoardPoint(i - 1, j));
-                    if(!board.containsPiece(i-1, j-1) && location.equals(new BoardPoint(4,1))){
-                        targetingSquares.add(new BoardPoint(i - 1, j-1));
-                    }
-                }
-                if(j < 2) // not too low
-                {
-                    targetingSquares.add(new BoardPoint(i - 1, j));
-                    if(!board.containsPiece(i-1, j+1) && location.equals(new BoardPoint(4,1))){
-                        targetingSquares.add(new BoardPoint(i - 1, j+1));
-                    }
-                }
-            }
-            // Check for moves down
-            if(j < 2 && (!board.containsPiece(i, j + 1) || board.getPieceAt(i, j + 1).getTeam() != team))
-            {
-                if(i > 3) // not too far left
-                {
-                    targetingSquares.add(new BoardPoint(i, j + 1));
-                }
-                if(i < 5) // not too far right
-                {
-                    targetingSquares.add(new BoardPoint(i, j + 1));
-                }
-            }
-            // Check for moves up
-            if(j > 0 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team))
-            {
-                if(i > 3) // not too far left
-                {
-                    targetingSquares.add(new BoardPoint(i, j - 1));
-                }
-                if(i < 5) // not too far right
-                {
-                    targetingSquares.add(new BoardPoint(i, j - 1));
-                }
-            }
-            // check for center spot in the "castle"
-            if(!board.containsPiece(4, 1) || board.getPieceAt(4, 1).getTeam() != team){
-                targetingSquares.add(new BoardPoint(4, 1));
+                output.add(new BoardPoint(4, 8));
             }
         }
+        else if(team == Team.Computer)
+        {
 
+            // Check for moves to the right
+            if(i < 5)
+            {
+                output.add(new BoardPoint(i + 1, j));
+                if(location.is(4,1)) // Moving diagonally from the center of the fortress
+                {
+                    output.add(new BoardPoint(5, 0));
+                    output.add(new BoardPoint(5, 2));
+                }
+            }
+            // Check for moves to the left
+            if(i > 3)
+            {
+                output.add(new BoardPoint(i - 1, j));
+                if(location.is(4,1)) // Moving diagonally from the center of the fortress
+                {
+                    output.add(new BoardPoint(3, 0));
+                    output.add(new BoardPoint(3, 2));
+                }
+            }
+            // Check for moves down
+            if(j < 2)
+            {
+                output.add(new BoardPoint(i, j + 1));
+            }
+            // Check for moves up
+            if(j > 0)
+            {
+                output.add(new BoardPoint(i, j - 1));
+            }
+            // check for center spot in the "castle"
+            if(!location.is(4, 1))
+            {
+                output.add(new BoardPoint(4, 1));
+            }
+        }
+        return output;
     }
 }

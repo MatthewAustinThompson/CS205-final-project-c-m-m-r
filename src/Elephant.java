@@ -89,7 +89,8 @@ public class Elephant extends Piece
         g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 20, null);
     }
 
-
+    // ==== Temporarily commented out ====
+    /*
     //Checks that the path square: Exists on board && Contains no pieces
     public boolean isValidElephantPathSquare(BoardPoint point) {
 
@@ -269,5 +270,66 @@ public class Elephant extends Piece
         }
 
 
+    }*/
+
+    @Override
+    public ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard)
+    {
+        ArrayList<BoardPoint> output = new ArrayList<BoardPoint>();
+        int i = location.getX();
+        int j = location.getY();
+        // Check for moves to the right
+        //if(i < 7 && !board.containsPiece(i + 1, j))
+        if(i < 6 && hypotheticalBoard[i+1][j] == null)
+        {
+            if(j > 1 && hypotheticalBoard[i+2][j-1] == null) // not too high
+            {
+                output.add(new BoardPoint(i + 3, j - 2));
+            }
+            if(j < 8 && hypotheticalBoard[i+2][j+1] == null) // not too low
+            {
+                output.add(new BoardPoint(i + 3, j + 2));
+            }
+        }
+        // Check for moves to the left
+        //if(i > 1 && !board.containsPiece(i - 1, j))
+        if(i > 2 && hypotheticalBoard[i-1][j] == null)
+        {
+            if(j > 1 && hypotheticalBoard[i-2][j-1] == null) // not too high
+            {
+                output.add(new BoardPoint(i - 3, j - 2));
+            }
+            if(j < 8 && hypotheticalBoard[i-2][j+2] == null) // not too low
+            {
+                output.add(new BoardPoint(i - 3, j + 2));
+            }
+        }
+        // Check for moves down
+        //if(j < 8 && !board.containsPiece(i, j + 1))
+        if(j < 7 && hypotheticalBoard[i][j + 1] == null)
+        {
+            if(i > 1 && hypotheticalBoard[i-1][j+2] == null) // not too far left
+            {
+                output.add(new BoardPoint(i - 2, j + 3));
+            }
+            if(i < 7 && hypotheticalBoard[i+1][j+2] == null) // not too far right
+            {
+                output.add(new BoardPoint(i + 2, j + 3));
+            }
+        }
+        // Check for moves up
+        //if(j > 1 && !board.containsPiece(i, j - 1))
+        if(j > 2 && hypotheticalBoard[i][j - 1] == null)
+        {
+            if(i > 1 && hypotheticalBoard[i-1][j-2] == null) // not too far left
+            {
+                output.add(new BoardPoint(i - 2, j - 3));
+            }
+            if(i < 7 && hypotheticalBoard[i+1][j-2] == null) // not too far right
+            {
+                output.add(new BoardPoint(i + 2, j - 3));
+            }
+        }
+        return output;
     }
 }

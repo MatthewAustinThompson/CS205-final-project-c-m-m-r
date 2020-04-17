@@ -54,53 +54,59 @@ public class Soldier extends Piece
 
 
     @Override
-    public void findTargetingSquares()
+    public ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard)
     {
-        targetingSquares = new ArrayList<BoardPoint>();
+        ArrayList<BoardPoint> output = new ArrayList<BoardPoint>();
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        if(i < 8 && !board.containsPiece(i + 1, j))
+        //if(i < 8 && !board.containsPiece(i + 1, j))
+        if(i < 8)
         {
-            targetingSquares.add(new BoardPoint(i + 1, j));
+            output.add(new BoardPoint(i + 1, j));
         }
         // Check for moves to the left
-        if(i > 0 && !board.containsPiece(i - 1, j))
+        //if(i > 0 && !board.containsPiece(i - 1, j))
+        if(i > 0)
         {
-            targetingSquares.add(new BoardPoint(i - 1, j));
+            output.add(new BoardPoint(i - 1, j));
         }
         // Check for moves down
-        if(j < 9 && !board.containsPiece(i, j + 1) && team == Team.Computer)
+        //if(j < 9 && !board.containsPiece(i, j + 1) && team == Team.Computer)
+        if(j < 9 && team == Team.Computer)
         {
-            targetingSquares.add(new BoardPoint(i, j + 1));
+            output.add(new BoardPoint(i, j + 1));
         }
         // Check for moves up
-        if(j >= 1 && !board.containsPiece(i, j - 1) && team == Team.Player)
+        //if(j >= 1 && !board.containsPiece(i, j - 1) && team == Team.Player)
+        if(j >= 1 && team == Team.Player)
         {
-            targetingSquares.add(new BoardPoint(i, j - 1));
+            output.add(new BoardPoint(i, j - 1));
         }
         // special cases
-        if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && !board.containsPiece(4, 1)){
-            targetingSquares.add(new BoardPoint(4, 1));
+        //if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && !board.containsPiece(4, 1))
+        if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && !location.is(4,1))
+        {
+            output.add(new BoardPoint(4, 1));
         }
-        if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && !board.containsPiece(4, 8)){
-            targetingSquares.add(new BoardPoint(4, 8));
+        //if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && !board.containsPiece(4, 8))
+        if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && !location.is(4,8))
+        {
+            output.add(new BoardPoint(4, 8));
         }
-        if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && !board.containsPiece(3, 9) ){
-            targetingSquares.add(new BoardPoint(3, 9));
+        //if(location.is(4,8) && team == Team.Computer && !board.containsPiece(3, 9) )
+        if(location.is(4,8) && team == Team.Computer)
+        {
+            output.add(new BoardPoint(3, 9));
+            output.add(new BoardPoint(5, 9));
         }
-        if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && !board.containsPiece(5, 9) ){
-            targetingSquares.add(new BoardPoint(5, 9));
+        //if(location.is(4,1) && team == Team.Player && !board.containsPiece(3, 0))
+        if(location.is(4,1) && team == Team.Player)
+        {
+            output.add(new BoardPoint(3, 0));
+            output.add(new BoardPoint(5, 0));
         }
-        if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && !board.containsPiece(3, 0)){
-            targetingSquares.add(new BoardPoint(3, 0));
-        }
-        if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && !board.containsPiece(5, 0)){
-            targetingSquares.add(new BoardPoint(5, 0));
-        }
+
+        return output;
     }
 }

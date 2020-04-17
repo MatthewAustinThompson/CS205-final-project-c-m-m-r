@@ -177,17 +177,33 @@ public abstract class Piece
     }
     // This sets targetingSquares to contain all squares that this Piece is
     // able to move to, or capture at, or protect teammates at
-    public abstract void findTargetingSquares();
+    public abstract ArrayList<BoardPoint> findTargetingSquares(Piece[][] hypotheticalBoard);
+
+    // Wrapper method
+    public void findTargetingSquares()
+    {
+        targetingSquares = findTargetingSquares(board.getSpaces());
+    }
 
     // This sets legalMoveSquares to contain every square in targetingSquares
     // that doesn't contain a teammate
     public void findLegalMoveSquares()
     {
+        System.out.println(this.toString());
         legalMoveSquares = new ArrayList<BoardPoint>();
         for(BoardPoint bp : targetingSquares)
         {
-            // If there's not a teammate there, we can move there
-            if(!board.containsTeammate(this, bp))
+            // If there's not a teammate there,
+            // and it doesn't put us in check, we can move there
+            if(board.containsTeammate(this, bp))
+            {
+                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because a teammate is there");
+            }
+            else if(!board.canMoveWithoutCausingCheck(this, bp))
+            {
+                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because of check");
+            }
+            else
             {
                 legalMoveSquares.add(bp);
             }
@@ -198,5 +214,48 @@ public abstract class Piece
     public boolean containsClick(int mx, int my)
     {
         return outline.contains(mx, my);
+    }
+
+    public String toString()
+    {
+        String s = "";
+        if(team == Team.Player)
+        {
+            s += "Player's ";
+        }
+        else
+        {
+            s += "Computer's ";
+        }
+        if(pieceType == PieceType.General)
+        {
+            s += " General at ";
+        }
+        else if(pieceType == PieceType.Horse)
+        {
+            s += " Horse at ";
+        }
+        else if(pieceType == PieceType.Chariot)
+        {
+            s += " Chariot at ";
+        }
+        else if(pieceType == PieceType.Guard)
+        {
+            s += " Guard at ";
+        }
+        else if(pieceType == PieceType.Soldier)
+        {
+            s += " Soldier at ";
+        }
+        else if(pieceType == PieceType.Elephant)
+        {
+            s += " Elephant at ";
+        }
+        else if(pieceType == PieceType.Cannon)
+        {
+            s += " Cannon at ";
+        }
+        s += location.getX() + "," + location.getY();
+        return s;
     }
 }
