@@ -60,74 +60,46 @@ public class Soldier extends Piece
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        if(i < 8 && (!board.containsPiece(i + 1, j) || board.getPieceAt(i + 1, j).getTeam() != team))
+        if(i < 8 && !board.containsPiece(i + 1, j))
         {
-            if(j > 0) // not too high
-            {
-                targetingSquares.add(new BoardPoint(i + 1, j));
-            }
-            if(j < 9) // not too low
-            {
-                targetingSquares.add(new BoardPoint(i + 1, j));
-            }
+            targetingSquares.add(new BoardPoint(i + 1, j));
         }
         // Check for moves to the left
-        if(i > 0 && (!board.containsPiece(i - 1, j)  || board.getPieceAt(i - 1, j).getTeam() != team))
+        if(i > 0 && !board.containsPiece(i - 1, j))
         {
-            if(j > 0) // not too high
-            {
-                targetingSquares.add(new BoardPoint(i - 1, j));
-            }
-            if(j < 9) // not too low
-            {
-                targetingSquares.add(new BoardPoint(i - 1, j));
-            }
+            targetingSquares.add(new BoardPoint(i - 1, j));
         }
         // Check for moves down
-        if(j < 9 && (!board.containsPiece(i, j + 1)  || board.getPieceAt(i, j + 1).getTeam() != team) && team == Team.Computer)
+        if(j < 9 && !board.containsPiece(i, j + 1) && team == Team.Computer)
         {
-            if(i > 0) // not too far left
-            {
-                targetingSquares.add(new BoardPoint(i, j + 1));
-            }
-            if(i < 8) // not too far right
-            {
-                targetingSquares.add(new BoardPoint(i, j + 1));
-            }
+            targetingSquares.add(new BoardPoint(i, j + 1));
         }
         // Check for moves up
-        if(j >= 1 && (!board.containsPiece(i, j - 1) || board.getPieceAt(i, j - 1).getTeam() != team) && team == Team.Player)
+        if(j >= 1 && !board.containsPiece(i, j - 1) && team == Team.Player)
         {
-            if(i > 0) // not too far left
-            {
-                targetingSquares.add(new BoardPoint(i, j - 1));
-            }
-            if(i < 8) // not too far right
-            {
-                targetingSquares.add(new BoardPoint(i, j - 1));
-            }
+            targetingSquares.add(new BoardPoint(i, j - 1));
         }
         // special cases
-        if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && (!board.containsPiece(4, 1) || board.getPieceAt(4, 1).getTeam() != team)){
+        if(team == Team.Player && i >= 3 && i <= 5 && j <= 2 && j > 0 && !board.containsPiece(4, 1)){
             targetingSquares.add(new BoardPoint(4, 1));
         }
-        if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && (!board.containsPiece(4, 8) || board.getPieceAt(4, 8).getTeam() != team)){
+        if(team == Team.Computer && i >= 3 && i <= 5 && j < 9 && j >= 7 && !board.containsPiece(4, 8)){
             targetingSquares.add(new BoardPoint(4, 8));
         }
         if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && (!board.containsPiece(3, 9) || board.getPieceAt(3, 9).getTeam() != team)){
+                && !board.containsPiece(3, 9) ){
             targetingSquares.add(new BoardPoint(3, 9));
         }
         if(location.equals(new BoardPoint(4,8)) && team == Team.Computer
-                && (!board.containsPiece(5, 9) || board.getPieceAt(5, 9).getTeam() != team)){
+                && !board.containsPiece(5, 9) ){
             targetingSquares.add(new BoardPoint(5, 9));
         }
         if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && (!board.containsPiece(3, 0) || board.getPieceAt(3, 0).getTeam() != team)){
+                && !board.containsPiece(3, 0)){
             targetingSquares.add(new BoardPoint(3, 0));
         }
         if(location.equals(new BoardPoint(4,1)) && team == Team.Player
-                && (!board.containsPiece(5, 0) || board.getPieceAt(5, 0).getTeam() != team)){
+                && !board.containsPiece(5, 0)){
             targetingSquares.add(new BoardPoint(5, 0));
         }
     }
