@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
-public class ExamplePieceMarcus extends Piece
+public abstract class ExamplePieceMarcus extends Piece
 {
     // The octagon shape of the piece
     private Path2D.Double outline;
