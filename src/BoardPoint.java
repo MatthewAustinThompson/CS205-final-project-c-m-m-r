@@ -100,4 +100,10 @@ public class BoardPoint
         }
     }
 
+    // Check if this BoardPoint is the given (x,y) pair
+    public boolean is(int x, int y)
+    {
+        return this.x == x && this.y == y;
+    }
+
 }
