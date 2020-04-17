@@ -303,6 +303,16 @@ public class Board
         }
         return otherPiece.getTeam() != p.getTeam();
     }
+    // Wrapper
+    public boolean containsEnemy(Piece p, int i, int j)
+    {
+        return containsEnemy(p, new BoardPoint(i, j));
+    }
+
+    public boolean containsEnemyCannon(Piece p, int i, int j)
+    {
+        return containsEnemy(p, i, j) && spaces[i][j].getPieceType() == PieceType.Cannon;
+    }
 
 
     // Returns Euclidean distance between a boardPoint and two coordinates
@@ -357,5 +367,89 @@ public class Board
         // Set the old space to empty
         spaces[oldBP.getX()][oldBP.getY()] = null;
         return true;
+    }
+
+    // ==================================================
+    //
+    //                 Detecting Check
+    //
+    // ==================================================
+    // This returns true if the specified Team's General is in check on the
+    // give board
+    public boolean boardHasCheck(Piece[][] boardSpaces, Team team)
+    {
+
+        BoardPoint generalLoc = new BoardPoint(0,0); // initialize to default value
+        boolean generalFound = false;
+
+        // Iterate through all of this Team's Pieces to find the General
+        for(int i = 0; i < boardSpaces.length; i++)
+        {
+            for(int j = 0; j < boardSpaces[0].length; j++)
+            {
+                if(boardSpaces[i][j] != null && boardSpaces[i][j].getPieceType() == PieceType.General &&
+                boardSpaces[i][j].getTeam() == team)
+                {
+                    generalLoc = boardSpaces[i][j].getLocation();
+                    generalFound = true;
+                    break;
+                }
+            }
+        }
+        if(!generalFound)
+        {
+            System.out.println("Could not find the General when looking for check.");
+            return false;
+        }
+
+        // Iterate through all opposing Pieces, and see if they are looking at the
+        // General's space
+        for(Piece[] column : boardSpaces)
+        {
+            for(Piece p : column)
+            {
+                if(p != null && p.getTeam() != team)
+                {
+                    if(p.findTargetingSquares(boardSpaces).contains(generalLoc))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // Helper function: returns a copy of the current Board
+    public Piece[][] copyBoard()
+    {
+        Piece[][] copyOfBoard = new Piece[spaces.length][spaces[0].length];
+        for(int i = 0; i < spaces.length; i++)
+        {
+            for(int j = 0; j < spaces[0].length; j++)
+            {
+                copyOfBoard[i][j] = spaces[i][j];
+            }
+        }
+        return copyOfBoard;
+    }
+
+    // Tests if the Piece can move to the given space without putting its own
+    // team in check.
+    public boolean canMoveWithoutCausingCheck(Piece p, BoardPoint bp)
+    {
+        if(!p.getTargetingSquares().contains(bp))
+        {
+            System.out.println("Problem: you are seeing if a Piece would cause check at a space it can't even move to.");
+            return false;
+        }
+        Piece[][] hypotheticalBoard = this.copyBoard();
+        BoardPoint prevLoc = p.getLocation();
+        hypotheticalBoard[bp.getX()][bp.getY()] = p;
+        p.setLocation(bp);
+        hypotheticalBoard[prevLoc.getX()][prevLoc.getY()] = null;
+        boolean answer = this.boardHasCheck(hypotheticalBoard, p.getTeam());
+        p.setLocation(prevLoc);
+        return !answer;
     }
 }
