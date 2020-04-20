@@ -9,7 +9,11 @@ public class GameManager
 
     private ArrayList<Piece> pieces;
 
+    private StartScreen startScreen;
     private Board board;
+
+    // to determine rendering between the start screen and board
+    private boolean playing;
 
     // When the player clicks on a Piece
     private Piece selectedPiece;
@@ -22,6 +26,8 @@ public class GameManager
 
     public GameManager(int inputWidth, int inputHeight)
     {
+        playing = false;
+
         width = inputWidth;
         height = inputHeight;
 
@@ -42,6 +48,7 @@ public class GameManager
         pieces.add(new ExamplePieceMatthew(this,
                 new Point(width/4, height/6) , new BoardPoint(2,2)));*/
 
+        startScreen = new StartScreen(this);
         board = new Board(this);
 
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
@@ -107,16 +114,20 @@ public class GameManager
 
     public void render(Graphics2D g2d)
     {
-        board.render(g2d);
-        // Have each Piece draw itself
-        for(Piece p : pieces)
-        {
-            p.render(g2d);
-        }
-        board.drawHighlights(g2d);
-        if(selectedPiece != null)
-        {
-            selectedPiece.drawHighlight(g2d);
+        if(!playing){
+            startScreen.render(g2d);
+        } else {
+            board.render(g2d);
+            // Have each Piece draw itself
+            for(Piece p : pieces)
+            {
+                p.render(g2d);
+            }
+            board.drawHighlights(g2d);
+            if(selectedPiece != null)
+            {
+                selectedPiece.drawHighlight(g2d);
+            }
         }
     }
 
@@ -204,6 +215,8 @@ public class GameManager
     // ================================
     public void reactToClick(int mx, int my)
     {
+        playing = startScreen.buttonPress(mx, my);
+
         // If a Piece is selected, either move it or unselect it
         if(selectedPiece != null)
         {
