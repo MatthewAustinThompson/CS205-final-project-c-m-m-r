@@ -11,6 +11,7 @@ public class GameManager
 
     private StartScreen startScreen;
     private Board board;
+    private TurnDisplaySign turnDisplaySign;
 
     // to determine rendering between the start screen and board
     private boolean playing;
@@ -28,6 +29,10 @@ public class GameManager
     private boolean playerIsInCheck;
     private boolean computerCanMove;
     private boolean computerIsInCheck;
+    private final int playerTurnMarker = 1;
+    private final int computerTurnMarker = -1;
+    private int turnMarker = playerTurnMarker;
+
 
     public GameManager(int inputWidth, int inputHeight)
     {
@@ -48,6 +53,8 @@ public class GameManager
         computerIsInCheck = false;
 
         startScreen = new StartScreen(this);
+        turnDisplaySign = new TurnDisplaySign(this);
+
         board = new Board(this);
 
         this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
@@ -90,6 +97,9 @@ public class GameManager
         this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
 
         this.updatePieces();
+
+        System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+
     }
 
     public void tick()
@@ -117,6 +127,8 @@ public class GameManager
             startScreen.render(g2d);
         } else {
             board.render(g2d);
+            turnDisplaySign.render(g2d);
+
             // Have each Piece draw itself
             for(Piece p : pieces)
             {
@@ -221,10 +233,12 @@ public class GameManager
         else
         {
             // If a Piece is selected, either move it or unselect it
-            if(selectedPiece != null)
+            if(selectedPiece != null )
             {
                 BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
-                if(bp != null)
+
+                //Can't move piece unless it is that team's turn but can select and unselect to see valid moves
+                if(bp != null  && (convertTeamMarkerToTeam(turnMarker) == selectedPiece.getTeam()))
                 {
                     // If we are capturing, remove the piece getting captured
                     if(board.containsPiece(bp))
@@ -233,7 +247,17 @@ public class GameManager
                     }
                     // Now do the move
                     board.move(selectedPiece, bp);
+
+                    //If moved, switch teams & let user know
+                    turnMarker = (-turnMarker);
+                    System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+
+
                     needsToUpdate = true; // the pieces need to update where they can move
+                }
+
+                if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
+                    System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
                 }
                 selectedPiece.setIsHighlighted(false);
                 selectedPiece = null;
@@ -319,5 +343,15 @@ public class GameManager
             computerIsInCheck = false;
             return false;
         }
+    }
+
+    public Team convertTeamMarkerToTeam(int turnMarker){
+        if (turnMarker == playerTurnMarker){return Team.Player;}
+        if (turnMarker == computerTurnMarker){return Team.Computer;}
+        return Team.Player;
+    }
+
+    public Team getWhoseTurnItIs(){
+        return convertTeamMarkerToTeam(this.turnMarker);
     }
 }
