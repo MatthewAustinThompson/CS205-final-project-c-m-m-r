@@ -20,9 +20,14 @@ public class GameManager
 
     // If a Piece has been captured
     private Piece toBeRemoved;
-
     // If all Pieces need to update their moves
     private boolean needsToUpdate;
+
+    // Detecting when the game ends
+    private boolean playerCanMove;
+    private boolean playerIsInCheck;
+    private boolean computerCanMove;
+    private boolean computerIsInCheck;
 
     public GameManager(int inputWidth, int inputHeight)
     {
@@ -36,17 +41,11 @@ public class GameManager
         selectedPiece = null;
         toBeRemoved = null;
         needsToUpdate = false;
-        /*pieces.add(new ExamplePieceMarcus(this,
-                new Point(width/2, height/2), new BoardPoint(0,0)));
 
-        pieces.add(new ExamplePieceRuth(this,
-                new Point(width/3, height/3) , new BoardPoint(1,0)));
-
-        pieces.add(new ExamplePieceChris(this,
-                new Point(width/2, height/4) , new BoardPoint(2,1)));
-
-        pieces.add(new ExamplePieceMatthew(this,
-                new Point(width/4, height/6) , new BoardPoint(2,2)));*/
+        playerCanMove = true;
+        playerIsInCheck = false;
+        computerCanMove = true;
+        computerIsInCheck = false;
 
         startScreen = new StartScreen(this);
         board = new Board(this);
@@ -260,6 +259,65 @@ public class GameManager
             }
             selectedPiece = null;
             board.unhighlightAll();
+        }
+    }
+
+
+    // ===================================
+    //
+    //             Checkmate
+    //
+    // ===================================
+    public boolean updatePlayerCanMove()
+    {
+        for(Piece p : pieces)
+        {
+            if(p.getTeam() == Team.Player && p.canMove())
+            {
+                playerCanMove = true;
+                return true;
+            }
+        }
+        playerCanMove = false;
+        return false;
+    }
+    public boolean updateComputerCanMove()
+    {
+        for(Piece p : pieces)
+        {
+            if(p.getTeam() == Team.Computer && p.canMove())
+            {
+                computerCanMove = true;
+                return true;
+            }
+        }
+        computerCanMove = false;
+        return false;
+    }
+    public boolean updatePlayerIsInCheck()
+    {
+        if(board.boardHasCheck(board.getSpaces(), Team.Player))
+        {
+            playerIsInCheck = true;
+            return true;
+        }
+        else
+        {
+            playerIsInCheck = false;
+            return false;
+        }
+    }
+    public boolean updateComputerIsInCheck()
+    {
+        if(board.boardHasCheck(board.getSpaces(), Team.Computer))
+        {
+            computerIsInCheck = true;
+            return true;
+        }
+        else
+        {
+            computerIsInCheck = false;
+            return false;
         }
     }
 }
