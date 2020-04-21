@@ -12,6 +12,7 @@ public class GameManager
     private StartScreen startScreen;
     private Board board;
     private TurnDisplaySign turnDisplaySign;
+    private MessageBoard messageBoard;
 
     // to determine rendering between the start screen and board
     private boolean playing;
@@ -54,6 +55,7 @@ public class GameManager
 
         startScreen = new StartScreen(this);
         turnDisplaySign = new TurnDisplaySign(this);
+        messageBoard = new MessageBoard(this, turnDisplaySign);
 
         board = new Board(this);
 
@@ -126,8 +128,13 @@ public class GameManager
         if(!playing){
             startScreen.render(g2d);
         } else {
+            //===============================================================
+            // PUT DISPLAY STUFF HERE
+            //===============================================================
             board.render(g2d);
             turnDisplaySign.render(g2d);
+            messageBoard.render(g2d);
+
 
             // Have each Piece draw itself
             for(Piece p : pieces)
@@ -251,6 +258,7 @@ public class GameManager
                     //If moved, switch teams & let user know
                     turnMarker = (-turnMarker);
                     System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                    messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
 
 
                     needsToUpdate = true; // the pieces need to update where they can move
