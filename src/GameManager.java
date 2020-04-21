@@ -215,46 +215,51 @@ public class GameManager
     // ================================
     public void reactToClick(int mx, int my)
     {
-        playing = startScreen.buttonPress(mx, my);
-
-        // If a Piece is selected, either move it or unselect it
-        if(selectedPiece != null)
+        if(!playing)
         {
-            BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
-            if(bp != null)
-            {
-                // If we are capturing, remove the piece getting captured
-                if(board.containsPiece(bp))
-                {
-                    toBeRemoved = board.getPieceAt(bp);
-                }
-                // Now do the move
-                board.move(selectedPiece, bp);
-                needsToUpdate = true; // the pieces need to update where they can move
-            }
-            selectedPiece.setIsHighlighted(false);
-            selectedPiece = null;
-            board.unhighlightAll();
-            return;
+            playing = startScreen.buttonPress(mx, my);
         }
         else
         {
-            for(Piece p : pieces)
+            // If a Piece is selected, either move it or unselect it
+            if(selectedPiece != null)
             {
-                if(p.containsClick(mx, my))
+                BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
+                if(bp != null)
                 {
-                    selectedPiece = p;
-                    selectedPiece.setIsHighlighted(true);
-                    board.highlightLegalMoves(p);
-                    return;
+                    // If we are capturing, remove the piece getting captured
+                    if(board.containsPiece(bp))
+                    {
+                        toBeRemoved = board.getPieceAt(bp);
+                    }
+                    // Now do the move
+                    board.move(selectedPiece, bp);
+                    needsToUpdate = true; // the pieces need to update where they can move
+                }
+                selectedPiece.setIsHighlighted(false);
+                selectedPiece = null;
+                board.unhighlightAll();
+                return;
+            }
+            else
+            {
+                for(Piece p : pieces)
+                {
+                    if(p.containsClick(mx, my))
+                    {
+                        selectedPiece = p;
+                        selectedPiece.setIsHighlighted(true);
+                        board.highlightLegalMoves(p);
+                        return;
+                    }
                 }
             }
+            if(selectedPiece != null)
+            {
+                selectedPiece.setIsHighlighted(false);
+            }
+            selectedPiece = null;
+            board.unhighlightAll();
         }
-        if(selectedPiece != null)
-        {
-            selectedPiece.setIsHighlighted(false);
-        }
-        selectedPiece = null;
-        board.unhighlightAll();
     }
 }
