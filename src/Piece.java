@@ -258,4 +258,10 @@ public abstract class Piece
         s += location.getX() + "," + location.getY();
         return s;
     }
+
+    // Return true if the Piece currrently has at least one space it can move to
+    public boolean canMove()
+    {
+        return !legalMoveSquares.isEmpty();
+    }
 }
