@@ -1,5 +1,3 @@
-import javafx.scene.text.Text;
-
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
@@ -13,6 +11,8 @@ public class TurnDisplaySign {
     private int turnBoardWidth;
     private int turnBoardHeight;
 
+    RoundRectangle2D outRec, fillRec;
+
     // Variables for drawing
     private int lineWidth;
     private int pointRadius;
@@ -21,7 +21,6 @@ public class TurnDisplaySign {
     int signPositionX;
     int signPositionY;
 
-    Text text;
 
     public TurnDisplaySign(GameManager inputManager)
     {
@@ -40,6 +39,9 @@ public class TurnDisplaySign {
         pointRadius = 10;
         fillColor = new Color(128,178,245);
         outlineColor = new Color(45,58,98);
+
+        outRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 45, 45);
+        fillRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 35, 35);
     }
 
 
@@ -55,12 +57,12 @@ public class TurnDisplaySign {
         FontMetrics metrics = g2d.getFontMetrics(font);
 
         // Outline
-        RoundRectangle2D outRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 45, 45);
+        outRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 45, 45);
         g2d.setColor(outlineColor);
         g2d.fill(outRec);
 
         // Fill
-        RoundRectangle2D fillRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 35, 35);
+        fillRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 35, 35);
         fillRec.setFrame(outRec.getMinX() + 8,outRec.getMinY() + 6,turnBoardWidth * .94, turnBoardHeight * .85);
         g2d.setColor(fillColor);
         g2d.fill(fillRec);
@@ -82,6 +84,12 @@ public class TurnDisplaySign {
         g2d.drawString(turnMessage,(int)stringPosX, (int)stringPosY);
     }
 
+    public double getSignPositionXRight() {
+        return outRec.getMinX();
+    }
 
-
+    public double getSignPositionYFloor() {
+        return outRec.getMaxY();
+    }
 }
+
