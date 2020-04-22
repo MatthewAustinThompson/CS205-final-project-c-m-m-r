@@ -34,6 +34,7 @@ public class GameManager
     private TurnDisplaySign turnDisplaySign;
     private MessageBoard messageBoard;
     private PassButton passButton;
+    private ArrayList<String> messagesToAdd;  // store messages to add to the message board
 
     private boolean testingWithoutTurns = false; //SWITCH TO TRUE TO TEST PIECE MOVEMENT FREEELY
     private final int playerTurnMarker = 1;
@@ -63,6 +64,7 @@ public class GameManager
         startScreen = new StartScreen(this);
         turnDisplaySign = new TurnDisplaySign(this);
         messageBoard = new MessageBoard(this, turnDisplaySign);
+        messagesToAdd = new ArrayList<String>();
         passButton = new PassButton(this,messageBoard);
 
         board = new Board(this);
@@ -128,6 +130,16 @@ public class GameManager
         {
             updatePieces();
             needsToUpdate = false;
+            updateComputerCanMove();
+            updateComputerIsInCheck();
+            updatePlayerCanMove();
+            updatePlayerIsInCheck();
+            isGameOver();
+            for(String message : messagesToAdd)
+            {
+                messageBoard.addMessageToMessageBoard(message);
+            }
+            messagesToAdd = new ArrayList<String>();
         }
     }
 
@@ -255,9 +267,9 @@ public class GameManager
                 turnMarker = (-turnMarker);
 
                 if (!testingWithoutTurns) {
-                    System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                    messageBoard.addMessageToMessageBoard(convertTeamMarkerToTeam(-turnMarker) + " has passed their turn.");
-                    messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                    //System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                    messagesToAdd.add(convertTeamMarkerToTeam(-turnMarker) + " has passed their turn.");
+                    messagesToAdd.add("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
                 }
 
             }
@@ -284,12 +296,12 @@ public class GameManager
                     turnMarker = (-turnMarker);
 
                     if(testingWithoutTurns) {
-                        messageBoard.addMessageToMessageBoard("You have switched the turn enforcement OFF.");
+                        messagesToAdd.add("You have switched the turn enforcement OFF.");
                     }
 
                     if (!testingWithoutTurns) {
-                        System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                        messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                        //System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                        messagesToAdd.add("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
                     }
 
 
@@ -301,8 +313,8 @@ public class GameManager
 
                 if (!testingWithoutTurns) {
                     if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
-                        System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
-                        messageBoard.addMessageToMessageBoard("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+                        //System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+                        messagesToAdd.add("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
                     }
                 }
 
@@ -390,6 +402,23 @@ public class GameManager
             computerIsInCheck = false;
             return false;
         }
+    }
+
+    public boolean isGameOver()
+    {
+        if(turnMarker == playerTurnMarker && playerIsInCheck && !playerCanMove)
+        {
+            messagesToAdd.add("Player has been checkmated.");
+            messagesToAdd.add("Computer wins.");
+            return true;
+        }
+        if(turnMarker == computerTurnMarker && computerIsInCheck && !computerCanMove)
+        {
+            messagesToAdd.add("Computer has been checkmated.");
+            messagesToAdd.add("Player wins.");
+            return true;
+        }
+        return false;
     }
 
     public Team convertTeamMarkerToTeam(int turnMarker){
