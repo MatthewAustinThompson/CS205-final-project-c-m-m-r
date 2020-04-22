@@ -159,7 +159,10 @@ public class MessageBoard {
                     g2d.fill(fillRec);
 
                     g2d.setColor(outlineColor);
-                    this.visibleMsgCounter = 0;
+                    this.visibleMsgCounter = 1;
+
+                    g2d.drawString(msg, (int) stringPosX, (int) (fillRec.getMinY() + (outRec.getHeight() * .15)));
+
                 }
             }
         }

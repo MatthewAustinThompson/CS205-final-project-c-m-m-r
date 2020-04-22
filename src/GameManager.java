@@ -395,9 +395,10 @@ public class GameManager
         // If the user clicks on the pass button
         if (passButton.containsClick(mx, my))
         {
-
             //Switch teams & let user know
             turnMarker = computerTurnMarker;
+            messagesToAdd.add("Team Player has passed.");
+            needsToUpdate = true;
         }
         // If a Piece is selected, either move it or unselect it
         else if(selectedPiece != null)
@@ -452,6 +453,10 @@ public class GameManager
         {
             //Switch teams & let user know
             turnMarker = playerTurnMarker;
+
+            messagesToAdd.add("Team Computer has passed.");
+            needsToUpdate = true;
+
         }
         // If a Piece is selected, either move it or unselect it
         else if(selectedPiece != null)
