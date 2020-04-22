@@ -15,6 +15,7 @@ public class GameManager
 
     // to determine rendering between the start screen and board
     private boolean playing;
+    private boolean gameHasEnded;
     // When the user has clicked to play
     private boolean needToStartGame;
 
@@ -43,7 +44,12 @@ public class GameManager
     private final int computerTurnMarker = -1;
     private int turnMarker = playerTurnMarker;
 
+    private RectangularButton playAgainButton;
 
+    // Variables for drawing
+    Color paleOrange = new Color(239, 164, 103);
+    Color paleBlue = new Color(159, 208, 255);
+    Color deepBlue = new Color(45, 58, 98);
 
     public GameManager(int inputWidth, int inputHeight)
     {
@@ -51,6 +57,7 @@ public class GameManager
         height = inputHeight;
 
         playing = false;
+        gameHasEnded = false;
         needToStartGame = false;
         startScreen = new StartScreen(this);
     }
@@ -108,6 +115,7 @@ public class GameManager
             turnDisplaySign.render(g2d);
             messageBoard.render(g2d);
             passButton.render(g2d);
+            playAgainButton.render(g2d);
 
 
             // Have each Piece draw itself
@@ -168,6 +176,8 @@ public class GameManager
     {
         pieces = new ArrayList<Piece>();
 
+        turnMarker = playerTurnMarker;
+
         selectedPiece = null;
         toBeRemoved = null;
         needsToUpdate = false;
@@ -180,7 +190,13 @@ public class GameManager
         turnDisplaySign = new TurnDisplaySign(this);
         messageBoard = new MessageBoard(this, turnDisplaySign);
         messagesToAdd = new ArrayList<String>();
-        passButton = new PassButton(this,messageBoard);
+        passButton = new PassButton(this, messageBoard);
+
+        playAgainButton = new RectangularButton(this,
+                (int)(messageBoard.getXRight() + messageBoard.getWidth()/2 - width/8),
+                (int)(messageBoard.getYFloor() + height/8 + 20),
+                width/4,height/8, paleOrange, paleOrange, paleBlue, "Play Again");
+        playAgainButton.setIsFaded(true);
 
         board = new Board(this);
 
@@ -284,6 +300,10 @@ public class GameManager
         {
             reactToClickStart(mx, my);
         }
+        else if(gameHasEnded)
+        {
+            reactToClickGameEnded(mx, my);
+        }
         else if(turnMarker == playerTurnMarker)
         {
             reactToClickPlayer(mx, my);
@@ -386,6 +406,15 @@ public class GameManager
         {
             playing = true;
             needToStartGame = true;
+        }
+    }
+
+    public void reactToClickGameEnded(int mx, int my)
+    {
+        if(playAgainButton.containsClick(mx, my))
+        {
+            needToStartGame = true;
+            gameHasEnded = false;
         }
     }
 
@@ -567,12 +596,16 @@ public class GameManager
         {
             messagesToAdd.add("Player has been checkmated.");
             messagesToAdd.add("Computer wins.");
+            gameHasEnded = true;
+            playAgainButton.setIsFaded(false);
             return true;
         }
         if(turnMarker == computerTurnMarker && computerIsInCheck && !computerCanMove)
         {
             messagesToAdd.add("Computer has been checkmated.");
             messagesToAdd.add("Player wins.");
+            gameHasEnded = true;
+            playAgainButton.setIsFaded(false);
             return true;
         }
         return false;
