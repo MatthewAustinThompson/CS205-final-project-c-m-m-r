@@ -30,6 +30,9 @@ public class GameManager
     private boolean playerIsInCheck;
     private boolean computerCanMove;
     private boolean computerIsInCheck;
+
+    //======TURNS===================
+    private boolean testingWithoutTurns = false; //SWITCH TO TRUE TO TEST PIECE MOVEMENT FREEELY
     private final int playerTurnMarker = 1;
     private final int computerTurnMarker = -1;
     private int turnMarker = playerTurnMarker;
@@ -245,7 +248,9 @@ public class GameManager
                 BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
 
                 //Can't move piece unless it is that team's turn but can select and unselect to see valid moves
-                if(bp != null  && (convertTeamMarkerToTeam(turnMarker) == selectedPiece.getTeam()))
+                if(bp != null  &&
+                        ( ( convertTeamMarkerToTeam(turnMarker) == selectedPiece.getTeam() ) ||
+                                testingWithoutTurns) )
                 {
                     // If we are capturing, remove the piece getting captured
                     if(board.containsPiece(bp))
@@ -257,17 +262,30 @@ public class GameManager
 
                     //If moved, switch teams & let user know
                     turnMarker = (-turnMarker);
-                    System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                    messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+
+                    if(testingWithoutTurns) {
+                        messageBoard.addMessageToMessageBoard("You have switched the turn enforcement OFF.");
+                    }
+
+                    if (!testingWithoutTurns) {
+                        System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                        messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                    }
+
 
 
                     needsToUpdate = true; // the pieces need to update where they can move
                 }
 
-                if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
-                    System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
-                    messageBoard.addMessageToMessageBoard("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+
+
+                if (!testingWithoutTurns) {
+                    if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
+                        System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+                        messageBoard.addMessageToMessageBoard("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+                    }
                 }
+
                 selectedPiece.setIsHighlighted(false);
                 selectedPiece = null;
                 board.unhighlightAll();
