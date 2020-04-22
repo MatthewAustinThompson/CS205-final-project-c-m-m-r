@@ -137,6 +137,14 @@ public class GameManager
     {
         return board;
     }
+    public boolean getPlaying()
+    {
+        return playing;
+    }
+    public boolean isPlayersTurn()
+    {
+        return turnMarker == playerTurnMarker;
+    }
 
     // Setters
     public void setWidth(int inputWidth)
@@ -274,13 +282,17 @@ public class GameManager
     {
         if(!playing)
         {
-            if(startScreen.buttonPress(mx, my))
-            {
-                playing = true;
-                needToStartGame = true;
-            }
+            reactToClickStart(mx, my);
         }
-        else
+        else if(turnMarker == playerTurnMarker)
+        {
+            reactToClickPlayer(mx, my);
+        }
+        else if(turnMarker == computerTurnMarker)
+        {
+            reactToClickComputer(mx, my);
+        }
+        /*else
         {
             //If the pass button was clicked, switch turns
             if (passButton.containsClick(mx, my)){
@@ -297,7 +309,7 @@ public class GameManager
             }
 
             // If a Piece is selected, either move it or unselect it
-            if(selectedPiece != null )
+            if(selectedPiece != null)
             {
                 BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
 
@@ -364,9 +376,127 @@ public class GameManager
             }
             selectedPiece = null;
             board.unhighlightAll();
+        }*/
+    }
+
+    // React to a click on the start screen
+    public void reactToClickStart(int mx, int my)
+    {
+        if(startScreen.buttonPress(mx, my))
+        {
+            playing = true;
+            needToStartGame = true;
         }
     }
 
+    // React to a click on the player's turn
+    public void reactToClickPlayer(int mx, int my)
+    {
+        // If the user clicks on the pass button
+        if (passButton.containsClick(mx, my))
+        {
+
+            //Switch teams & let user know
+            turnMarker = computerTurnMarker;
+        }
+        // If a Piece is selected, either move it or unselect it
+        else if(selectedPiece != null)
+        {
+            BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
+            if(bp != null)
+            {
+                // If we are capturing, remove the piece getting captured
+                if(board.containsPiece(bp))
+                {
+                    toBeRemoved = board.getPieceAt(bp);
+                }
+                // Now do the move
+                board.move(selectedPiece, bp);
+
+                turnMarker = computerTurnMarker;
+                needsToUpdate = true; // the pieces need to update where they can move
+            }
+            // We have either moved the Piece, or clicked off it. In either case,
+            // unhighlight the piece.
+            selectedPiece.setIsHighlighted(false);
+            selectedPiece = null;
+            board.unhighlightAll();
+            return;
+        }
+        else
+        {
+            for(Piece p : pieces)
+            {
+                if(p.containsClick(mx, my) && p.getTeam() == Team.Player)
+                {
+                    selectedPiece = p;
+                    selectedPiece.setIsHighlighted(true);
+                    board.highlightLegalMoves(p);
+                    return;
+                }
+            }
+        }
+        if(selectedPiece != null)
+        {
+            selectedPiece.setIsHighlighted(false);
+        }
+        selectedPiece = null;
+        board.unhighlightAll();
+    }
+
+    // React to a click on the computer's turn
+    public void reactToClickComputer(int mx, int my)
+    {
+        // If the user clicks on the pass button
+        if(passButton.containsClick(mx, my))
+        {
+            //Switch teams & let user know
+            turnMarker = playerTurnMarker;
+        }
+        // If a Piece is selected, either move it or unselect it
+        else if(selectedPiece != null)
+        {
+            BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
+            if(bp != null)
+            {
+                // If we are capturing, remove the piece getting captured
+                if(board.containsPiece(bp))
+                {
+                    toBeRemoved = board.getPieceAt(bp);
+                }
+                // Now do the move
+                board.move(selectedPiece, bp);
+
+                turnMarker = playerTurnMarker;
+                needsToUpdate = true; // the pieces need to update where they can move
+            }
+            // We have either moved the Piece, or clicked off it. In either case,
+            // unhighlight the piece.
+            selectedPiece.setIsHighlighted(false);
+            selectedPiece = null;
+            board.unhighlightAll();
+            return;
+        }
+        else
+        {
+            for(Piece p : pieces)
+            {
+                if(p.containsClick(mx, my) && p.getTeam() == Team.Computer)
+                {
+                    selectedPiece = p;
+                    selectedPiece.setIsHighlighted(true);
+                    board.highlightLegalMoves(p);
+                    return;
+                }
+            }
+        }
+        if(selectedPiece != null)
+        {
+            selectedPiece.setIsHighlighted(false);
+        }
+        selectedPiece = null;
+        board.unhighlightAll();
+    }
 
     // ===================================
     //
