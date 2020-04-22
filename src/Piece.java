@@ -99,8 +99,7 @@ public abstract class Piece
         if(this.isHighlighted)
         {
             g2d.setStroke(new BasicStroke(5));
-            Color brightOrange = new Color(255,148,7);
-            g2d.setColor(brightOrange);
+            g2d.setColor(new Color(170, 231, 255, 255));
             g2d.draw(this.outline);
         }
     }

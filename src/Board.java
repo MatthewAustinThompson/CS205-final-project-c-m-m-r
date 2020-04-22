@@ -35,9 +35,7 @@ public class Board
 
         Color nightBlue = new Color(8,8,51);
         defaultColor = nightBlue;
-
-        Color brightOrange = new Color(255,148,7);
-        highlightedColor = brightOrange;
+        highlightedColor = new Color(170, 231, 255, 255);
     }
 
 

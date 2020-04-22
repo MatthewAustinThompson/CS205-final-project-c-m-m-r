@@ -97,7 +97,7 @@ public class Game extends Canvas implements Runnable
 
         //========================COLOR SPLIT BG=============================
         Color rightColor = new Color(197, 221, 245);
-        Color leftColor = new Color(222, 174, 112, 221);
+        Color leftColor = new Color(235, 184, 119, 221);
 
         g2d.setColor(rightColor);
         g2d.fillRect((int) (WIDTH * .55), 0, (int)(WIDTH ), HEIGHT);
