@@ -16,8 +16,13 @@ public class TurnDisplaySign {
     // Variables for drawing
     private int lineWidth;
     private int pointRadius;
-    private Color fillColor;
-    private Color outlineColor;
+    Color paleOrange = new Color(255,207,165);
+    Color paleBlue = new Color(159,208,255);
+    Color deepBlue =  new Color(45,58,98);
+
+    private Color fillColor = paleBlue;
+    private Color outlineColor = deepBlue;
+
     int signPositionX;
     int signPositionY;
 
@@ -37,8 +42,6 @@ public class TurnDisplaySign {
 
         lineWidth = 8;
         pointRadius = 10;
-        fillColor = new Color(128,178,245);
-        outlineColor = new Color(45,58,98);
 
         outRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 45, 45);
         fillRec = new RoundRectangle2D.Double(signPositionX, signPositionY, turnBoardWidth, turnBoardHeight, 35, 35);
@@ -53,7 +56,7 @@ public class TurnDisplaySign {
     public void render(Graphics2D g2d)
     {
 
-        Font font = new Font("Helvetica", Font.PLAIN, 20);
+        Font font = new Font("Helvetica", Font.PLAIN, 25);
         FontMetrics metrics = g2d.getFontMetrics(font);
 
         // Outline
@@ -84,12 +87,16 @@ public class TurnDisplaySign {
         g2d.drawString(turnMessage,(int)stringPosX, (int)stringPosY);
     }
 
-    public double getSignPositionXRight() {
+    public double getSignPositionXLeft() {
         return outRec.getMinX();
     }
 
     public double getSignPositionYFloor() {
         return outRec.getMaxY();
+    }
+
+    public double getOuterWidth() {
+        return outRec.getWidth();
     }
 }
 

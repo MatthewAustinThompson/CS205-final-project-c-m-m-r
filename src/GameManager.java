@@ -266,6 +266,7 @@ public class GameManager
 
                 if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
                     System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
+                    messageBoard.addMessageToMessageBoard("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
                 }
                 selectedPiece.setIsHighlighted(false);
                 selectedPiece = null;

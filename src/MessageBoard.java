@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -16,22 +15,34 @@ public class MessageBoard {
     private int windowHeight;
     private int messageBoardWidth;
     private int messageBoardHeight;
-    private RoundRectangle2D outRec,fillRec;
+    private RoundRectangle2D outRec,fillRec,coverMsgRec;
     TurnDisplaySign turnDisplaySign;
 
     //=========================================
     //Drawing Stuff
     //=========================================
-    private Color fillColor;
-    private Color outlineColor;
+    Color paleOrange = new Color(255,207,165);
+    Color paleBlue = new Color(159,208,255);
+    Color deepBlue =  new Color(0,54,108);
+    private Color fillColor = paleBlue;
+    private Color outlineColor = deepBlue;
     int msgBoardPositionX;
     int msgBoardPositionY;
 
     //=========================================
     //Message Board Stuff
     //=========================================
-    private ArrayList<String> messagesToDisplay;
-    String concatMessages = "";
+    int visibleMsgCounter = 0;
+    final int msgSpacing = 12;
+
+    double stringPosX = 0;
+    double stringPosY = 0;
+    private ArrayList<String> messagesToDisplay = new ArrayList<String>();
+
+    double coverWidth;
+    double coverHeight;
+    int coverX;
+    int coverY;
 
     public MessageBoard(GameManager inputManager, TurnDisplaySign turnDisplaySign)
     {
@@ -40,15 +51,17 @@ public class MessageBoard {
         windowWidth = (int)manager.getWidth();
         windowHeight = (int)manager.getHeight();
 
-        messageBoardHeight = windowHeight/4;
-        messageBoardWidth = windowWidth/4;
+        messageBoardHeight = (int) (windowHeight * .38);
+        messageBoardWidth = (int) (windowWidth * .375);
 
-        msgBoardPositionX = (windowWidth - (int) (windowWidth * .37) );
+        //msgBoardPositionX = ( (int) this.turnDisplaySign.getSignPositionXLeft() - 30);
+        msgBoardPositionX = (int) (this.turnDisplaySign.getSignPositionXLeft() +
+                this.turnDisplaySign.getOuterWidth() * .5
+                - messageBoardWidth * .5 );
+
         msgBoardPositionY = ((int) this.turnDisplaySign.getSignPositionYFloor() + 40 );
 
 
-        fillColor = new Color(128,178,245);
-        outlineColor = new Color(45,58,98);
     }
 
 
@@ -56,7 +69,7 @@ public class MessageBoard {
     //       Add to MSG BOARD
     // ===========================================
     public void addMessageToMessageBoard(String msg) {
-        concatMessages = concatMessages + "\n" + msg;
+        messagesToDisplay.add(msg);
     }
 
     // ===========================================
@@ -66,35 +79,94 @@ public class MessageBoard {
     // ===========================================
     public void render(Graphics2D g2d)
     {
-        //add string messages, turn into text object
 
-        //The board is as tall as it needs to be + a little padding
+        //==============================
+        // FONT to use
+        //==============================
 
-
-        //define font to use
         Font font = new Font("Helvetica", Font.PLAIN, 20);
         FontMetrics metrics = g2d.getFontMetrics(font);
+        g2d.setFont(font);
 
-        // Outline rectanlge
-        outRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
+        Font smallerFont = new Font("Helvetica", Font.PLAIN, 17);
+        FontMetrics smallerMetrics = g2d.getFontMetrics(smallerFont);
+
+        //==============================
+        // RECTANGLES
+        //==============================
+
+        // Outline rectangle
+        outRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 25, 25);
         g2d.setColor(outlineColor);
         g2d.fill(outRec);
 
-        // Fill rectanlge
-        fillRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 35, 35);
-        fillRec.setFrame(outRec.getMinX() + 8,outRec.getMinY() + 6,messageBoardWidth * .94, messageBoardHeight * .85);
+        // Fill rectangle and center
+        fillRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
+        double fillRecWidth = messageBoardWidth * .94;
+        double fillRecHeight = messageBoardHeight * .90;
+        int fillRecPosX = (int)(outRec.getMinX() + outRec.getWidth()/2 - fillRecWidth/2);
+        int fillRecPosY = (int)(outRec.getMinY() + outRec.getHeight()/2 - fillRecHeight/2);
+        fillRec.setFrame(fillRecPosX,fillRecPosY,fillRecWidth,fillRecHeight);
+
         g2d.setColor(fillColor);
         g2d.fill(fillRec);
 
 
-
+        //==============================
+        // MESSAGE BOARD
+        //==============================
         //FIXED ERROR: Metrics was created w font object.  Resetting font to different font than what used metrics causes
         //measurements not to align
-        double stringPosX = outRec.getMinX() + outRec.getWidth()/2 ;
-        double stringPosY = fillRec.getMinY() + 20;
 
 
+        //==========================================
+        //PRINT THE MESSAGES THAT HAVE BEEN ADDED
+        //==========================================
+        g2d.setFont(smallerFont);
+        g2d.setColor(outlineColor);
+        visibleMsgCounter = 0;
 
+        if (!messagesToDisplay.isEmpty()){
+            for (String msg: messagesToDisplay){
+
+                //==============
+                //The x value of text is :
+                // + start at rectangle's left X position
+                // + half the rectangle's width to center by the text's edge
+                // - half the text's width to center by the text's center
+                //==============
+
+                stringPosX = outRec.getMinX() + ( outRec.getWidth() * .5) - (smallerMetrics.getStringBounds(msg,null).getWidth() * .5);
+
+                stringPosY = fillRec.getMinY() + ( outRec.getHeight() * .15 +  (visibleMsgCounter * msgSpacing) );
+
+                g2d.drawString(msg, (int) stringPosX,(int) (stringPosY + 10 * visibleMsgCounter) );
+
+                visibleMsgCounter++;
+
+                //if the messages run over the message box, 'clear' it
+                //just paint over it lol
+
+                if ( (stringPosY + 10 * visibleMsgCounter + 20) > fillRec.getMaxY() ) {
+                    // Fill rectanlge
+                    coverMsgRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
+                    coverWidth = messageBoardWidth * .94;
+                    coverHeight = messageBoardHeight * .85;
+                    coverX = (int)(outRec.getMinX() + outRec.getWidth()/2 - coverWidth/2);
+                    coverY = (int)(outRec.getMinY() + outRec.getHeight()/2 - coverHeight/2);
+                    fillRec.setFrame(coverX,coverY,coverWidth,coverHeight);
+
+                    g2d.setColor(fillColor);
+                    g2d.fill(fillRec);
+
+                    g2d.setColor(outlineColor);
+                    this.visibleMsgCounter = 0;
+
+
+                }
+
+            }
+        }
     }
 
 

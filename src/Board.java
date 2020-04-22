@@ -32,8 +32,12 @@ public class Board
 
         lineWidth = 8;
         pointRadius = 10;
-        defaultColor = Color.BLUE;
-        highlightedColor = Color.MAGENTA;
+
+        Color nightBlue = new Color(8,8,51);
+        defaultColor = nightBlue;
+
+        Color brightOrange = new Color(255,148,7);
+        highlightedColor = brightOrange;
     }
 
 
