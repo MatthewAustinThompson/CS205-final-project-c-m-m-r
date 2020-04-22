@@ -22,11 +22,12 @@ public class MessageBoard {
     //=========================================
     //Drawing Stuff
     //=========================================
-    Color paleOrange = new Color(255,207,165);
+    Color paleOrange = new Color(240, 188, 140);
     Color paleBlue = new Color(159,208,255);
     Color deepBlue =  new Color(0,54,108);
     private Color fillColor = paleBlue;
-    private Color outlineColor = deepBlue;
+    private Color outlineColor = paleBlue;
+    private Color textColor = deepBlue;
     int msgBoardPositionX;
     int msgBoardPositionY;
 
@@ -91,7 +92,7 @@ public class MessageBoard {
         FontMetrics metrics = g2d.getFontMetrics(font);
         g2d.setFont(font);
 
-        Font smallerFont = new Font("Helvetica", Font.PLAIN, 17);
+        Font smallerFont = new Font("Helvetica", Font.PLAIN, 20);
         FontMetrics smallerMetrics = g2d.getFontMetrics(smallerFont);
 
         //==============================
@@ -126,7 +127,7 @@ public class MessageBoard {
         //PRINT THE MESSAGES THAT HAVE BEEN ADDED
         //==========================================
         g2d.setFont(smallerFont);
-        g2d.setColor(outlineColor);
+        g2d.setColor(textColor);
         visibleMsgCounter = 0;
 
         if (!messagesToDisplay.isEmpty()) {
@@ -158,7 +159,7 @@ public class MessageBoard {
                     g2d.setColor(fillColor);
                     g2d.fill(fillRec);
 
-                    g2d.setColor(outlineColor);
+                    g2d.setColor(textColor);
                     this.visibleMsgCounter = 1;
 
                     g2d.drawString(msg, (int) stringPosX, (int) (fillRec.getMinY() + (outRec.getHeight() * .15)));

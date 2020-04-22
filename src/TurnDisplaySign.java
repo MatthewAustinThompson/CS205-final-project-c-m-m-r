@@ -36,7 +36,7 @@ public class TurnDisplaySign {
         turnBoardHeight = windowHeight/8;
         turnBoardWidth = windowWidth/4;
 
-        signPositionX = (windowWidth - (int) (windowWidth * .37) );
+        signPositionX = (windowWidth - (int) (windowWidth * .345) );
         signPositionY = (windowHeight - (int) (windowHeight * 0.9) );
 
 

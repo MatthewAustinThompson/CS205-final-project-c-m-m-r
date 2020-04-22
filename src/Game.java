@@ -7,6 +7,7 @@ It is a tutorial by RealTutsGML
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
@@ -94,11 +95,18 @@ public class Game extends Canvas implements Runnable
         }
         Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
 
-        Color paleOrange = new Color(255,207,165);
-        Color paleBlue = new Color(188, 219, 248);
+        //========================COLOR SPLIT BG=============================
+        Color rightColor = new Color(197, 221, 245);
+        Color leftColor = new Color(222, 174, 112, 221);
+
+        g2d.setColor(rightColor);
+        g2d.fillRect((int) (WIDTH * .55), 0, (int)(WIDTH ), HEIGHT);
+
+        g2d.setColor(leftColor);
+        g2d.fillRect((int) (0), 0, (int)(WIDTH * .55), HEIGHT);
+        //=======================END COLOR SPLIT BG==========================
+
         // Draw the background each frame
-        g2d.setColor(paleBlue);
-        g2d.fillRect(0, 0, WIDTH, HEIGHT);
         gameManager.render(g2d);
 
         g2d.dispose();

@@ -19,7 +19,7 @@ public class PassButton {
     RoundRectangle2D buttonDisplay;
 
     // Variables for drawing
-    Color paleOrange = new Color(255, 207, 165);
+    Color paleOrange = new Color(239, 164, 103);
     Color paleBlue = new Color(159, 208, 255);
     Color deepBlue = new Color(45, 58, 98);
 
