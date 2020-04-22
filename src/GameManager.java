@@ -15,6 +15,8 @@ public class GameManager
 
     // to determine rendering between the start screen and board
     private boolean playing;
+    // When the user has clicked to play
+    private boolean needToStartGame;
 
     // When the player clicks on a Piece
     private Piece selectedPiece;
@@ -45,109 +47,60 @@ public class GameManager
 
     public GameManager(int inputWidth, int inputHeight)
     {
-        playing = false;
-
         width = inputWidth;
         height = inputHeight;
 
-        pieces = new ArrayList<Piece>();
-
-        selectedPiece = null;
-        toBeRemoved = null;
-        needsToUpdate = false;
-
-        playerCanMove = true;
-        playerIsInCheck = false;
-        computerCanMove = true;
-        computerIsInCheck = false;
-
+        playing = false;
+        needToStartGame = false;
         startScreen = new StartScreen(this);
-        turnDisplaySign = new TurnDisplaySign(this);
-        messageBoard = new MessageBoard(this, turnDisplaySign);
-        messagesToAdd = new ArrayList<String>();
-        passButton = new PassButton(this,messageBoard);
-
-        board = new Board(this);
-
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
-
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
-        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(0,3));
-        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(2,3));
-        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(4,3));
-        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(6,3));
-        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(8,3));
-
-        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
-        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
-        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
-        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
-
-        this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,8));
-        this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,1));
-
-        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
-        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
-        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
-        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
-
-        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
-        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
-        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
-        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
-
-        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
-        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
-        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
-        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
-
-        this.updatePieces();
-
-        System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-
     }
 
     public void tick()
     {
+        if(needToStartGame)
+        {
+            this.startGame();
+            needToStartGame = false;
+        }
         // Have each Piece update each frame, if applicable
-        for(Piece p : pieces)
+        if(playing)
         {
-            p.tick();
-        }
-        if(toBeRemoved != null)
-        {
-            pieces.remove(toBeRemoved);
-            toBeRemoved = null;
-        }
-        if(needsToUpdate)
-        {
-            updatePieces();
-            needsToUpdate = false;
-            updateComputerCanMove();
-            updateComputerIsInCheck();
-            updatePlayerCanMove();
-            updatePlayerIsInCheck();
-            isGameOver();
-            for(String message : messagesToAdd)
+            for(Piece p : pieces)
             {
-                messageBoard.addMessageToMessageBoard(message);
+                p.tick();
             }
-            messagesToAdd = new ArrayList<String>();
+            if(toBeRemoved != null)
+            {
+                pieces.remove(toBeRemoved);
+                toBeRemoved = null;
+            }
+            if(needsToUpdate)
+            {
+                updatePieces();
+                needsToUpdate = false;
+                updateComputerCanMove();
+                updateComputerIsInCheck();
+                updatePlayerCanMove();
+                updatePlayerIsInCheck();
+                isGameOver();
+                for(String message : messagesToAdd)
+                {
+                    messageBoard.addMessageToMessageBoard(message);
+                }
+                messagesToAdd = new ArrayList<String>();
+            }
         }
+
     }
 
     public void render(Graphics2D g2d)
     {
-        if(!playing){
+        if(!playing || needToStartGame)
+        {
             startScreen.render(g2d);
-        } else {
+        }
+        else
+        {
             //===============================================================
             // PUT DISPLAY STUFF HERE
             //===============================================================
@@ -200,6 +153,71 @@ public class GameManager
     //         Managing Pieces
     //
     // ================================
+
+    // This resets the board to its starting position and initializes variables to
+    // play the game
+    public void startGame()
+    {
+        pieces = new ArrayList<Piece>();
+
+        selectedPiece = null;
+        toBeRemoved = null;
+        needsToUpdate = false;
+
+        playerCanMove = true;
+        playerIsInCheck = false;
+        computerCanMove = true;
+        computerIsInCheck = false;
+
+        turnDisplaySign = new TurnDisplaySign(this);
+        messageBoard = new MessageBoard(this, turnDisplaySign);
+        messagesToAdd = new ArrayList<String>();
+        passButton = new PassButton(this,messageBoard);
+
+        board = new Board(this);
+
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
+
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(0,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(2,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(4,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(6,3));
+        this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(8,3));
+
+        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
+        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
+        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
+        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
+
+        this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,8));
+        this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,1));
+
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
+
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
+
+        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
+        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
+        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
+        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
+
+        this.updatePieces();
+    }
+
     public void addPiece(PieceType pieceType, Team team, BoardPoint location)
     {
         if(board.containsPiece(location))
@@ -256,7 +274,11 @@ public class GameManager
     {
         if(!playing)
         {
-            playing = startScreen.buttonPress(mx, my);
+            if(startScreen.buttonPress(mx, my))
+            {
+                playing = true;
+                needToStartGame = true;
+            }
         }
         else
         {
