@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class MessageBoard {
 
@@ -15,7 +16,7 @@ public class MessageBoard {
     private int windowHeight;
     private int messageBoardWidth;
     private int messageBoardHeight;
-    private RoundRectangle2D outRec,fillRec,coverMsgRec;
+    private RoundRectangle2D outRec,fillRec, coverMsgRec;
     TurnDisplaySign turnDisplaySign;
 
     //=========================================
@@ -61,6 +62,8 @@ public class MessageBoard {
 
         msgBoardPositionY = ((int) this.turnDisplaySign.getSignPositionYFloor() + 40 );
 
+        outRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 25, 25);
+        fillRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
 
     }
 
@@ -77,7 +80,7 @@ public class MessageBoard {
     //       Drawing the Message Board Sign
     //
     // ===========================================
-    public void render(Graphics2D g2d)
+    public void render(Graphics2D g2d) throws ConcurrentModificationException
     {
 
         //==============================
@@ -126,49 +129,52 @@ public class MessageBoard {
         g2d.setColor(outlineColor);
         visibleMsgCounter = 0;
 
-        if (!messagesToDisplay.isEmpty()){
-            for (String msg: messagesToDisplay){
-
+        if (!messagesToDisplay.isEmpty()) {
+            for (String msg : messagesToDisplay) {
                 //==============
                 //The x value of text is :
-                // + start at rectangle's left X position
+                 // + start at rectangle's left X position
                 // + half the rectangle's width to center by the text's edge
                 // - half the text's width to center by the text's center
                 //==============
 
-                stringPosX = outRec.getMinX() + ( outRec.getWidth() * .5) - (smallerMetrics.getStringBounds(msg,null).getWidth() * .5);
-
-                stringPosY = fillRec.getMinY() + ( outRec.getHeight() * .15 +  (visibleMsgCounter * msgSpacing) );
-
-                g2d.drawString(msg, (int) stringPosX,(int) (stringPosY + 10 * visibleMsgCounter) );
+                stringPosX = outRec.getMinX() + (outRec.getWidth() * .5) - (smallerMetrics.getStringBounds(msg, null).getWidth() * .5);
+                stringPosY = fillRec.getMinY() + (outRec.getHeight() * .15 + (visibleMsgCounter * msgSpacing));
+                g2d.drawString(msg, (int) stringPosX, (int) (stringPosY + 10 * visibleMsgCounter));
 
                 visibleMsgCounter++;
 
                 //if the messages run over the message box, 'clear' it
                 //just paint over it lol
-
-                if ( (stringPosY + 10 * visibleMsgCounter + 20) > fillRec.getMaxY() ) {
+                if ((stringPosY + 10 * visibleMsgCounter + 20) > fillRec.getMaxY()) {
                     // Fill rectanlge
                     coverMsgRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
                     coverWidth = messageBoardWidth * .94;
                     coverHeight = messageBoardHeight * .85;
-                    coverX = (int)(outRec.getMinX() + outRec.getWidth()/2 - coverWidth/2);
-                    coverY = (int)(outRec.getMinY() + outRec.getHeight()/2 - coverHeight/2);
-                    fillRec.setFrame(coverX,coverY,coverWidth,coverHeight);
+                    coverX = (int) (outRec.getMinX() + outRec.getWidth() / 2 - coverWidth / 2);
+                    coverY = (int) (outRec.getMinY() + outRec.getHeight() / 2 - coverHeight / 2);
+                    fillRec.setFrame(coverX, coverY, coverWidth, coverHeight);
 
                     g2d.setColor(fillColor);
                     g2d.fill(fillRec);
 
                     g2d.setColor(outlineColor);
                     this.visibleMsgCounter = 0;
-
-
                 }
-
             }
         }
     }
 
+    public double getYFloor(){
+        return outRec.getMaxY();
+    }
 
+    public double getXRight(){
+        return outRec.getMinX();
+    }
+
+    public double getWidth(){
+        return outRec.getWidth();
+    }
 
 }

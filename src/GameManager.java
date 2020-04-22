@@ -11,8 +11,7 @@ public class GameManager
 
     private StartScreen startScreen;
     private Board board;
-    private TurnDisplaySign turnDisplaySign;
-    private MessageBoard messageBoard;
+
 
     // to determine rendering between the start screen and board
     private boolean playing;
@@ -32,10 +31,15 @@ public class GameManager
     private boolean computerIsInCheck;
 
     //======TURNS===================
+    private TurnDisplaySign turnDisplaySign;
+    private MessageBoard messageBoard;
+    private PassButton passButton;
+
     private boolean testingWithoutTurns = false; //SWITCH TO TRUE TO TEST PIECE MOVEMENT FREEELY
     private final int playerTurnMarker = 1;
     private final int computerTurnMarker = -1;
     private int turnMarker = playerTurnMarker;
+
 
 
     public GameManager(int inputWidth, int inputHeight)
@@ -59,6 +63,7 @@ public class GameManager
         startScreen = new StartScreen(this);
         turnDisplaySign = new TurnDisplaySign(this);
         messageBoard = new MessageBoard(this, turnDisplaySign);
+        passButton = new PassButton(this,messageBoard);
 
         board = new Board(this);
 
@@ -137,6 +142,7 @@ public class GameManager
             board.render(g2d);
             turnDisplaySign.render(g2d);
             messageBoard.render(g2d);
+            passButton.render(g2d);
 
 
             // Have each Piece draw itself
@@ -242,6 +248,20 @@ public class GameManager
         }
         else
         {
+            //If the pass button was clicked, switch turns
+            if (passButton.containsClick(mx, my)){
+
+                //Switch teams & let user know
+                turnMarker = (-turnMarker);
+
+                if (!testingWithoutTurns) {
+                    System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                    messageBoard.addMessageToMessageBoard(convertTeamMarkerToTeam(-turnMarker) + " has passed their turn.");
+                    messageBoard.addMessageToMessageBoard("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
+                }
+
+            }
+
             // If a Piece is selected, either move it or unselect it
             if(selectedPiece != null )
             {
