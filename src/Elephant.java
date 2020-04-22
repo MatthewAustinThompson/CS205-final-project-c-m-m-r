@@ -76,10 +76,10 @@ public class Elephant extends Piece
         try {
             //Create BufferedImage object by reading from file
             if(this.getTeam()==Team.Computer){
-            img = ImageIO.read(new File("./src/ElephantRed.png"));
+            img = ImageIO.read(new File("./src/Images/ElephantRed2.png"));
             }
             else {
-                img = ImageIO.read(new File("./src/ElephantGreen.png"));
+                img = ImageIO.read(new File("./src/Images/ElephantGreen2.png"));
             }
 
         } catch (IOException e) {

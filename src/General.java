@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class General extends Piece
@@ -45,11 +49,31 @@ public class General extends Piece
         g2d.setColor(fillColor);
         g2d.fill(outline);
 
+
+        BufferedImage img = null;
+        try {
+            //Create BufferedImage object by reading from file
+            if(this.getTeam()==Team.Computer){
+                img = ImageIO.read(new File("./src/Images/KingRed.png"));
+            }
+            else {
+                img = ImageIO.read(new File("./src/Images/KingGreen.png"));
+            }
+
+        } catch (IOException e) {
+            System.out.println("no img found");
+        }
+        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
+        g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 23, null);
+
+        /*
         // Write the word "Soldier"
         g2d.setFont(new Font("Courier", Font.PLAIN, 10));
         g2d.setColor(symbolColor);
         int pixelLength = g2d.getFontMetrics().stringWidth("General"); // the number of pixels the string is long
         g2d.drawString("General", (int)this.center.x - pixelLength/2, (int)center.y + 5);
+
+         */
     }
 
 
