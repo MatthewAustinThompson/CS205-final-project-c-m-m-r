@@ -229,37 +229,37 @@ public abstract class Piece
         }
         if(pieceType == PieceType.General)
         {
-            s += " General at ";
+            s += "General at ";
         }
         else if(pieceType == PieceType.Horse)
         {
-            s += " Horse at ";
+            s += "Horse at ";
         }
         else if(pieceType == PieceType.Chariot)
         {
-            s += " Chariot at ";
+            s += "Chariot at ";
         }
         else if(pieceType == PieceType.Guard)
         {
-            s += " Guard at ";
+            s += "Guard at ";
         }
         else if(pieceType == PieceType.Soldier)
         {
-            s += " Soldier at ";
+            s += "Soldier at ";
         }
         else if(pieceType == PieceType.Elephant)
         {
-            s += " Elephant at ";
+            s += "Elephant at ";
         }
         else if(pieceType == PieceType.Cannon)
         {
-            s += " Cannon at ";
+            s += "Cannon at ";
         }
         s += location.getX() + "," + location.getY();
         return s;
     }
 
-    // Return true if the Piece currrently has at least one space it can move to
+    // Return true if the Piece currently has at least one space it can move to
     public boolean canMove()
     {
         return !legalMoveSquares.isEmpty();
