@@ -13,9 +13,10 @@ public class GameManager
     private Board board;
 
 
-    // to determine rendering between the start screen and board
+    // To determine rendering between the start screen and board
     private boolean playing;
     private boolean gameHasEnded;
+
     // When the user has clicked to play
     private boolean needToStartGame;
 
@@ -24,6 +25,7 @@ public class GameManager
 
     // If a Piece has been captured
     private Piece toBeRemoved;
+
     // If all Pieces need to update their moves
     private boolean needsToUpdate;
 
@@ -39,7 +41,7 @@ public class GameManager
     private PassButton passButton;
     private ArrayList<String> messagesToAdd;  // store messages to add to the message board
 
-    private boolean testingWithoutTurns = false; //SWITCH TO TRUE TO TEST PIECE MOVEMENT FREEELY
+    private boolean testingWithoutTurns = false; //SWITCH TO TRUE TO TEST PIECE MOVEMENT FREELY
     private final int playerTurnMarker = 1;
     private final int computerTurnMarker = -1;
     private int turnMarker = playerTurnMarker;
@@ -96,8 +98,11 @@ public class GameManager
                 }
                 messagesToAdd = new ArrayList<String>();
             }
+            if(turnMarker == computerTurnMarker && !gameHasEnded)
+            {
+                computerMove();
+            }
         }
-
     }
 
     public void render(Graphics2D g2d)
@@ -154,6 +159,7 @@ public class GameManager
         return turnMarker == playerTurnMarker;
     }
 
+
     // Setters
     public void setWidth(int inputWidth)
     {
@@ -163,6 +169,7 @@ public class GameManager
     {
         height = inputHeight;
     }
+
 
     // ================================
     //
@@ -280,6 +287,7 @@ public class GameManager
         pieces.add(p);
         board.getSpaces()[location.getX()][location.getY()] = p;
     }
+
     public void updatePieces()
     {
         for(Piece p : pieces)
@@ -314,10 +322,10 @@ public class GameManager
         }
         /*else
         {
-            //If the pass button was clicked, switch turns
+            // If the pass button was clicked, switch turns
             if (passButton.containsClick(mx, my)){
 
-                //Switch teams & let user know
+                // Switch teams & let user know
                 turnMarker = (-turnMarker);
 
                 if (!testingWithoutTurns) {
@@ -333,7 +341,7 @@ public class GameManager
             {
                 BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
 
-                //Can't move piece unless it is that team's turn but can select and unselect to see valid moves
+                // Can't move piece unless it is that team's turn but can select and unselect to see valid moves
                 if(bp != null  &&
                         ( ( convertTeamMarkerToTeam(turnMarker) == selectedPiece.getTeam() ) ||
                                 testingWithoutTurns) )
@@ -346,7 +354,7 @@ public class GameManager
                     // Now do the move
                     board.move(selectedPiece, bp);
 
-                    //If moved, switch teams & let user know
+                    // If moved, switch teams & let user know
                     turnMarker = (-turnMarker);
 
                     if(testingWithoutTurns) {
@@ -480,7 +488,7 @@ public class GameManager
         // If the user clicks on the pass button
         if(passButton.containsClick(mx, my))
         {
-            //Switch teams & let user know
+            // Switch teams & let user know
             turnMarker = playerTurnMarker;
 
             messagesToAdd.add("Team Computer has passed.");
@@ -532,6 +540,88 @@ public class GameManager
         board.unhighlightAll();
     }
 
+
+    // ================================
+    //
+    //          Computer Move
+    //
+    // ================================
+    public void computerMove()
+    {
+        // If no possible moves, but not in check then must pass
+        if(!computerCanMove && !computerIsInCheck)
+        {
+            turnMarker = playerTurnMarker;
+            System.out.println("Team Computer has passed.");
+            messageBoard.addMessageToMessageBoard("Team Computer has passed.");
+            System.out.println("It is now Team Player's turn.");
+            messageBoard.addMessageToMessageBoard("It is now Team Player's turn.");
+        }
+        else
+        {
+            // Initializer List
+            ArrayList<Piece> computerPieces = new ArrayList<Piece>();
+            ArrayList<BoardPoint> computerBP = new ArrayList<BoardPoint>();
+            BoardPoint bp = new BoardPoint(0, 0);
+            boolean redo = true;
+            int randomPiece = 0;
+            int randomMove = 0;
+
+            // Add all the pieces on Team Computer that have legal move options to a new ArrayList
+            for(Piece p : pieces)
+            {
+                if(p.getTeam() == Team.Computer && p.canMove())
+                {
+                    computerPieces.add(p);
+                }
+            }
+
+            while(redo)
+            {
+                // Reset
+                redo = false;
+                computerBP.clear();
+
+                // Creates a random int with a max value of the computerPieces ArrayList size minus one,
+                // with a min value of 0, this is so its value can be used to index the pieces
+                randomPiece = (int)(Math.random() * (computerPieces.size()-1) + 0);
+
+                computerBP.addAll(computerPieces.get(randomPiece).getLegalMoveSquares());
+
+                // Creates a random int with a max value of the computerBP ArrayList size minus one,
+                // with a min value of 0, this is so its value can be used to index the piece's moves
+                randomMove = (int)(Math.random() * (computerBP.size()-1) + 0);
+                bp = computerBP.get(randomMove);
+
+                // If the computer is in check and function that looks to see if the team will be in check
+                // after moving a piece returns that the team will be, then goes to beginning of while loop
+                if(computerIsInCheck && !board.canMoveWithoutCausingCheck(computerPieces.get(randomPiece), bp))
+                {
+                    redo = true;
+                }
+            }
+
+            // If we are capturing, remove the piece getting captured
+            if (board.containsPiece(bp)) {
+                toBeRemoved = board.getPieceAt(bp);
+            }
+
+            // Now do the move
+            board.move(computerPieces.get(randomPiece), bp);
+
+            // If moved, switch teams & let user know
+            turnMarker = playerTurnMarker;
+
+            if (!testingWithoutTurns) {
+                System.out.println("It is now Team Player's turn.");
+                messageBoard.addMessageToMessageBoard("It is now Team Player's turn.");
+            }
+
+            needsToUpdate = true; // the pieces need to update where they can move
+        }
+    }
+
+
     // ===================================
     //
     //             Checkmate
@@ -568,6 +658,8 @@ public class GameManager
         if(board.boardHasCheck(board.getSpaces(), Team.Player))
         {
             playerIsInCheck = true;
+            System.out.println("Team Player is in check.");
+            messageBoard.addMessageToMessageBoard("Team Player is in check.");
             return true;
         }
         else
@@ -581,6 +673,8 @@ public class GameManager
         if(board.boardHasCheck(board.getSpaces(), Team.Computer))
         {
             computerIsInCheck = true;
+            System.out.println("Team Computer is in check.");
+            messageBoard.addMessageToMessageBoard("Team Computer is in check.");
             return true;
         }
         else
