@@ -1,6 +1,9 @@
 # JANGGI
 Marcus Elia, Ruth Kollar, Christopher Suitor, Matthew Thompson
 
+UVM CS205 Final Project
+#
+
 Janggi is a Korean board game reminiscent of Chess.
 One major difference of Janggi from Chess is that, in Janggi, you move along the lines.
 
