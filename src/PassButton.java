@@ -5,9 +5,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PassButton extends RectangularButton{
-
-
+public class PassButton extends RectangularButton
+{
     private GameManager manager;
     private int windowWidth;
     private int windowHeight;
@@ -28,9 +27,8 @@ public class PassButton extends RectangularButton{
     private Color outlineColor = deepBlue;
 
 
-
-
-    public PassButton(GameManager inputManager, MessageBoard messageBoard) {
+    public PassButton(GameManager inputManager, MessageBoard messageBoard)
+    {
         super(inputManager,
                 (int)(messageBoard.getXRight()
                 + messageBoard.getWidth()/2
@@ -44,13 +42,13 @@ public class PassButton extends RectangularButton{
                 "Pass Turn"
         );
 
-        /* super constructor has to be first line
+        /* Super constructor has to be first line
         RectangularButton(GameManager inputManager, int inputPosX, int inputPosY, int inputButtonWidth,
                  int inputButtonHeight, Color inputFillColor, Color inputOutlineColor,
                  Color inputFadedFillColor, String inputText)
          */
 
-        //Super input calculations
+        // Super input calculations
         manager = inputManager;
         windowWidth = (int) manager.getWidth();
         windowHeight = (int) manager.getHeight();
@@ -68,10 +66,11 @@ public class PassButton extends RectangularButton{
 
     }
 
-    //modified to extend, now use superclass methods
+    // Modified to extend, now use superclass methods
 
 /*
-    public void render(Graphics2D g2d){
+    public void render(Graphics2D g2d)
+    {
         g2d.setColor(paleOrange);
         g2d.fill(buttonDisplay);
 
@@ -83,14 +82,15 @@ public class PassButton extends RectangularButton{
 
         String buttonTxt = "Pass Turn";
 
-        //CENTER and DRAW button text
+        // CENTER and DRAW button text
         double stringPosX = buttonDisplay.getMinX() + buttonDisplay.getWidth()/2 - metrics.getStringBounds(buttonTxt,null).getWidth()/2;
         double stringPosY = buttonDisplay.getMinY() + buttonDisplay.getHeight()/2 + metrics.getStringBounds(buttonTxt,null).getHeight()/4;
         g2d.drawString(buttonTxt,(int)stringPosX, (int)stringPosY);
 
     }
 */
-    public boolean containsClickCoordinates(int x, int y){
+    public boolean containsClickCoordinates(int x, int y)
+    {
         if (
                 x > buttonDisplay.getMinX() &&
                 y > buttonDisplay.getMinY() &&
@@ -102,7 +102,5 @@ public class PassButton extends RectangularButton{
         return false;
 
     }
-
-
 }
 
