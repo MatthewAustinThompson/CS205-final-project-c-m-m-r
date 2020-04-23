@@ -105,6 +105,8 @@ public class MessageBoard {
         g2d.fill(outRec);
 
         // Fill rectangle and center
+        fillRec = outRec;
+        /*
         fillRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
         double fillRecWidth = messageBoardWidth * .94;
         double fillRecHeight = messageBoardHeight * .90;
@@ -113,7 +115,9 @@ public class MessageBoard {
         fillRec.setFrame(fillRecPosX,fillRecPosY,fillRecWidth,fillRecHeight);
 
         g2d.setColor(fillColor);
-        g2d.fill(fillRec);
+        g2d.fill(fillRec); */
+
+
 
 
         //==============================
@@ -128,12 +132,10 @@ public class MessageBoard {
         //==========================================
         g2d.setFont(smallerFont);
         g2d.setColor(textColor);
-        visibleMsgCounter = 0;
+        this.visibleMsgCounter = 0;
 
         if (!messagesToDisplay.isEmpty()) {
             for (String msg : messagesToDisplay) {
-
-                System.out.println("MSG" + msg);
                 //==============
                 //The x value of text is :
                  // + start at rectangle's left X position
@@ -142,24 +144,24 @@ public class MessageBoard {
                 //==============
 
                 stringPosX = outRec.getMinX() + (outRec.getWidth() * .5) - (smallerMetrics.getStringBounds(msg, null).getWidth() * .5);
-                stringPosY = fillRec.getMinY() + (outRec.getHeight() * .15 + (visibleMsgCounter * msgSpacing));
-                g2d.drawString(msg, (int) stringPosX, (int) (stringPosY + 10 * visibleMsgCounter));
+                stringPosY = fillRec.getMinY() + (fillRec.getHeight() * .15 + (this.visibleMsgCounter * msgSpacing));
+                g2d.drawString(msg, (int) stringPosX, (int) (stringPosY + 10 * this.visibleMsgCounter));
 
                 visibleMsgCounter++;
 
                 //if the messages run over the message box, 'clear' it
                 //just paint over it lol
-                if ((stringPosY + 10 * visibleMsgCounter + 20) > fillRec.getMaxY()) {
+                if ((stringPosY + (10 * visibleMsgCounter) + 20) > fillRec.getMaxY()) {
                     // Fill rectanlge
                     coverMsgRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
                     coverWidth = messageBoardWidth * .94;
                     coverHeight = messageBoardHeight * .85;
                     coverX = (int) (outRec.getMinX() + outRec.getWidth() / 2 - coverWidth / 2);
                     coverY = (int) (outRec.getMinY() + outRec.getHeight() / 2 - coverHeight / 2);
-                    fillRec.setFrame(coverX, coverY, coverWidth, coverHeight);
+                    coverMsgRec.setFrame(coverX, coverY, coverWidth, coverHeight);
 
                     g2d.setColor(fillColor);
-                    g2d.fill(fillRec);
+                    g2d.fill(coverMsgRec);
 
                     g2d.setColor(textColor);
                     this.visibleMsgCounter = 1;

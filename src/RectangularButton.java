@@ -84,5 +84,6 @@ public class RectangularButton
     public void setIsFaded(boolean input)
     {
         isFaded = input;
+
     }
 }

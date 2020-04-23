@@ -27,7 +27,7 @@ public class GameManager
     private Piece toBeRemoved;
 
     // If all Pieces need to update their moves
-    private boolean needsToUpdate;
+    private boolean needsToUpdate = true;
 
     // Detecting when the game ends
     private boolean playerCanMove;
@@ -97,22 +97,29 @@ public class GameManager
                 for(String message : messagesToAdd)
                 {
                     messageBoard.addMessageToMessageBoard(message);
-                    messageBoard.addMessageToMessageBoard("extraLine");
+                    System.out.println("Adding" + message); //does not print????
+                    messageBoard.addMessageToMessageBoard("Extra Line"); //fixed
                 }
-                messagesToAdd = new ArrayList<String>();
+                messagesToAdd.clear();
 
                 //Can current team pass turn?=======================
                 if (getWhoseTurnItIs() == Team.Player){
+
                     if (!playerCanMove && !playerIsInCheck){
                         passButton.setIsFaded(false);
                     }
-                    passButton.setIsFaded(true);
+                    if (playerCanMove || playerIsInCheck){
+                        passButton.setIsFaded(true);
+                    }
                 }
                 if (getWhoseTurnItIs() == Team.Computer){
                     if (!computerCanMove && !computerIsInCheck){
                         passButton.setIsFaded(false);
                     }
-                    passButton.setIsFaded(true);
+
+                    if (computerCanMove || computerIsInCheck){
+                        passButton.setIsFaded(true);
+                    }
                 }
 
             }
@@ -205,7 +212,7 @@ public class GameManager
 
         selectedPiece = null;
         toBeRemoved = null;
-        needsToUpdate = false;
+        needsToUpdate = true;
 
         playerCanMove = true;
         playerIsInCheck = false;
@@ -216,7 +223,6 @@ public class GameManager
         messageBoard = new MessageBoard(this, turnDisplaySign);
         messagesToAdd = new ArrayList<String>();
         passButton = new PassButton(this, messageBoard);
-        passButton.setIsFaded(true);
 
         playAgainButton = new RectangularButton(this,
                 (int)(messageBoard.getXRight() + messageBoard.getWidth()/2 - width/8),
@@ -448,6 +454,7 @@ public class GameManager
     // React to a click on the player's turn
     public void reactToClickPlayer(int mx, int my)
     {
+
         // If the user clicks on the pass button
         if (passButton.containsClick(mx, my))
         {
@@ -456,7 +463,6 @@ public class GameManager
             messagesToAdd.add("Team Player has passed.");
             needsToUpdate = true;
         }
-
 
         // If a Piece is selected, either move it or unselect it
         else if(selectedPiece != null)
