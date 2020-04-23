@@ -679,7 +679,6 @@ public class GameManager
             if (!testingWithoutTurns) {
                 System.out.println("It is now Team Player's turn.");
             }
-
             */
 
             needsToUpdate = true; // the pieces need to update where they can move
