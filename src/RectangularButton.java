@@ -74,6 +74,8 @@ public class RectangularButton
 
     public boolean containsClick(int x, int y)
     {
+        if (isFaded){return false;}
+
         return x > buttonDisplay.getMinX() && y > buttonDisplay.getMinY() &&
               x < buttonDisplay.getMaxX() && y < buttonDisplay.getMaxY();
     }

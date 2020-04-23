@@ -132,6 +132,8 @@ public class MessageBoard {
 
         if (!messagesToDisplay.isEmpty()) {
             for (String msg : messagesToDisplay) {
+
+                System.out.println("MSG" + msg);
                 //==============
                 //The x value of text is :
                  // + start at rectangle's left X position

@@ -5,7 +5,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PassButton {
+public class PassButton extends RectangularButton{
 
 
     private GameManager manager;
@@ -22,6 +22,7 @@ public class PassButton {
     Color paleOrange = new Color(239, 164, 103);
     Color paleBlue = new Color(159, 208, 255);
     Color deepBlue = new Color(45, 58, 98);
+    Color faded = new Color(170,170,170);
 
     private Color fillColor = paleBlue;
     private Color outlineColor = deepBlue;
@@ -30,6 +31,26 @@ public class PassButton {
 
 
     public PassButton(GameManager inputManager, MessageBoard messageBoard) {
+        super(inputManager,
+                (int)(messageBoard.getXRight()
+                + messageBoard.getWidth()/2
+                - inputManager.getWidth() / 4/2),
+                (int)messageBoard.getYFloor() + 10,
+                (int)inputManager.getWidth()/4,
+                (int)inputManager.getHeight()/8,
+                new Color(239, 164, 103),
+                new Color(239, 164, 103),
+                new Color(170,170,170),
+                "Pass Turn"
+        );
+
+        /* super constructor has to be first line
+        RectangularButton(GameManager inputManager, int inputPosX, int inputPosY, int inputButtonWidth,
+                 int inputButtonHeight, Color inputFillColor, Color inputOutlineColor,
+                 Color inputFadedFillColor, String inputText)
+         */
+
+        //Super input calculations
         manager = inputManager;
         windowWidth = (int) manager.getWidth();
         windowHeight = (int) manager.getHeight();
@@ -47,7 +68,9 @@ public class PassButton {
 
     }
 
+    //modified to extend, now use superclass methods
 
+/*
     public void render(Graphics2D g2d){
         g2d.setColor(paleOrange);
         g2d.fill(buttonDisplay);
@@ -66,8 +89,8 @@ public class PassButton {
         g2d.drawString(buttonTxt,(int)stringPosX, (int)stringPosY);
 
     }
-
-    public boolean containsClick(int x, int y){
+*/
+    public boolean containsClickCoordinates(int x, int y){
         if (
                 x > buttonDisplay.getMinX() &&
                 y > buttonDisplay.getMinY() &&
@@ -79,5 +102,7 @@ public class PassButton {
         return false;
 
     }
+
+
 }
 

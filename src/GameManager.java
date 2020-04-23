@@ -92,11 +92,29 @@ public class GameManager
                 updatePlayerCanMove();
                 updatePlayerIsInCheck();
                 isGameOver();
+
+                //Add message board msgs============================
                 for(String message : messagesToAdd)
                 {
                     messageBoard.addMessageToMessageBoard(message);
+                    messageBoard.addMessageToMessageBoard("extraLine");
                 }
                 messagesToAdd = new ArrayList<String>();
+
+                //Can current team pass turn?=======================
+                if (getWhoseTurnItIs() == Team.Player){
+                    if (!playerCanMove && !playerIsInCheck){
+                        passButton.setIsFaded(false);
+                    }
+                    passButton.setIsFaded(true);
+                }
+                if (getWhoseTurnItIs() == Team.Computer){
+                    if (!computerCanMove && !computerIsInCheck){
+                        passButton.setIsFaded(false);
+                    }
+                    passButton.setIsFaded(true);
+                }
+
             }
             if(turnMarker == computerTurnMarker && !gameHasEnded)
             {
@@ -198,6 +216,7 @@ public class GameManager
         messageBoard = new MessageBoard(this, turnDisplaySign);
         messagesToAdd = new ArrayList<String>();
         passButton = new PassButton(this, messageBoard);
+        passButton.setIsFaded(true);
 
         playAgainButton = new RectangularButton(this,
                 (int)(messageBoard.getXRight() + messageBoard.getWidth()/2 - width/8),
@@ -437,6 +456,8 @@ public class GameManager
             messagesToAdd.add("Team Player has passed.");
             needsToUpdate = true;
         }
+
+
         // If a Piece is selected, either move it or unselect it
         else if(selectedPiece != null)
         {
@@ -612,10 +633,12 @@ public class GameManager
             // If moved, switch teams & let user know
             turnMarker = playerTurnMarker;
 
+            /*
             if (!testingWithoutTurns) {
                 System.out.println("It is now Team Player's turn.");
-                messageBoard.addMessageToMessageBoard("It is now Team Player's turn.");
             }
+
+             */
 
             needsToUpdate = true; // the pieces need to update where they can move
         }
