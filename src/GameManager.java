@@ -231,44 +231,44 @@ public class GameManager
 
         board = new Board(this);
 
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
-        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
-        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
-
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
-        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
+//        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
+//        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
+//        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
+//        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
+//
+//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
+//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
+//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
+//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
+//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(0,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(2,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(4,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(6,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(8,3));
 
-        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
-        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
-        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
-        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
+//        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
+//        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
+//        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
+//        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
 
         this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,8));
         this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,1));
 
-        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
-        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
-        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
-        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
-
-        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
-        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
-        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
-        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
-
-        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
-        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
-        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
-        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
+//        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
+//        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
+//        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
+//        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
+//
+//        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
+//        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
+//        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
+//        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
+//
+//        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
+//        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
+//        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
+//        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
 
         this.updatePieces();
     }
@@ -579,6 +579,7 @@ public class GameManager
         {
             turnMarker = playerTurnMarker;
             messagesToAdd.add("Team Computer has passed.");
+            needsToUpdate = true;
         }
         else
         {
@@ -625,7 +626,7 @@ public class GameManager
                 {
                     // Creates a random int with a max value of the capturePieces ArrayList size minus one,
                     // with a min value of 0, this is so its value can be used to index the pieces
-                    randomPiece = (int)(Math.random() * (capturePieces.size()-1) + 0);
+                    randomPiece = (int)(Math.random() * capturePieces.size() + 0);
 
                     // Add legal moves of randomly chosen piece to new ArrayList
                     computerBP.addAll(capturePieces.get(randomPiece).getLegalMoveSquares());
@@ -638,7 +639,7 @@ public class GameManager
                 {
                     // Creates a random int with a max value of the computerPieces ArrayList size minus one,
                     // with a min value of 0, this is so its value can be used to index the pieces
-                    randomPiece = (int)(Math.random() * (computerPieces.size()-1) + 0);
+                    randomPiece = (int)(Math.random() * computerPieces.size() + 0);
 
                     // Add legal moves of randomly chosen piece to new ArrayList
                     computerBP.addAll(computerPieces.get(randomPiece).getLegalMoveSquares());
@@ -646,7 +647,7 @@ public class GameManager
 
                 // Creates a random int with a max value of the computerBP ArrayList size minus one,
                 // with a min value of 0, this is so its value can be used to index the piece's moves
-                randomMove = (int)(Math.random() * (computerBP.size()-1) + 0);
+                randomMove = (int)(Math.random() * computerBP.size() + 0);
                 bp = computerBP.get(randomMove);
 
                 // If the computer is in check and function that looks to see if the team will be in check
