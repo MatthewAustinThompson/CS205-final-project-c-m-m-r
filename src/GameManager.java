@@ -651,10 +651,21 @@ public class GameManager
                 bp = computerBP.get(randomMove);
 
                 // If the computer is in check and function that looks to see if the team will be in check
-                // after moving a piece returns that the team will be, then goes to beginning of while loop
-                if(computerIsInCheck && !board.canMoveWithoutCausingCheck(computerPieces.get(randomPiece), bp))
+                // after moving a piece returns that the team will be, then goes to beginning of while loop,
+                // works regardless of using capturePieces or computerPieces for randomPiece
+                if(!capturePieces.isEmpty())
                 {
-                    redo = true;
+                    if(computerIsInCheck && !board.canMoveWithoutCausingCheck(capturePieces.get(randomPiece), bp))
+                    {
+                        redo = true;
+                    }
+                }
+                else
+                {
+                    if(computerIsInCheck && !board.canMoveWithoutCausingCheck(computerPieces.get(randomPiece), bp))
+                    {
+                        redo = true;
+                    }
                 }
             }
 
