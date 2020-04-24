@@ -231,44 +231,44 @@ public class GameManager
 
         board = new Board(this);
 
-//        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
-//        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
-//        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
-//        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
-//
-//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
-//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
-//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
-//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
-//        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(1,9));
+        this.addPiece(PieceType.Horse, Team.Player, new BoardPoint(7,9));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(1,0));
+        this.addPiece(PieceType.Horse, Team.Computer, new BoardPoint(7,0));
+
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(0,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(2,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(4,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(6,6));
+        this.addPiece(PieceType.Soldier, Team.Player, new BoardPoint(8,6));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(0,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(2,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(4,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(6,3));
         this.addPiece(PieceType.Soldier, Team.Computer, new BoardPoint(8,3));
 
-//        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
-//        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
-//        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
-//        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
+        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(3,9));
+        this.addPiece(PieceType.Guard, Team.Player, new BoardPoint(5,9));
+        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(3,0));
+        this.addPiece(PieceType.Guard, Team.Computer, new BoardPoint(5,0));
 
         this.addPiece(PieceType.General, Team.Player, new BoardPoint(4,8));
         this.addPiece(PieceType.General, Team.Computer, new BoardPoint(4,1));
 
-//        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
-//        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
-//        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
-//        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
-//
-//        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
-//        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
-//        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
-//        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
-//
-//        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
-//        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
-//        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
-//        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(2,9));
+        this.addPiece(PieceType.Elephant, Team.Player, new BoardPoint(6,9));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(2,0));
+        this.addPiece(PieceType.Elephant, Team.Computer, new BoardPoint(6,0));
+
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(0,9));
+        this.addPiece(PieceType.Chariot, Team.Player, new BoardPoint(8,9));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(0,0));
+        this.addPiece(PieceType.Chariot, Team.Computer, new BoardPoint(8,0));
+
+        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(1,7));
+        this.addPiece(PieceType.Cannon, Team.Player, new BoardPoint(7,7));
+        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(1,2));
+        this.addPiece(PieceType.Cannon, Team.Computer, new BoardPoint(7,2));
 
         this.updatePieces();
     }
