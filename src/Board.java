@@ -422,6 +422,61 @@ public class Board
         return false;
     }
 
+    // This returns true if the generals are facing each other with nothing
+    // in between on the given board
+    public boolean generalsAreFacing(Piece[][] boardSpaces)
+    {
+        BoardPoint playerGeneralLoc = new BoardPoint(0,0); // initialize to default value
+        BoardPoint computerGeneralLoc = new BoardPoint(0,0); // initialize to default value
+        boolean playerGeneralFound = false;
+        boolean computerGeneralFound = false;
+        for(int i = 0; i < boardSpaces.length; i++)
+        {
+            for(int j = 0; j < boardSpaces[0].length; j++)
+            {
+                if(boardSpaces[i][j] != null && boardSpaces[i][j].getPieceType() == PieceType.General)
+                {
+                    if(boardSpaces[i][j].getTeam() == Team.Player)
+                    {
+                        playerGeneralLoc = boardSpaces[i][j].getLocation();
+                        playerGeneralFound = true;
+                    }
+                    else
+                    {
+                        computerGeneralLoc = boardSpaces[i][j].getLocation();
+                        computerGeneralFound = true;
+                    }
+                }
+            }
+        }
+        if(!computerGeneralFound)
+        {
+            System.out.println("Error: computer General not found.");
+        }
+        if(!playerGeneralFound)
+        {
+            System.out.println("Error: player General not found.");
+        }
+
+        // Starting at the player's general's position, move up the board to see if we run
+        // into the computer's general first
+        int i = playerGeneralLoc.getX();
+        int j = playerGeneralLoc.getY();
+        while(j > 0)
+        {
+            j--;
+            if(computerGeneralLoc.is(i, j))
+            {
+                return true;
+            }
+            else if(boardSpaces[i][j] != null)
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+
     // Helper function: returns a copy of the current Board
     public Piece[][] copyBoard()
     {
@@ -451,6 +506,25 @@ public class Board
         p.setLocation(bp);
         hypotheticalBoard[prevLoc.getX()][prevLoc.getY()] = null;
         boolean answer = this.boardHasCheck(hypotheticalBoard, p.getTeam());
+        p.setLocation(prevLoc);
+        return !answer;
+    }
+
+    // Tests if the Piece can move to the given space without making the two
+    // generals face each other
+    public boolean canMoveWithoutMakingGeneralsFace(Piece p, BoardPoint bp)
+    {
+        if(!p.getTargetingSquares().contains(bp))
+        {
+            System.out.println("Problem: you are seeing if a Piece would cause Generals to face at a space it can't even move to.");
+            return false;
+        }
+        Piece[][] hypotheticalBoard = this.copyBoard();
+        BoardPoint prevLoc = p.getLocation();
+        hypotheticalBoard[bp.getX()][bp.getY()] = p;
+        p.setLocation(bp);
+        hypotheticalBoard[prevLoc.getX()][prevLoc.getY()] = null;
+        boolean answer = this.generalsAreFacing(hypotheticalBoard);
         p.setLocation(prevLoc);
         return !answer;
     }
