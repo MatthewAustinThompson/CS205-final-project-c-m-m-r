@@ -34,6 +34,8 @@ public class GameManager
     private boolean playerIsInCheck;
     private boolean computerCanMove;
     private boolean computerIsInCheck;
+    private boolean generalsWereFacing;
+    private boolean generalsAreFacing;
 
     //======TURNS===================
     private TurnDisplaySign turnDisplaySign;
@@ -92,6 +94,7 @@ public class GameManager
                 updateComputerIsInCheck();
                 updatePlayerCanMove();
                 updatePlayerIsInCheck();
+                updateGeneralsFacing();
                 isGameOver();
 
                 // Add message board msgs============================
@@ -217,6 +220,8 @@ public class GameManager
         playerIsInCheck = false;
         computerCanMove = true;
         computerIsInCheck = false;
+        generalsAreFacing = false;
+        generalsWereFacing = false;
 
         turnDisplaySign = new TurnDisplaySign(this);
         messageBoard = new MessageBoard(this, turnDisplaySign);
@@ -700,7 +705,7 @@ public class GameManager
 
     // ===================================
     //
-    //             Checkmate
+    //          Checkmate/Draw
     //
     // ===================================
     public boolean updatePlayerCanMove()
@@ -757,6 +762,20 @@ public class GameManager
             return false;
         }
     }
+    public boolean updateGeneralsFacing()
+    {
+        generalsWereFacing = generalsAreFacing;
+        if(board.generalsAreFacing(board.getSpaces()))
+        {
+            generalsAreFacing = true;
+            return true;
+        }
+        else
+        {
+            generalsAreFacing = false;
+            return false;
+        }
+    }
 
     public boolean isGameOver()
     {
@@ -772,6 +791,23 @@ public class GameManager
         {
             messagesToAdd.add("Computer has been checkmated.");
             messagesToAdd.add("Player wins.");
+            gameHasEnded = true;
+            playAgainButton.setIsFaded(false);
+            return true;
+        }
+        if(generalsAreFacing && generalsWereFacing)
+        {
+            if(turnMarker == playerTurnMarker)
+            {
+                messagesToAdd.add("The Generals faced, and");
+                messagesToAdd.add("the computer did not move away.");
+            }
+            else
+            {
+                messagesToAdd.add("The Generals faced, and");
+                messagesToAdd.add("the player did not move away.");
+            }
+            messagesToAdd.add("The game is a draw.");
             gameHasEnded = true;
             playAgainButton.setIsFaded(false);
             return true;
