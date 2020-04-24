@@ -40,7 +40,7 @@ public class GameManager
     //======TURNS===================
     private TurnDisplaySign turnDisplaySign;
     private MessageBoard messageBoard;
-    private PassButton passButton;
+    private RectangularButton passButton;
     private ArrayList<String> messagesToAdd;  // Store messages to add to the message board
 
     private boolean testingWithoutTurns = false; // SWITCH TO TRUE TO TEST PIECE MOVEMENT FREELY
@@ -240,8 +240,11 @@ public class GameManager
         turnDisplaySign = new TurnDisplaySign(this);
         messageBoard = new MessageBoard(this, turnDisplaySign);
         messagesToAdd = new ArrayList<String>();
-        passButton = new PassButton(this, messageBoard);
-
+        //passButton = new PassButton(this, messageBoard);
+        passButton = new RectangularButton(this,
+                (int)(messageBoard.getXRight() + messageBoard.getWidth()/2 - width/8),
+                (int)(messageBoard.getYFloor() + 10),
+                width/4,height/8, paleOrange, paleOrange, faded, "Pass Turn");
         playAgainButton = new RectangularButton(this,
                 (int)(messageBoard.getXRight() + messageBoard.getWidth()/2 - width/8),
                 (int)(messageBoard.getYFloor() + height/8 + 20),
@@ -604,6 +607,11 @@ public class GameManager
         if(playing)
         {
             playAgainButton.reactToMouseMotion(mx, my);
+            passButton.reactToMouseMotion(mx, my);
+        }
+        else
+        {
+            startScreen.reactToMouseMotion(mx, my);
         }
     }
 
