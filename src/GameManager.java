@@ -97,14 +97,28 @@ public class GameManager
                 updateGeneralsFacing();
                 isGameOver();
 
-                // Add message board msgs============================
-                for(String message : messagesToAdd)
-                {
-                    messageBoard.addMessageToMessageBoard(message);
+                //==============================
+                //        MESSAGE BOARD
+                //==============================
+                //TO USE:
+                // Add your string to messagesToAdd.Add("string")
+                // Set this.needsToUpdate = true;
+                // Set messageBoard.setNeedsToUpdate(true);
+                //DELETES ALL MESSAGES that were added prior to the
+                // most recent setting of messagesBoard.setNeedsToUpdate(true)
+                if(messageBoard.needsToUpdate()){
+                    messageBoard.clear();
+                    for(String message : messagesToAdd)
+                    {
+                        messageBoard.addMessageToMessageBoard(message);
+                    }
+                    messagesToAdd.clear();
+                    messageBoard.setNeedsToUpdate(false);
                 }
-                messagesToAdd.clear();
 
-                // Can current team pass turn?=======================
+                //==============================
+                //         PASS BUTTON
+                //==============================
                 if (getWhoseTurnItIs() == Team.Player){
 
                     if (!playerCanMove && !playerIsInCheck){
@@ -141,7 +155,7 @@ public class GameManager
         else
         {
             //===============================================================
-            // PUT DISPLAY STUFF HERE
+            // PUT ANYTHING THAT NEEDS TO RENDER HERE
             //===============================================================
             board.render(g2d);
             turnDisplaySign.render(g2d);
@@ -459,13 +473,25 @@ public class GameManager
     public void reactToClickPlayer(int mx, int my)
     {
 
+        //TODO: DELETE THIS LATER
+        //Testing msg board
+        /*
+        messagesToAdd.add("Player has clicked.");
+        messagesToAdd.add("line 2");
+        messagesToAdd.add("-----------------------");
+        needsToUpdate = true;
+        messageBoard.setNeedsToUpdate(true);
+        */
+
         // If the user clicks on the pass button
         if (passButton.containsClick(mx, my))
         {
             //Switch teams & let user know
             turnMarker = computerTurnMarker;
             messagesToAdd.add("Team Player has passed.");
+
             needsToUpdate = true;
+            messageBoard.setNeedsToUpdate(true);
         }
 
         // If a Piece is selected, either move it or unselect it
@@ -523,7 +549,9 @@ public class GameManager
             turnMarker = playerTurnMarker;
 
             messagesToAdd.add("Team Computer has passed.");
+
             needsToUpdate = true;
+            messageBoard.setNeedsToUpdate(true);
 
         }
         // If a Piece is selected, either move it or unselect it
@@ -579,12 +607,23 @@ public class GameManager
     // ================================
     public void computerMove()
     {
+        //TODO: DELETE LATER
+        //TESTING MSG BOARD MSGS
+        /*
+        messagesToAdd.add("Computer moved");
+        messagesToAdd.add("line 2");
+        messagesToAdd.add("line 3:::::::");
+        messageBoard.setNeedsToUpdate(true);
+        */
+
         // If no possible moves, but not in check then must pass
         if(!computerCanMove && !computerIsInCheck)
         {
             turnMarker = playerTurnMarker;
             messagesToAdd.add("Team Computer has passed.");
+
             needsToUpdate = true;
+            messageBoard.setNeedsToUpdate(true);
         }
         else
         {
@@ -740,6 +779,7 @@ public class GameManager
         {
             playerIsInCheck = true;
             messagesToAdd.add("Team Player is in check.");
+            messageBoard.setNeedsToUpdate(true);
             return true;
         }
         else
@@ -754,6 +794,7 @@ public class GameManager
         {
             computerIsInCheck = true;
             messagesToAdd.add("Team Computer is in check.");
+            messageBoard.setNeedsToUpdate(true);
             return true;
         }
         else
@@ -783,6 +824,9 @@ public class GameManager
         {
             messagesToAdd.add("Player has been checkmated.");
             messagesToAdd.add("Computer wins.");
+
+            messageBoard.setNeedsToUpdate(true);
+
             gameHasEnded = true;
             playAgainButton.setIsFaded(false);
             return true;
@@ -791,6 +835,9 @@ public class GameManager
         {
             messagesToAdd.add("Computer has been checkmated.");
             messagesToAdd.add("Player wins.");
+
+            messageBoard.setNeedsToUpdate(true);
+
             gameHasEnded = true;
             playAgainButton.setIsFaded(false);
             return true;
@@ -801,6 +848,7 @@ public class GameManager
             {
                 messagesToAdd.add("The Generals faced, and");
                 messagesToAdd.add("the computer did not move away.");
+
             }
             else
             {
@@ -808,6 +856,10 @@ public class GameManager
                 messagesToAdd.add("the player did not move away.");
             }
             messagesToAdd.add("The game is a draw.");
+
+
+            messageBoard.setNeedsToUpdate(true);
+
             gameHasEnded = true;
             playAgainButton.setIsFaded(false);
             return true;
