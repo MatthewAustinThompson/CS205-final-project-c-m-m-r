@@ -299,7 +299,7 @@ public class Elephant extends Piece
             {
                 output.add(new BoardPoint(i - 3, j - 2));
             }
-            if(j < 8 && hypotheticalBoard[i-2][j+2] == null) // not too low
+            if(j < 8 && hypotheticalBoard[i-2][j+1] == null) // not too low
             {
                 output.add(new BoardPoint(i - 3, j + 2));
             }
