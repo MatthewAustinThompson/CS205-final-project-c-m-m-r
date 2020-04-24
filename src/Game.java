@@ -24,8 +24,9 @@ public class Game extends Canvas implements Runnable
 
         gameManager = new GameManager(WIDTH, HEIGHT);
         this.addMouseListener(new MouseInput(gameManager));
+        this.addMouseMotionListener(new MouseMotionInput(gameManager));
         new Window(WIDTH, HEIGHT, "Janggi", this);
-        //this.addKeyListener(new KeyInput(handler));
+
 
     }
 

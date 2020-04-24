@@ -13,10 +13,12 @@ public class RectangularButton
 
     RoundRectangle2D buttonDisplay;
     private boolean isFaded;
+    private boolean isHovered;
 
-    private Color fillColor;// = paleBlue;
-    private Color outlineColor;// = deepBlue;
+    private Color fillColor;
+    private Color outlineColor;
     private Color fadedFillColor;
+    private Color hoverColor; // when the mouse hovers over this
 
     private String text;
 
@@ -38,10 +40,12 @@ public class RectangularButton
         fillColor = inputFillColor;
         outlineColor = inputOutlineColor;
         fadedFillColor = inputFadedFillColor;
+        hoverColor = new Color(fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue(), 128); // lower alpha
 
         text = inputText;
 
         isFaded = false;
+        isHovered = false;
 
         buttonDisplay = new RoundRectangle2D.Double(buttonPosX, buttonPosY, buttonWidth, buttonHeight, 45, 45);
 
@@ -52,7 +56,14 @@ public class RectangularButton
     {
         if(!isFaded)
         {
-            g2d.setColor(fillColor);
+            if(isHovered)
+            {
+                g2d.setColor(hoverColor);
+            }
+            else
+            {
+                g2d.setColor(fillColor);
+            }
         }
         else
         {
@@ -74,16 +85,34 @@ public class RectangularButton
 
     public boolean containsClick(int x, int y)
     {
-        if (isFaded){return false;}
+        if (isFaded)
+        {
+            return false;
+        }
 
         return x > buttonDisplay.getMinX() && y > buttonDisplay.getMinY() &&
               x < buttonDisplay.getMaxX() && y < buttonDisplay.getMaxY();
     }
 
-    // Setter
+    public void reactToMouseMotion(int mx, int my)
+    {
+        if(containsClick(mx, my))
+        {
+            setIsHovered(true);
+        }
+        else
+        {
+            setIsHovered(false);
+        }
+    }
+
+    // Setters
     public void setIsFaded(boolean input)
     {
         isFaded = input;
-
+    }
+    public void setIsHovered(boolean input)
+    {
+        isHovered = input;
     }
 }

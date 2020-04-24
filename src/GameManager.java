@@ -599,6 +599,13 @@ public class GameManager
         board.unhighlightAll();
     }
 
+    public void reactToMotion(int mx, int my)
+    {
+        if(playing)
+        {
+            playAgainButton.reactToMouseMotion(mx, my);
+        }
+    }
 
     // ================================
     //
@@ -867,13 +874,21 @@ public class GameManager
         return false;
     }
 
-    public Team convertTeamMarkerToTeam(int turnMarker){
-        if (turnMarker == playerTurnMarker){return Team.Player;}
-        if (turnMarker == computerTurnMarker){return Team.Computer;}
+    public Team convertTeamMarkerToTeam(int turnMarker)
+    {
+        if (turnMarker == playerTurnMarker)
+        {
+            return Team.Player;
+        }
+        if (turnMarker == computerTurnMarker)
+        {
+            return Team.Computer;
+        }
         return Team.Player;
     }
 
-    public Team getWhoseTurnItIs(){
+    public Team getWhoseTurnItIs()
+    {
         return convertTeamMarkerToTeam(this.turnMarker);
     }
 }
