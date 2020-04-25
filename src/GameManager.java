@@ -832,6 +832,20 @@ public class GameManager
             return false;
         }
     }
+    // How many attacking pieces (not generals or guards) that each team has left
+    public int countAttackingPieces(Team team)
+    {
+        int count = 0;
+        for(Piece p : pieces)
+        {
+            if(p.getTeam() == team && p.getPieceType() != PieceType.General && p.getPieceType() != PieceType.Guard)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
 
     public boolean isGameOver()
     {
@@ -875,6 +889,16 @@ public class GameManager
 
             messageBoard.setNeedsToUpdate(true);
 
+            gameHasEnded = true;
+            playAgainButton.setIsFaded(false);
+            return true;
+        }
+        if(countAttackingPieces(Team.Player) < 2 && countAttackingPieces(Team.Computer) < 2)
+        {
+            messagesToAdd.add("Neither team has enough pieces.");
+            messagesToAdd.add("The game is a draw.");
+
+            messageBoard.setNeedsToUpdate(true);
             gameHasEnded = true;
             playAgainButton.setIsFaded(false);
             return true;
