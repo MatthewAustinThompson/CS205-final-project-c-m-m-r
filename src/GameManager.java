@@ -646,6 +646,7 @@ public class GameManager
             ArrayList<Piece> computerPieces = new ArrayList<Piece>();
             ArrayList<Piece> capturePieces = new ArrayList<Piece>();
             ArrayList<BoardPoint> computerBP = new ArrayList<BoardPoint>();
+            ArrayList<Piece> advanceables = getAdvanceableComputerPieces();
             BoardPoint bp = new BoardPoint(0, 0);
             boolean redo = true;
             int randomPiece = 0;
@@ -694,6 +695,17 @@ public class GameManager
                     // for each move
                     computerBP.removeIf(captureMovesBP -> !board.containsPiece(captureMovesBP));
                 }
+                else if(countAttackingPieces(Team.Player) < 2 && !advanceables.isEmpty())
+                {
+                    if(moveRandomlyTowardPlayerGeneral())
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
                 else
                 {
                     // Creates a random int with a max value of the computerPieces ArrayList size minus one,
@@ -729,7 +741,8 @@ public class GameManager
             }
 
             // If we are capturing, remove the piece getting captured
-            if (board.containsPiece(bp)) {
+            if (board.containsPiece(bp))
+            {
                 toBeRemoved = board.getPieceAt(bp);
             }
 
@@ -754,6 +767,80 @@ public class GameManager
 
             needsToUpdate = true; // the pieces need to update where they can move
         }
+    }
+
+    // Helper function: move a random computer piece toward the player's general, if possible.
+    public boolean moveRandomlyTowardPlayerGeneral()
+    {
+        boolean hasMoved = false;
+        ArrayList<Piece> advanceable = getAdvanceableComputerPieces();
+        if(advanceable.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            int randomIndex = (int)(Math.random() * advanceable.size());
+            Piece pieceToMove = advanceable.get(randomIndex);
+            BoardPoint bp = getRandomAdvance(pieceToMove);
+            if(board.containsPiece(bp))
+            {
+                toBeRemoved = board.getPieceAt(bp);
+            }
+            board.move(pieceToMove, bp);
+            turnMarker = playerTurnMarker;
+            needsToUpdate = true;
+            return true;
+        }
+    }
+
+    // Piece p must be owned by the computer. Returns true if this piece has a
+    // legal move that brings it closer to the player's general
+    public boolean canAdvance(Piece p)
+    {
+        if(p.getTeam() != Team.Computer)
+        {
+            return false;
+        }
+        for(BoardPoint bp : p.getLegalMoveSquares())
+        {
+            if(BoardPoint.isCloserToTarget(bp, p.getLocation(), new BoardPoint(4, 8)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Returns a random advancing move for this piece, assuming p belongs to the computer
+    public BoardPoint getRandomAdvance(Piece p)
+    {
+        if(p.getTeam() != Team.Computer)
+        {
+            return null;
+        }
+        for(BoardPoint bp : p.getLegalMoveSquares())
+        {
+            if(BoardPoint.isCloserToTarget(bp, p.getLocation(), new BoardPoint(4, 8)))
+            {
+                return bp;
+            }
+        }
+        return null;
+    }
+
+    // Returns an arraylist of the computer pieces which can advance toward the player's general
+    public ArrayList<Piece> getAdvanceableComputerPieces()
+    {
+        ArrayList<Piece> advanceable = new ArrayList<Piece>();
+        for(Piece p : pieces)
+        {
+            if(p.getTeam() == Team.Computer && canAdvance(p))
+            {
+                advanceable.add(p);
+            }
+        }
+        return advanceable;
     }
 
 

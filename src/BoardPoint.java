@@ -66,11 +66,13 @@ public class BoardPoint
     //Added function to check if the piece is on the board.
     //Must have positive x,y values, x: 0-8, y:0-9
     public boolean existsOnBoard() {
-        if (this.getX() < 0 || this.getY() < 0 ) {
+        if (this.getX() < 0 || this.getY() < 0 )
+        {
             return false;
         }
 
-        if (this.getX() > 8 || this.getY() > 9) {
+        if (this.getX() > 8 || this.getY() > 9)
+        {
             return false;
         }
 
@@ -78,24 +80,31 @@ public class BoardPoint
     }
 
     //Were the points given the piece illegal
-    public boolean getWasClipped() {
+    public boolean getWasClipped()
+    {
         return this.wasClipped;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if(o == this){
+    public boolean equals(Object o)
+    {
+        if(o == this)
+        {
             return true;
         }
-        if (!(o instanceof BoardPoint)) {
+        if (!(o instanceof BoardPoint))
+        {
             return false;
         }
 
         BoardPoint otherBoardPoint = (BoardPoint) o;
 
-        if(x == otherBoardPoint.getX() && y == otherBoardPoint.getY()){
+        if(x == otherBoardPoint.getX() && y == otherBoardPoint.getY())
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
@@ -104,6 +113,18 @@ public class BoardPoint
     public boolean is(int x, int y)
     {
         return this.x == x && this.y == y;
+    }
+
+    // Returns Euclidean distance between points
+    public static double distanceBetween(BoardPoint bp1, BoardPoint bp2)
+    {
+        return Math.sqrt((bp1.getX() - bp2.getX())*(bp1.getX() - bp2.getX()) + (bp1.getY() - bp2.getY())*(bp1.getY() - bp2.getY()));
+    }
+
+    // Returns true if bp1 is closer to target than bp2 is to target
+    public static boolean isCloserToTarget(BoardPoint bp1, BoardPoint bp2, BoardPoint target)
+    {
+        return distanceBetween(bp1, target) < distanceBetween(bp2, target);
     }
 
 }
