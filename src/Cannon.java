@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Cannon extends Piece
 {
 
-
     public Cannon(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
     {
         super(inputManager, inputCenter, inputLocation);
@@ -63,17 +62,7 @@ public class Cannon extends Piece
         } catch (IOException e) {
             System.out.println("no img found");
         }
-        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
         g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 20, null);
-
-        /*
-        // Write the word "Cannon"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 11));
-        g2d.setColor(symbolColor);
-        int pixelLength = g2d.getFontMetrics().stringWidth("Cannon"); // the number of pixels the string is long
-        g2d.drawString("Cannon", (int)this.center.x - pixelLength/2, (int)center.y + 5);
-        */
-
     }
 
 

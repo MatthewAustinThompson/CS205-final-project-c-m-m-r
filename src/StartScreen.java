@@ -1,11 +1,9 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class StartScreen
 {
@@ -21,19 +19,13 @@ public class StartScreen
     // Variables for drawing
     private int lineWidth;
     private int pointRadius;
-    /*private int buttonX;
-    private int buttonY;
-    private int buttonWidth;
-    private int buttonHeight;*/
 
     // ===============================
     RoundRectangle2D buttonVisual;
     private final Color txtColor = new Color(45,58,98);
     private final Color bgColor =  new Color(128,178,245);
-    //private final Color buttonColor = new Color(247,183,109);
 
     String gameName = "Janggi";
-    //String buttonText = "Start Game";
 
     Color paleOrange = new Color(239, 164, 103);
     Color paleBlue = new Color(159, 208, 255);
@@ -88,16 +80,8 @@ public class StartScreen
 
         BufferedImage img = null;
 
-        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
-        try {
-            /*
-            img = ImageIO.read(new File("./src/Images/ChariotRookRed.png"));
-            g2d.drawImage(img,windowWidth/8, (int)(windowHeight * .9), null);
-            img = ImageIO.read(new File("./src/Images/ChariotRookGreen.png"));
-            g2d.drawImage(img,7 * windowWidth/8 - 40, (int)(windowHeight * .9), null);
-
-             */
-
+        try
+        {
             img = ImageIO.read(new File("./src/Images/HorseRed.png"));
             g2d.drawImage(img,windowWidth/8, (int)(windowHeight * .8), null);
             img = ImageIO.read(new File("./src/Images/HorseGreen.png"));
@@ -136,16 +120,9 @@ public class StartScreen
             g2d.drawImage(img,windowWidth/8, (int)(windowHeight * .2), null);
             img = ImageIO.read(new File("./src/Images/HorseGreen.png"));
             g2d.drawImage(img,7 * windowWidth/8 - 40, (int)(windowHeight * .2), null);
-
-            /*
-            img = ImageIO.read(new File("./src/Images/ChariotRookRed.png"));
-            g2d.drawImage(img,windowWidth/8, (int)(windowHeight * .1), null);
-            img = ImageIO.read(new File("./src/Images/ChariotRookGreen.png"));
-            g2d.drawImage(img,7 * windowWidth/8 - 40, (int)(windowHeight * .1), null);
-
-             */
-
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println("no img found");
         }
 
@@ -155,40 +132,13 @@ public class StartScreen
         int titleX = (int) (windowWidth / 2 - metrics.getStringBounds(gameName,null).getWidth()/2);
         int titleY = windowHeight / 4;
 
-        //buttonWidth = (int) (windowWidth * .25);
-        //buttonHeight = (int) (windowHeight * .20);
-
-        // ==============BUTTON POSITION=================
-        //buttonX = windowWidth / 2 - buttonWidth/2;
-        //buttonY = windowHeight * 6 / 10;
-
-        //
         // ==============DRAW TITLE=================
         g2d.setFont(font);
         g2d.setColor(txtColor);
         g2d.drawString(gameName, titleX, titleY);
 
         // ==============DRAW BUTTON=================
-        /*g2d.setFont(smallerFont);
-        g2d.setColor(buttonColor);
-        buttonVisual = new RoundRectangle2D.Double(buttonX, buttonY, buttonWidth, buttonHeight, 45, 45);
-
-        g2d.fill( buttonVisual);*/
         startButton.render(g2d);
-
-
-
-        // ==============DRAW TEXT IN BUTTON=================
-        /*g2d.setFont(smallerFont);
-        g2d.setColor(Color.white);
-
-        int stringPosX = (int) (buttonVisual.getMinX() + buttonVisual.getWidth()/2
-                - smallerMetrics.getStringBounds(buttonText,null).getWidth()/2);
-
-        int stringPosY = (int) (buttonVisual.getMinY() + buttonVisual.getHeight()/2
-                - smallerMetrics.getHeight()/8);
-
-        g2d.drawString(buttonText,stringPosX,stringPosY);*/
 
         // ==============DRAW CAPTION TEXT=================
         Font captionFont = new Font("Helvetica", Font.PLAIN, 14);
@@ -206,17 +156,12 @@ public class StartScreen
         g2d.setFont(captionFont);
         g2d.setColor(txtColor);
         g2d.drawString(captionTxt1, captionX, captionY);
-        g2d.drawString(captionTxt2, captionX, captionY + 25);
+        g2d.drawString(captionTxt2, captionX2, captionY + 25);
         g2d.drawString(captionTxt3, captionX3, captionY + 50);
     }
 
     public boolean buttonPress(int mx, int my)
     {
-        /*if(mx >= buttonX && mx <= buttonX + buttonWidth && my >= buttonY && my <= buttonY + buttonHeight){
-            return true;
-        } else {
-            return false;
-        }*/
         return startButton.containsClick(mx, my);
     }
 

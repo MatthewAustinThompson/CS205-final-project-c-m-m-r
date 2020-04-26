@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Guard extends Piece
 {
 
-
     public Guard(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
     {
         super(inputManager, inputCenter, inputLocation);
@@ -62,17 +61,7 @@ public class Guard extends Piece
         } catch (IOException e) {
             System.out.println("no img found");
         }
-        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
         g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 20, null);
-
-        /*
-        // Write the word "Guard"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 13));
-        g2d.setColor(symbolColor);
-        int pixelLength = g2d.getFontMetrics().stringWidth("Guard"); // the number of pixels the string is long
-        g2d.drawString("Guard", (int)this.center.x - pixelLength/2, (int)center.y + 5);
-
-         */
     }
 
 

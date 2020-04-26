@@ -78,12 +78,9 @@ public class TurnDisplaySign {
 
         String turnMessage = manager.getWhoseTurnItIs() + "\'s Move";
 
-        //FIXED ERROR: Metrics was created w font object.  Resetting font to different font than what used metrics causes
-        //measurements not to align
         double stringPosX = outRec.getMinX() + outRec.getWidth()/2 - metrics.getStringBounds(turnMessage,null).getWidth()/2;
         double stringPosY = outRec.getMinY() + outRec.getHeight()/2 + metrics.getStringBounds(turnMessage,null).getHeight()/4;
 
-        //g2d.drawString(turnMessage, signPositionX + turnBoardWidth/15, (int) (signPositionY+turnBoardHeight/1.8));
         g2d.drawString(turnMessage,(int)stringPosX, (int)stringPosY);
     }
 

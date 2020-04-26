@@ -26,8 +26,6 @@ public class Game extends Canvas implements Runnable
         this.addMouseListener(new MouseInput(gameManager));
         this.addMouseMotionListener(new MouseMotionInput(gameManager));
         new Window(WIDTH, HEIGHT, "Janggi", this);
-
-
     }
 
     public synchronized void start()

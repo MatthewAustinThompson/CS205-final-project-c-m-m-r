@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Horse extends Piece
 {
 
-
     public Horse(GameManager inputManager, Point inputCenter, BoardPoint inputLocation, Team inputTeam)
     {
         super(inputManager, inputCenter, inputLocation);
@@ -63,17 +62,7 @@ public class Horse extends Piece
         } catch (IOException e) {
             System.out.println("no img found");
         }
-        //Graphics2d object.drawImage(Image object, x coord, y coord, idk but set null)
         g2d.drawImage(img, (int)this.center.x -20, (int)center.y - 20, null);
-
-        /*
-        // Write the word "Horse"
-        g2d.setFont(new Font("Courier", Font.PLAIN, 14));
-        g2d.setColor(symbolColor);
-        int pixelLength = g2d.getFontMetrics().stringWidth("Horse"); // the number of pixels the string is long
-        g2d.drawString("Horse", (int)this.center.x - pixelLength/2, (int)center.y + 5);
-
-         */
     }
 
 
@@ -84,7 +73,6 @@ public class Horse extends Piece
         int i = location.getX();
         int j = location.getY();
         // Check for moves to the right
-        //if(i < 7 && !board.containsPiece(i + 1, j))
         if(i < 7 && hypotheticalBoard[i+1][j] == null)
         {
             if(j > 0) // not too high
@@ -97,7 +85,6 @@ public class Horse extends Piece
             }
         }
         // Check for moves to the left
-        //if(i > 1 && !board.containsPiece(i - 1, j))
         if(i > 1 && hypotheticalBoard[i-1][j] == null)
         {
             if(j > 0) // not too high
@@ -110,7 +97,6 @@ public class Horse extends Piece
             }
         }
         // Check for moves down
-        //if(j < 8 && !board.containsPiece(i, j + 1))
         if(j < 8 && hypotheticalBoard[i][j + 1] == null)
         {
             if(i > 0) // not too far left
@@ -123,7 +109,6 @@ public class Horse extends Piece
             }
         }
         // Check for moves up
-        //if(j > 1 && !board.containsPiece(i, j - 1))
         if(j > 1 && hypotheticalBoard[i][j - 1] == null)
         {
             if(i > 0) // not too far left

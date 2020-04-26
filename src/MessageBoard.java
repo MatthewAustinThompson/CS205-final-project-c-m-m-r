@@ -107,25 +107,6 @@ public class MessageBoard {
         g2d.setColor(outlineColor);
         g2d.fill(outRec);
 
-        /*
-        =====================================
-        BOARD IS ALL ONE COLOR, FILLREC NOW UNNECESSARY
-        (keeping code just in case)
-        =====================================
-        fillRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
-        double fillRecWidth = messageBoardWidth * .94;
-        double fillRecHeight = messageBoardHeight * .90;
-        int fillRecPosX = (int)(outRec.getMinX() + outRec.getWidth()/2 - fillRecWidth/2);
-        int fillRecPosY = (int)(outRec.getMinY() + outRec.getHeight()/2 - fillRecHeight/2);
-        fillRec.setFrame(fillRecPosX,fillRecPosY,fillRecWidth,fillRecHeight);
-        g2d.setColor(fillColor);
-        g2d.fill(fillRec); */
-
-
-        //FIXED ERROR: Metrics was created w font object.  Resetting font to different font than what used metrics causes
-        //measurements not to align
-
-
         //==========================================
         //PRINT THE MESSAGES THAT HAVE BEEN ADDED
         //==========================================
@@ -147,24 +128,6 @@ public class MessageBoard {
                 g2d.drawString(msg, (int) stringPosX, (int) (stringPosY) );
 
                 visibleMsgCounter++;
-
-                /*=========================CLEARED EXTERNALLY=====================================
-                //CLEARING WHEN OVERFILLED NOW UNNECESSARY, keeping code in case
-                if ((stringPosY + (10 * visibleMsgCounter) + 15) > outRec.getMaxY()) {
-
-                        // Clear board
-                        coverMsgRec = new RoundRectangle2D.Double(msgBoardPositionX, msgBoardPositionY, messageBoardWidth, messageBoardHeight, 30, 30);
-                        g2d.setColor(fillColor);
-                        g2d.fill(coverMsgRec);
-
-                        //Place new string on top of cleared board
-                        this.visibleMsgCounter = 1;
-                        stringPosY = outRec.getMinY() + (outRec.getHeight() * .15 + (this.visibleMsgCounter * msgSpacing));
-
-                        g2d.setColor(textColor);
-                        g2d.drawString(msg, (int) stringPosX, (int) stringPosY);
-                }
-                 */
             }
         }
     }
