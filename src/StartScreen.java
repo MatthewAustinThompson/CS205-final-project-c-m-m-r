@@ -144,9 +144,9 @@ public class StartScreen
         Font captionFont = new Font("Helvetica", Font.PLAIN, 14);
         FontMetrics metrics2 = g2d.getFontMetrics(captionFont);
 
-        String captionTxt1 = "Capture the computer's general to win!";
+        String captionTxt1 = "Checkmate the computer's general to win!";
         String captionTxt2 = "Click on a piece to see available moves.";
-        String captionTxt3 = "(It's ok if you don't already know the rules, our system will help you.)";
+        String captionTxt3 = "See the ReadMe for a brief description of the rules.";
         int captionX = (int) (windowWidth / 2 - metrics2.getStringBounds(captionTxt1,null).getWidth()/2);
         int captionX2 = (int) (windowWidth / 2 - metrics2.getStringBounds(captionTxt2,null).getWidth()/2);
         int captionX3 = (int) (windowWidth / 2 - metrics2.getStringBounds(captionTxt3,null).getWidth()/2);
