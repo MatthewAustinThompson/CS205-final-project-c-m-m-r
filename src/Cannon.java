@@ -309,19 +309,8 @@ public class Cannon extends Piece
             // If there's not a teammate there,
             // and it doesn't put us in check,
             // and it's not a cannon, we can move there
-            if(board.containsTeammate(this, bp))
-            {
-                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because a teammate is there");
-            }
-            else if(!board.canMoveWithoutCausingCheck(this, bp))
-            {
-                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because of check");
-            }
-            else if(board.containsEnemyCannon(this, bp.getX(), bp.getY()))
-            {
-                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because cannon");
-            }
-            else
+            if(!board.containsTeammate(this, bp) && board.canMoveWithoutCausingCheck(this, bp)
+                    && !board.containsEnemyCannon(this, bp.getX(), bp.getY()))
             {
                 legalMoveSquares.add(bp);
             }

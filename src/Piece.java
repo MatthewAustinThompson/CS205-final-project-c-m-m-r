@@ -189,21 +189,12 @@ public abstract class Piece
     // that doesn't contain a teammate
     public void findLegalMoveSquares()
     {
-        System.out.println(this.toString());
         legalMoveSquares = new ArrayList<BoardPoint>();
         for(BoardPoint bp : targetingSquares)
         {
             // If there's not a teammate there,
             // and it doesn't put us in check, we can move there
-            if(board.containsTeammate(this, bp))
-            {
-                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because a teammate is there");
-            }
-            else if(!board.canMoveWithoutCausingCheck(this, bp))
-            {
-                System.out.println("\t Cannot go to " + bp.getX() + "," + bp.getY() + " because of check");
-            }
-            else
+            if(!board.containsTeammate(this, bp) && board.canMoveWithoutCausingCheck(this, bp))
             {
                 legalMoveSquares.add(bp);
             }
