@@ -50,7 +50,7 @@ public class GameManager
 
     private RectangularButton playAgainButton;
 
-    // Variables for drawing
+    // Colors for drawing buttons/background
     Color paleOrange = new Color(239, 164, 103);
     Color paleBlue = new Color(159, 208, 255);
     Color deepBlue = new Color(45, 58, 98);
@@ -106,7 +106,8 @@ public class GameManager
                 // Set messageBoard.setNeedsToUpdate(true);
                 //DELETES ALL MESSAGES that were added prior to the
                 // most recent setting of messagesBoard.setNeedsToUpdate(true)
-                if(messageBoard.needsToUpdate()){
+                if(messageBoard.needsToUpdate())
+                {
                     messageBoard.clear();
                     for(String message : messagesToAdd)
                     {
@@ -116,24 +117,29 @@ public class GameManager
                     messageBoard.setNeedsToUpdate(false);
                 }
 
-                //==============================
-                //         PASS BUTTON
-                //==============================
-                if (getWhoseTurnItIs() == Team.Player){
 
-                    if (!playerCanMove && !playerIsInCheck){
+                //  Decide if pass button is faded or not
+                if (getWhoseTurnItIs() == Team.Player)
+                {
+
+                    if (!playerCanMove && !playerIsInCheck)
+                    {
                         passButton.setIsFaded(false);
                     }
-                    if (playerCanMove || playerIsInCheck){
+                    if (playerCanMove || playerIsInCheck)
+                    {
                         passButton.setIsFaded(true);
                     }
                 }
-                if (getWhoseTurnItIs() == Team.Computer){
-                    if (!computerCanMove && !computerIsInCheck){
+                if (getWhoseTurnItIs() == Team.Computer)
+                {
+                    if (!computerCanMove && !computerIsInCheck)
+                    {
                         passButton.setIsFaded(false);
                     }
 
-                    if (computerCanMove || computerIsInCheck){
+                    if (computerCanMove || computerIsInCheck)
+                    {
                         passButton.setIsFaded(true);
                     }
                 }
@@ -366,91 +372,6 @@ public class GameManager
         {
             reactToClickComputer(mx, my);
         }
-        /*else
-        {
-            // If the pass button was clicked, switch turns
-            if (passButton.containsClick(mx, my)){
-
-                // Switch teams & let user know
-                turnMarker = (-turnMarker);
-
-                if (!testingWithoutTurns) {
-                    //System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                    messagesToAdd.add(convertTeamMarkerToTeam(-turnMarker) + " has passed their turn.");
-                    messagesToAdd.add("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                }
-
-            }
-
-            // If a Piece is selected, either move it or unselect it
-            if(selectedPiece != null)
-            {
-                BoardPoint bp = board.clickIsOnLegalMove(mx, my, selectedPiece);
-
-                // Can't move piece unless it is that team's turn but can select and unselect to see valid moves
-                if(bp != null  &&
-                        ( ( convertTeamMarkerToTeam(turnMarker) == selectedPiece.getTeam() ) ||
-                                testingWithoutTurns) )
-                {
-                    // If we are capturing, remove the piece getting captured
-                    if(board.containsPiece(bp))
-                    {
-                        toBeRemoved = board.getPieceAt(bp);
-                    }
-                    // Now do the move
-                    board.move(selectedPiece, bp);
-
-                    // If moved, switch teams & let user know
-                    turnMarker = (-turnMarker);
-
-                    if(testingWithoutTurns) {
-                        messagesToAdd.add("You have switched the turn enforcement OFF.");
-                    }
-
-                    if (!testingWithoutTurns) {
-                        //System.out.println("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                        messagesToAdd.add("It is now Team " + convertTeamMarkerToTeam(turnMarker) + "'s turn.");
-                    }
-
-
-
-                    needsToUpdate = true; // the pieces need to update where they can move
-                }
-
-
-
-                if (!testingWithoutTurns) {
-                    if ( (convertTeamMarkerToTeam(turnMarker) != selectedPiece.getTeam())){
-                        //System.out.println("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
-                        messagesToAdd.add("Only pieces from Team " + convertTeamMarkerToTeam(turnMarker) + " may move.");
-                    }
-                }
-
-                selectedPiece.setIsHighlighted(false);
-                selectedPiece = null;
-                board.unhighlightAll();
-                return;
-            }
-            else
-            {
-                for(Piece p : pieces)
-                {
-                    if(p.containsClick(mx, my))
-                    {
-                        selectedPiece = p;
-                        selectedPiece.setIsHighlighted(true);
-                        board.highlightLegalMoves(p);
-                        return;
-                    }
-                }
-            }
-            if(selectedPiece != null)
-            {
-                selectedPiece.setIsHighlighted(false);
-            }
-            selectedPiece = null;
-            board.unhighlightAll();
-        }*/
     }
 
     // React to a click on the start screen
@@ -475,17 +396,6 @@ public class GameManager
     // React to a click on the player's turn
     public void reactToClickPlayer(int mx, int my)
     {
-
-        //TODO: DELETE THIS LATER
-        //Testing msg board
-        /*
-        messagesToAdd.add("Player has clicked.");
-        messagesToAdd.add("line 2");
-        messagesToAdd.add("-----------------------");
-        needsToUpdate = true;
-        messageBoard.setNeedsToUpdate(true);
-        */
-
         // If the user clicks on the pass button
         if (passButton.containsClick(mx, my))
         {
@@ -622,15 +532,6 @@ public class GameManager
     // ================================
     public void computerMove()
     {
-        //TODO: DELETE LATER
-        //TESTING MSG BOARD MSGS
-        /*
-        messagesToAdd.add("Computer moved");
-        messagesToAdd.add("line 2");
-        messagesToAdd.add("line 3:::::::");
-        messageBoard.setNeedsToUpdate(true);
-        */
-
         // If no possible moves, but not in check then must pass
         if(!computerCanMove && !computerIsInCheck)
         {
@@ -759,12 +660,6 @@ public class GameManager
             // If moved, switch teams & let user know
             turnMarker = playerTurnMarker;
 
-            /*
-            if (!testingWithoutTurns) {
-                System.out.println("It is now Team Player's turn.");
-            }
-            */
-
             needsToUpdate = true; // the pieces need to update where they can move
         }
     }
@@ -780,6 +675,7 @@ public class GameManager
         }
         else
         {
+            // Choose a random advanceable piece, and move it
             int randomIndex = (int)(Math.random() * advanceable.size());
             Piece pieceToMove = advanceable.get(randomIndex);
             BoardPoint bp = getRandomAdvance(pieceToMove);
