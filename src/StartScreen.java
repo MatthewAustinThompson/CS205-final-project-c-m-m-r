@@ -116,6 +116,19 @@ public class StartScreen
 
         g2d.drawString(buttonText,stringPosX,stringPosY);*/
 
+        // ==============DRAW CAPTION TEXT=================
+        String captionTxt1 = "Capture the computer's general to win!";
+        String captionTxt2 = "Click on a piece to see available moves.";
+        String captionTxt3 = "(It's ok if you don't already know the rules, our system will help you.)";
+        int captionX = (int) (windowWidth / 2 - metrics.getStringBounds(captionTxt1,null).getWidth()/6);
+        int captionY = windowHeight * 8 / 10;
+
+        Font captionFont = new Font("Helvetica", Font.BOLD, 18);
+        g2d.setFont(captionFont);
+        g2d.setColor(txtColor);
+        g2d.drawString(captionTxt1, captionX, captionY);
+        g2d.drawString(captionTxt2, captionX, captionY + 25);
+        g2d.drawString(captionTxt3, captionX, captionY + 50);
     }
 
     public boolean buttonPress(int mx, int my)
